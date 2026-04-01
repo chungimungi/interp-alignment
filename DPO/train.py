@@ -3,10 +3,10 @@ from pathlib import Path
 
 import modal
 
-MODEL_NAME = "meta-llama/Llama-3.2-3B-Instruct"
+MODEL_NAME = "HuggingFaceTB/SmolLM3-3B"
 DATASET_NAME = "argilla/ultrafeedback-binarized-preferences-cleaned"
-OUTPUT_DIR = "/root/outputs/Llama-3.2-3B-DPO"
-RUN_NAME = "Llama-3.2-3B-DPO"
+OUTPUT_DIR = "/root/outputs/SmolLM3-3B-DPO"
+RUN_NAME = "SmolLM3-3B-DPO"
 DISABLE_THINKING = True
 
 app = modal.App("dpo-llama-training")
