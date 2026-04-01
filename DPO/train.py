@@ -3,13 +3,13 @@ from pathlib import Path
 
 import modal
 
-MODEL_NAME = "Qwen/Qwen3-4B-Instruct-2507"
+MODEL_NAME = "meta-llama/Llama-3.2-3B-Instruct"
 DATASET_NAME = "argilla/ultrafeedback-binarized-preferences-cleaned"
-OUTPUT_DIR = "/root/outputs/Qwen3-4B-DPO"
-RUN_NAME = "Qwen3-4B-DPO"
+OUTPUT_DIR = "/root/outputs/Llama-3.2-3B-DPO"
+RUN_NAME = "Llama-3.2-3B-DPO"
 DISABLE_THINKING = True
 
-app = modal.App("dpo-qwen3-training")
+app = modal.App("dpo-llama-training")
 
 image = modal.Image.from_registry("python:3.11").pip_install(
     "torch",
@@ -76,8 +76,6 @@ def _normalize_example(example, tokenizer):
     chosen_messages = _as_messages(example.get("chosen"))
     rejected_messages = _as_messages(example.get("rejected"))
 
-    # Build prompt/completions from the same chat-template path to avoid
-    # prompt-prefix tokenization mismatches seen with Qwen + TRL.
     if prompt_messages and chosen_messages and rejected_messages:
         try:
             prompt_text = tokenizer.apply_chat_template(
@@ -159,7 +157,12 @@ def _latest_checkpoint_path(output_dir: str) -> str | None:
         "/root/outputs": model_out_vol,
     },
 )
-def train_and_push(repo_id: str, private: bool = False) -> str:
+def train_and_push(
+    repo_id: str,
+    private: bool = False,
+    push_merged: bool = True,
+    merged_repo_id: str | None = None,
+) -> str:
     import torch
     import wandb
     from datasets import load_dataset
@@ -241,13 +244,44 @@ def train_and_push(repo_id: str, private: bool = False) -> str:
     trainer.model.push_to_hub(repo_id, token=hf_token)
     tokenizer.push_to_hub(repo_id, token=hf_token)
 
+    pushed_urls = [f"https://huggingface.co/{repo_id} (adapter)"]
+
+    if push_merged:
+        dense_repo_id = merged_repo_id or f"{repo_id}-merged"
+        print(f"Merging LoRA adapter into dense model for repo: {dense_repo_id}")
+
+        merged_model = trainer.model.merge_and_unload()
+        dense_output_dir = f"{OUTPUT_DIR}-merged"
+        Path(dense_output_dir).mkdir(parents=True, exist_ok=True)
+
+        merged_model.save_pretrained(dense_output_dir)
+        tokenizer.save_pretrained(dense_output_dir)
+
+        HfApi(token=hf_token).create_repo(
+            repo_id=dense_repo_id, private=private, exist_ok=True
+        )
+        merged_model.push_to_hub(dense_repo_id, token=hf_token)
+        tokenizer.push_to_hub(dense_repo_id, token=hf_token)
+        pushed_urls.append(f"https://huggingface.co/{dense_repo_id} (merged dense)")
+
     model_out_vol.commit()
-    return f"Finished training and pushed to https://huggingface.co/{repo_id}"
+    return "Finished training and pushed: " + ", ".join(pushed_urls)
 
 
 @app.local_entrypoint()
-def main(repo_id: str, private: bool = False) -> None:
-    message = train_and_push.remote(repo_id=repo_id, private=private)
+def main(
+    repo_id: str,
+    private: bool = False,
+    push_merged: bool = True,
+    merged_repo_id: str = "",
+) -> None:
+    resolved_merged_repo_id = merged_repo_id.strip() or None
+    message = train_and_push.remote(
+        repo_id=repo_id,
+        private=private,
+        push_merged=push_merged,
+        merged_repo_id=resolved_merged_repo_id,
+    )
     print(message)
 
     out_dir = Path(OUTPUT_DIR)
