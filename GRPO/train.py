@@ -1,17 +1,16 @@
+import argparse
 import os
 import time
 from pathlib import Path
 
-import modal
+from dotenv import load_dotenv
 
-# ── Compute ───────────────────────────────────────────────────────────────────
-GPU = "L40S"
-TIMEOUT = 60 * 60 * 24     # 24 hours
+load_dotenv()
 
 # ── Model & Data ──────────────────────────────────────────────────────────────
 MODEL_NAME = "HuggingFaceTB/SmolLM3-3B"
 DATASET_NAME = "argilla/ultrafeedback-binarized-preferences-cleaned"
-OUTPUT_DIR = "/root/outputs/SmolLM3-3B-GRPO"
+OUTPUT_DIR = "./outputs/SmolLM3-3B-GRPO"
 RUN_NAME = "SmolLM3-3B-GRPO"
 DISABLE_THINKING = True
 
@@ -20,7 +19,7 @@ MAX_PROMPT_TOKENS = 1024
 MAX_COMPLETION_LENGTH = 768
 
 # ── GRPO ──────────────────────────────────────────────────────────────────────
-NUM_GENERATIONS = 4
+NUM_GENERATIONS = 16
 
 # ── Training ──────────────────────────────────────────────────────────────────
 PER_DEVICE_TRAIN_BATCH_SIZE = 4
@@ -36,29 +35,6 @@ LORA_R = 16
 LORA_ALPHA = 32
 LORA_DROPOUT = 0.05
 LORA_TARGET_MODULES = ["q_proj", "k_proj", "v_proj", "o_proj"]
-
-# ── Modal ─────────────────────────────────────────────────────────────────────
-app = modal.App("grpo-smollm3-training")
-
-image = (
-    modal.Image.from_registry("python:3.11")
-    .pip_install(
-        "torch",
-        "transformers>=4.45.0",
-        "datasets",
-        "trl>=0.11.0,<1.0.0",
-        "peft",
-        "accelerate",
-        "bitsandbytes",
-        "wandb",
-        "huggingface_hub",
-        "rouge_score",
-        "pynvml",
-    )
-)
-
-hf_cache_vol = modal.Volume.from_name("hf-cache", create_if_missing=True)
-model_out_vol = modal.Volume.from_name("grpo-model-outputs", create_if_missing=True)
 
 
 # ── Dataset ───────────────────────────────────────────────────────────────────
@@ -206,16 +182,6 @@ class _ProgressLogger:
 
 # ── Train ─────────────────────────────────────────────────────────────────────
 
-@app.function(
-    gpu=GPU,
-    timeout=TIMEOUT,
-    image=image,
-    secrets=[modal.Secret.from_dotenv(path=".env")],
-    volumes={
-        "/root/.cache/huggingface": hf_cache_vol,
-        "/root/outputs": model_out_vol,
-    },
-)
 def train_and_push(
     repo_id: str,
     private: bool = False,
@@ -381,64 +347,12 @@ def train_and_push(
         tokenizer.push_to_hub(dense_repo_id, token=hf_token)
         pushed_urls.append(f"https://huggingface.co/{dense_repo_id} (merged dense)")
 
-    model_out_vol.commit()
     return "Finished training and pushed: " + ", ".join(pushed_urls)
 
 
-@app.local_entrypoint()
-def main(
-    repo_id: str = "",
-    private: bool = False,
-    push_merged: bool = True,
-    merged_repo_id: str = "",
-    dry_run: bool = False,
-    light_run: bool = False,
-    local_output_dir: str = "./outputs",
-) -> None:
-    import subprocess
+# ── Re-push from local output dir (if HF push failed during training) ─────────
 
-    if not dry_run and not light_run and not repo_id:
-        raise ValueError("--repo-id is required for a full training run")
-
-    resolved_merged_repo_id = merged_repo_id.strip() or None
-    message = train_and_push.remote(
-        repo_id=repo_id,
-        private=private,
-        push_merged=push_merged,
-        merged_repo_id=resolved_merged_repo_id,
-        dry_run=dry_run,
-        light_run=light_run,
-    )
-    print(message)
-
-    if not dry_run and not light_run:
-        print(f"Artifacts saved in Modal volume under: {OUTPUT_DIR}")
-        print(f"Pulling model from volume to {local_output_dir} ...")
-        volume_name = "grpo-model-outputs"
-        for remote_path, label in [
-            ("SmolLM3-3B-GRPO", "adapter"),
-            ("SmolLM3-3B-GRPO-merged", "merged"),
-        ]:
-            local_path = f"{local_output_dir}/{remote_path}"
-            result = subprocess.run(
-                ["modal", "volume", "get", volume_name, remote_path, local_path],
-                capture_output=True,
-                text=True,
-            )
-            if result.returncode == 0:
-                print(f"[pull] {label} → {local_path}")
-            else:
-                print(f"[pull] {label} failed: {result.stderr.strip()}")
-
-
-# ── Re-push from volume (if HF push failed during training) ──────────────────
-
-@app.function(
-    image=image,
-    secrets=[modal.Secret.from_dotenv(path=".env")],
-    volumes={"/root/outputs": model_out_vol},
-)
-def push_from_volume(
+def push_from_local(
     repo_id: str,
     private: bool = False,
     push_merged: bool = True,
@@ -478,18 +392,46 @@ def push_from_volume(
     return "Pushed: " + ", ".join(pushed_urls)
 
 
-@app.local_entrypoint()
-def push(
-    repo_id: str,
-    private: bool = False,
-    push_merged: bool = True,
-    merged_repo_id: str = "",
-) -> None:
-    resolved_merged_repo_id = merged_repo_id.strip() or None
-    message = push_from_volume.remote(
-        repo_id=repo_id,
-        private=private,
-        push_merged=push_merged,
-        merged_repo_id=resolved_merged_repo_id,
-    )
-    print(message)
+# ── Entrypoint ────────────────────────────────────────────────────────────────
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    train_parser = subparsers.add_parser("train", help="Run GRPO training")
+    train_parser.add_argument("--repo-id", default="")
+    train_parser.add_argument("--private", action="store_true")
+    train_parser.add_argument("--no-push-merged", dest="push_merged", action="store_false")
+    train_parser.add_argument("--merged-repo-id", default="")
+    train_parser.add_argument("--dry-run", action="store_true")
+    train_parser.add_argument("--light-run", action="store_true")
+
+    push_parser = subparsers.add_parser("push", help="Re-push from local output dir")
+    push_parser.add_argument("--repo-id", required=True)
+    push_parser.add_argument("--private", action="store_true")
+    push_parser.add_argument("--no-push-merged", dest="push_merged", action="store_false")
+    push_parser.add_argument("--merged-repo-id", default="")
+
+    args = parser.parse_args()
+
+    if args.command == "train":
+        if not args.dry_run and not args.light_run and not args.repo_id:
+            parser.error("--repo-id is required for a full training run")
+        message = train_and_push(
+            repo_id=args.repo_id,
+            private=args.private,
+            push_merged=args.push_merged,
+            merged_repo_id=args.merged_repo_id.strip() or None,
+            dry_run=args.dry_run,
+            light_run=args.light_run,
+        )
+        print(message)
+
+    elif args.command == "push":
+        message = push_from_local(
+            repo_id=args.repo_id,
+            private=args.private,
+            push_merged=args.push_merged,
+            merged_repo_id=args.merged_repo_id.strip() or None,
+        )
+        print(message)
