@@ -1,0 +1,24 @@
+# CUDA 12.9 — use cu128 wheels (12.9 driver is backward-compatible with 12.8 runtime)
+# Install with: uv pip install -r requirements.txt --index-strategy unsafe-best-match
+--extra-index-url https://download.pytorch.org/whl/cu128
+
+torch>=2.7.0
+torchvision>=0.22.0
+
+transformers>=4.45.0
+datasets>=3.0.0
+trl>=0.14.0
+peft>=0.13.0
+accelerate>=1.0.0
+bitsandbytes>=0.44.0
+
+huggingface_hub>=0.25.0
+rouge_score>=0.1.2
+pynvml>=11.5.0
+wandb>=0.18.0
+python-dotenv>=1.0.0
+
+# pin requests to PyPI version — PyTorch index serves an older requests that
+# breaks datasets and wandb resolution; --index-strategy unsafe-best-match
+# ensures uv picks this from PyPI instead of stopping at the torch index
+requests>=2.32.2
