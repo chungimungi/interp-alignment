@@ -8,7 +8,6 @@ from peft import LoraConfig, TaskType
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from trl import KTOConfig, KTOTrainer
 
-# ====================== CONFIG ======================
 MODEL_NAME = "HuggingFaceTB/SmolLM3-3B"
 DATASET_NAME = "argilla/ultrafeedback-binarized-preferences-cleaned-kto"
 OUTPUT_DIR = "./outputs/SmolLM3-3B-KTO"
@@ -16,7 +15,6 @@ RUN_NAME = "SmolLM3-3B-KTO"
 REPO_ID = "JonJacob/SmolLM3-3B-KTO"
 MERGED_REPO_ID = "JonJacob/SmolLM3-3B-KTO-merged"
 
-# ====================== HELPERS ======================
 def _to_text(value, tokenizer):
     if isinstance(value, str):
         return value
@@ -57,7 +55,6 @@ if wandb_key:
 else:
     print("WANDB_API_KEY not found — training will run without Wandb logging.")
 
-# ====================== LOAD DATA & MODEL ======================
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
 if tokenizer.pad_token is None:
     tokenizer.pad_token = tokenizer.eos_token
@@ -71,7 +68,6 @@ model = AutoModelForCausalLM.from_pretrained(
     torch_dtype=torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16,
 )
 
-# ====================== KTO CONFIG & TRAINER ======================
 kto_config = KTOConfig(
     output_dir=OUTPUT_DIR,
     per_device_train_batch_size=4,
@@ -120,7 +116,6 @@ tokenizer.save_pretrained(OUTPUT_DIR)
 
 print("Training finished. Model saved locally.")
 
-# ====================== PUSH TO HF ======================
 if hf_token:
     api = HfApi()
     api.create_repo(repo_id=REPO_ID, private=False, exist_ok=True)
