@@ -6,3 +6,6 @@ __pycache__/
 crosscoder/cache/
 results
 cache
+outputs
+wandb
+*.log
