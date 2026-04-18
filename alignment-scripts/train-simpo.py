@@ -48,14 +48,12 @@ from trl.experimental.cpo import CPOConfig, CPOTrainer
 
 load_dotenv()
 
-# ── Model & Data ──────────────────────────────────────────────────────────────
 MODEL_NAME = "meta-llama/Llama-3.2-3B-Instruct"
 DATASET_NAME = "argilla/ultrafeedback-binarized-preferences-cleaned"
 OUTPUT_DIR = "./outputs/Llama-3.2-3B-Instruct-SimPO"
 RUN_NAME = "Llama-3.2-3B-Instruct-SimPO"
 DISABLE_THINKING = True
 
-# ── SimPO (arXiv:2405.14734) ──────────────────────────────────────────────────
 BETA = 2.0
 GAMMA_BETA_RATIO = 0.5
 SIMPO_GAMMA = BETA * GAMMA_BETA_RATIO   # = 1.0
@@ -63,7 +61,6 @@ SIMPO_GAMMA = BETA * GAMMA_BETA_RATIO   # = 1.0
 # if you want a non-zero NLL curve in W&B (changes the objective toward CPO+SimPO hybrid).
 CPO_ALPHA = 0.0
 
-# ── Training ──────────────────────────────────────────────────────────────────
 PER_DEVICE_TRAIN_BATCH_SIZE = 4
 GRADIENT_ACCUMULATION_STEPS = 8
 LEARNING_RATE = 5e-7
@@ -76,14 +73,10 @@ SAVE_TOTAL_LIMIT = 3
 MAX_LENGTH = 1024
 MAX_PROMPT_LENGTH = 128
 
-# ── LoRA ──────────────────────────────────────────────────────────────────────
 LORA_R = 16
 LORA_ALPHA = 32
 LORA_DROPOUT = 0.05
 LORA_TARGET_MODULES = ["q_proj", "k_proj", "v_proj", "o_proj"]
-
-
-# ── Dataset ───────────────────────────────────────────────────────────────────
 
 def _to_text(value, tokenizer) -> str:
     if isinstance(value, str):
@@ -300,11 +293,7 @@ class _ProgressLogger:
 
         self.callback = _Callback()
 
-
-# ── Train ─────────────────────────────────────────────────────────────────────
-
 def train_and_push(repo_id: str) -> str:
-    # ── 1. Credentials ────────────────────────────────────────────────────────
     hf_token = os.environ["HF_TOKEN"]
     wandb_key = os.environ["WANDB_API_KEY"]
     print("[check] env vars found: HF_TOKEN, WANDB_API_KEY")
@@ -315,13 +304,11 @@ def train_and_push(repo_id: str) -> str:
     wandb.login(key=wandb_key)
     print("[check] W&B login OK")
 
-    # ── 2. Tokenizer ──────────────────────────────────────────────────────────
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, token=hf_token)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
     print(f"[check] tokenizer loaded: {MODEL_NAME}")
 
-    # ── 3. Dataset ────────────────────────────────────────────────────────────
     dataset = load_dataset(DATASET_NAME, split="train")
     print(f"[check] dataset loaded: {DATASET_NAME} — {len(dataset)} rows")
 
@@ -336,7 +323,6 @@ def train_and_push(repo_id: str) -> str:
         f"{len(dataset)} rows (dropped {n_before_ctx - len(dataset)} over max_length={MAX_LENGTH})"
     )
 
-    # ── 4. Model ──────────────────────────────────────────────────────────────
     use_cuda = torch.cuda.is_available()
     use_bf16 = use_cuda and torch.cuda.is_bf16_supported()
     use_fp16 = use_cuda and not use_bf16
@@ -446,9 +432,6 @@ def train_and_push(repo_id: str) -> str:
     pushed_urls.append(f"https://huggingface.co/{dense_repo_id} (merged dense)")
 
     return "Finished training and pushed: " + ", ".join(pushed_urls)
-
-
-# ── Entrypoint ────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
