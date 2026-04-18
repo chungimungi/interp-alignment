@@ -1,0 +1,13 @@
+torch
+transformers
+datasets
+accelerate
+peft
+matplotlib
+seaborn
+scipy
+scikit-learn
+tqdm
+safetensors
+mergekit
+trl
