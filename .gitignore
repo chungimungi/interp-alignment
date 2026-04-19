@@ -4,7 +4,6 @@ __pycache__/
 *.json
 *.png
 crosscoder/cache/
-results
 cache
 outputs
 wandb
