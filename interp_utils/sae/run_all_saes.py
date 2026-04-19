@@ -43,7 +43,9 @@ import subprocess
 import sys
 import time
 from collections.abc import Iterator
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
+from queue import Queue
 from typing import Any
 
 import dotenv
@@ -82,6 +84,33 @@ def _sae_checkpoint_roots() -> tuple[Path, ...]:
         root / "checkpoints" / "sae",
         root / "checkpoints" / "saes",
     )
+
+
+def _resolve_gpu_ids(num_gpus: int | None, gpu_ids_str: str | None) -> list[int]:
+    """Resolve the GPU id pool from --num-gpus / --gpu-ids."""
+    if gpu_ids_str:
+        ids = [int(s) for s in gpu_ids_str.split(",") if s.strip()]
+        if not ids:
+            raise SystemExit(f"--gpu-ids {gpu_ids_str!r} parsed to an empty list")
+        return ids
+    detected = 0
+    try:
+        import torch  # noqa: PLC0415
+
+        detected = torch.cuda.device_count()
+    except Exception:  # noqa: BLE001
+        detected = 0
+    if num_gpus is None:
+        n = detected if detected > 0 else 1
+    else:
+        n = max(1, int(num_gpus))
+    if detected and n > detected:
+        print(
+            f"Requested {n} GPUs but only {detected} visible; clamping to {detected}.",
+            file=sys.stderr,
+        )
+        n = detected
+    return list(range(n))
 
 
 def _layer_run_dirs(model_dir_name: str, layer_idx: int, layer_tag: str) -> tuple[Path, ...]:
@@ -379,6 +408,8 @@ def _invoke_sae_for_layer(
     model_dir_name: str,
     layer_tag: str,
     common_args: argparse.Namespace,
+    gpu_id: int | None = None,
+    log_path: Path | None = None,
 ) -> tuple[int, str]:
     output_path = _repo_root() / "output" / "sae" / model_dir_name / f"layer_{layer_idx:02d}_{layer_tag}"
     checkpoint_path = (
@@ -438,19 +469,44 @@ def _invoke_sae_for_layer(
         cmd.append("--autocast")
     if common_args.autocast_lm:
         cmd.append("--autocast-lm")
+    if common_args.compile_llm:
+        cmd.append("--compile-llm")
+    if common_args.compile_sae:
+        cmd.append("--compile-sae")
 
     timeout_seconds: int | None = None
     if int(common_args.sae_job_timeout_minutes) > 0:
         timeout_seconds = int(common_args.sae_job_timeout_minutes) * 60
 
+    env = os.environ.copy()
+    if gpu_id is not None:
+        env["CUDA_VISIBLE_DEVICES"] = str(gpu_id)
+
     started = time.monotonic()
     try:
-        proc = subprocess.run(
-            cmd,
-            cwd=str(_repo_root()),
-            env=os.environ.copy(),
-            timeout=timeout_seconds,
-        )
+        if log_path is not None:
+            log_path.parent.mkdir(parents=True, exist_ok=True)
+            with log_path.open("w") as logf:
+                logf.write(
+                    f"# {model_id} L{layer_idx} ({layer_tag})\n"
+                    f"# GPU={gpu_id}\n# cmd={' '.join(cmd)}\n\n"
+                )
+                logf.flush()
+                proc = subprocess.run(
+                    cmd,
+                    cwd=str(_repo_root()),
+                    env=env,
+                    timeout=timeout_seconds,
+                    stdout=logf,
+                    stderr=subprocess.STDOUT,
+                )
+        else:
+            proc = subprocess.run(
+                cmd,
+                cwd=str(_repo_root()),
+                env=env,
+                timeout=timeout_seconds,
+            )
         elapsed = time.monotonic() - started
         return int(proc.returncode), f"elapsed={elapsed:.1f}s"
     except subprocess.TimeoutExpired:
@@ -498,19 +554,65 @@ def main() -> None:
     parser.add_argument("--k", type=int, default=64)
     parser.add_argument("--context-size", type=int, default=1024)
     parser.add_argument("--training-tokens", type=int, default=2_000_000)
-    parser.add_argument("--train-batch-size-tokens", type=int, default=1024)
-    parser.add_argument("--store-batch-size-prompts", type=int, default=8)
+    parser.add_argument(
+        "--train-batch-size-tokens",
+        type=int,
+        default=4096,
+        help="B200 default 4096 (was 1024); raise further if VRAM allows.",
+    )
+    parser.add_argument(
+        "--store-batch-size-prompts",
+        type=int,
+        default=32,
+        help="B200 default 32 (was 8); larger = bigger activation buffer per LM forward.",
+    )
     parser.add_argument("--n-batches-in-buffer", type=int, default=16)
     parser.add_argument("--lr", type=float, default=3e-4)
-    parser.add_argument("--model-dtype", choices=["float32", "float16", "bfloat16"], default="float32")
+    parser.add_argument(
+        "--model-dtype",
+        choices=["float32", "float16", "bfloat16"],
+        default="bfloat16",
+        help="LM weight dtype. bf16 is B200-native; flip to float32 only for reproducibility checks.",
+    )
     parser.add_argument(
         "--sae-job-timeout-minutes",
         type=int,
         default=120,
         help="Kill an individual sae.py job if it exceeds this duration; 0 disables timeout.",
     )
-    parser.add_argument("--autocast", action="store_true")
-    parser.add_argument("--autocast-lm", action="store_true")
+    parser.add_argument(
+        "--autocast",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Enable autocast in the SAE training loop (B200 default on; pass --no-autocast to disable).",
+    )
+    parser.add_argument(
+        "--autocast-lm",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Enable autocast for the LM forward (B200 default on; pass --no-autocast-lm to disable).",
+    )
+    parser.add_argument(
+        "--compile-llm",
+        action="store_true",
+        help="Pass --compile-llm to sae.py (torch.compile the LM forward). Adds warmup time but speeds up steady-state.",
+    )
+    parser.add_argument(
+        "--compile-sae",
+        action="store_true",
+        help="Pass --compile-sae to sae.py (torch.compile the SAE).",
+    )
+    parser.add_argument(
+        "--num-gpus",
+        type=int,
+        default=None,
+        help="Number of GPUs to use in parallel for SAE jobs. Defaults to torch.cuda.device_count().",
+    )
+    parser.add_argument(
+        "--gpu-ids",
+        default=None,
+        help="Explicit comma-separated GPU id list (e.g. '0,1,2,3'). Overrides --num-gpus.",
+    )
     parser.add_argument("--log-to-wandb", action="store_true")
     parser.add_argument("--wandb-project", default="minala_saes")
     parser.add_argument("--wandb-entity", default=None)
@@ -533,7 +635,7 @@ def main() -> None:
     args = parser.parse_args()
 
     results_root = Path(args.results_root)
-    sae_script = _repo_root() / "sae.py"
+    sae_script = Path(__file__).resolve().parent / "sae.py"
     if not sae_script.is_file():
         raise FileNotFoundError(sae_script)
 
@@ -566,59 +668,65 @@ def main() -> None:
         pb = max(256, int(args.corpus_parquet_batch_rows))
         _materialize_sae_corpus(corpus_id, ds_dir, cap, parquet_batch=pb)
 
+    # Build the flat job list once.
+    job_specs: list[tuple[str, Path, int, str]] = []
+    for mid, mdir in discovered:
+        best, mid_layer, _ = _layers_for_model(mdir / "layer_metrics.json")
+        jobs: list[tuple[int, str]] = []
+        if args.layers == "best":
+            jobs.append((best, "best"))
+        elif args.layers == "mid":
+            jobs.append((mid_layer, "mid"))
+        else:
+            jobs.append((best, "best"))
+            if mid_layer != best:
+                jobs.append((mid_layer, "mid"))
+        for layer_idx, tag in jobs:
+            job_specs.append((mid, mdir, layer_idx, tag))
+
+    print(f"\nPlanned training jobs: {len(job_specs)}\n")
+
+    # Resolve GPU pool.
+    gpu_ids = _resolve_gpu_ids(args.num_gpus, args.gpu_ids)
+    print(f"GPU pool: {gpu_ids}  (parallelism={len(gpu_ids)})\n")
+
+    log_root = _repo_root() / "logs" / "sae"
+    log_root.mkdir(parents=True, exist_ok=True)
+
     failures: list[tuple[str, int, str]] = []
     python_exe = sys.executable
-    total_jobs = 0
-    for mid, mdir in discovered:
-        best, mid_layer, n_layers = _layers_for_model(mdir / "layer_metrics.json")
-        jobs: list[tuple[int, str]] = []
-        if args.layers == "best":
-            jobs.append((best, "best"))
-        elif args.layers == "mid":
-            jobs.append((mid_layer, "mid"))
-        else:
-            jobs.append((best, "best"))
-            if mid_layer != best:
-                jobs.append((mid_layer, "mid"))
-        total_jobs += len(jobs)
-    print(f"\nPlanned training jobs: {total_jobs}\n")
+    pool: Queue[int] = Queue()
+    for g in gpu_ids:
+        pool.put(g)
 
-    interactive = sys.stdout.isatty()
-    pbar = tqdm(total=total_jobs, desc="SAE training", unit="job", disable=not interactive)
-    for mid, mdir in discovered:
-        best, mid_layer, n_layers = _layers_for_model(mdir / "layer_metrics.json")
-        jobs: list[tuple[int, str]] = []
-        if args.layers == "best":
-            jobs.append((best, "best"))
-        elif args.layers == "mid":
-            jobs.append((mid_layer, "mid"))
-        else:
-            jobs.append((best, "best"))
-            if mid_layer != best:
-                jobs.append((mid_layer, "mid"))
+    # Pre-filter skips & dry-runs so the pool only sees real work.
+    runnable: list[tuple[str, Path, int, str]] = []
+    skipped = 0
+    dry_runs: list[tuple[str, int, str]] = []
+    for mid, mdir, layer_idx, tag in job_specs:
+        existing = _has_existing_layer_run(mdir.name, layer_idx, tag)
+        if args.skip_existing and existing is not None:
+            print(f"  -> skipping: {mid} layer={layer_idx} ({tag}) (existing: {existing})")
+            skipped += 1
+            continue
+        if args.dry_run:
+            dry_runs.append((mid, layer_idx, tag))
+            continue
+        runnable.append((mid, mdir, layer_idx, tag))
 
-        for layer_idx, tag in jobs:
-            _log_line(
-                f"{mid}  layer={layer_idx} ({tag})  sae_corpus={corpus_id}  layers={n_layers}"
-                + ("  [starting]" if not args.dry_run else "  [dry-run]"),
-                interactive=interactive,
-            )
-            existing_run_dir = _has_existing_layer_run(mdir.name, layer_idx, tag)
-            if args.skip_existing and existing_run_dir is not None:
-                _log_line(
-                    f"  -> skipping: {mid} layer={layer_idx} ({tag}) "
-                    f"(existing run dir non-empty: {existing_run_dir})",
-                    interactive=interactive,
-                )
-                pbar.update(1)
-                continue
-            if args.dry_run:
-                pbar.update(1)
-                continue
-            _log_line(
-                f"  -> running: {mid} layer={layer_idx} ({tag})",
-                interactive=interactive,
-            )
+    if args.dry_run:
+        for mid, layer_idx, tag in dry_runs:
+            print(f"  -> [dry-run] {mid} layer={layer_idx} ({tag})")
+        print(f"\nDry-run complete. {len(dry_runs)} jobs would run, {skipped} skipped.")
+        return
+
+    print(f"Runnable: {len(runnable)} (skipped {skipped})")
+
+    def _worker(job: tuple[str, Path, int, str]) -> tuple[str, int, str, int, int, str, str]:
+        mid, mdir, layer_idx, tag = job
+        gpu = pool.get()
+        try:
+            log_path = log_root / mdir.name / f"layer_{layer_idx:02d}_{tag}.log"
             rc, reason = _invoke_sae_for_layer(
                 python_exe=python_exe,
                 script=sae_script,
@@ -628,20 +736,23 @@ def main() -> None:
                 model_dir_name=mdir.name,
                 layer_tag=tag,
                 common_args=args,
+                gpu_id=gpu,
+                log_path=log_path,
             )
-            if rc != 0:
-                failures.append((mid, layer_idx, f"exit {rc} ({reason})"))
-                _log_line(
-                    f"  -> failed: {mid} layer={layer_idx} ({tag}): exit {rc} ({reason})",
-                    interactive=interactive,
-                )
-            else:
-                _log_line(
-                    f"  -> done: {mid} layer={layer_idx} ({tag}) [{reason}]",
-                    interactive=interactive,
-                )
-            pbar.update(1)
-    pbar.close()
+            return mid, layer_idx, tag, gpu, rc, reason, str(log_path)
+        finally:
+            pool.put(gpu)
+
+    with ThreadPoolExecutor(max_workers=len(gpu_ids)) as ex:
+        futures = {ex.submit(_worker, j): j for j in runnable}
+        with tqdm(total=len(runnable), desc="SAE training", unit="job") as pbar:
+            for fut in as_completed(futures):
+                mid, layer_idx, tag, gpu, rc, reason, log = fut.result()
+                status = "OK" if rc == 0 else f"FAIL({rc})"
+                tqdm.write(f"[GPU{gpu}] {status} {mid} L{layer_idx}/{tag}  {reason}  log={log}")
+                if rc != 0:
+                    failures.append((mid, layer_idx, f"exit {rc} ({reason}) log={log}"))
+                pbar.update(1)
 
     if failures:
         print("\nSome SAE runs failed:", file=sys.stderr)
