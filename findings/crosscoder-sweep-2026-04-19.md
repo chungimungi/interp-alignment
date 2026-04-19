@@ -80,16 +80,75 @@ This is itself a paper-grade observation rather than a methodological footnote. 
 
 Both readings can sit in the limitations section. The cross-architecture pattern (DPO/SimPO/GRPO recruit broadly on all 3 bases; KTO/ORPO recruit narrowly even on the bases where they DO produce normal class counts) still stands as the headline.
 
-### Cross-seed variance check (seed-2 sweep, in flight)
+### Cross-seed variance check (seed-1 + seed-2, 14/15 cells)
 
-To ground the reported numbers in seed variance, we re-ran all 15 cells with `CROSSCODER_SEED=99`. First completed cell as of 11:13 PM IST:
+Re-ran all 15 cells with `CROSSCODER_SEED=99` (output `output/crosscoder-seed2/`). qwen-simpo seed-2 still in flight as of 12:45 AM IST 2026-04-20; rest done.
 
-| Cell        | seed=42 (s1) | seed=99 (s2) | delta |
-|-------------|--------------|--------------|-------|
-| smollm-kto aligned_only | 656 | 676 | +3.0% |
-| smollm-kto shift_aligned | +0.04693 | +0.07078 | +51% |
+**Aligned-only counts (15-cell summary)**
 
-**Implication**: aligned_only counts are robust to seed (~3% variance). Absolute shift magnitudes have meaningful seed-to-seed variability (~50% on this cell). Workshop writeup should report aligned_only counts as point estimates and shift values with seed-mean ± seed-std (≥2 seeds per cell).
+| slug          | seed=42 | seed=99 | delta |
+|---------------|---------|---------|-------|
+| smollm-dpo    | 1967    | 2187    | +11%  |
+| smollm-grpo   | 1820    | 2186    | +20%  |
+| smollm-kto    | 656     | 676     | +3%   |
+| smollm-orpo   | 2079    | 2131    | +3%   |
+| smollm-simpo  | 1840    | 2180    | +18%  |
+| llama-dpo     | 2640    | 3117    | +18%  |
+| llama-grpo    | 2607    | 2974    | +14%  |
+| llama-kto     | 917     | 943     | +3%   |
+| llama-orpo    | 708     | 785     | +11%  |
+| llama-simpo   | 2606    | 3063    | +18%  |
+| qwen-dpo      | 7782    | 7725    | -1%   |
+| qwen-grpo     | 7575    | 7442    | -2%   |
+| qwen-kto      | 7       | 20      | (+185%, both tiny) |
+| qwen-orpo     | 202     | 184     | -9%   |
+| qwen-simpo    | 7876    | (wip)   |       |
+
+aligned_only counts are robust to seed (median |delta| ~10-15%; sign always preserved; KTO/ORPO stay small, broad-recruitment stays big).
+
+**Shift values (shared_aligned cf_shift) are noisier — sign sometimes flips:**
+
+| slug         | seed=42 shift  | seed=99 shift |
+|--------------|----------------|---------------|
+| llama-orpo   | +0.0006        | **−0.0017**   |
+| llama-grpo   | +0.0026        | +0.0019       |
+| llama-kto    | +0.0706        | +0.0455       |
+| qwen-grpo    | +0.0891        | +0.0319       |
+| smollm-dpo   | +0.0001        | +0.0014       |
+| smollm-kto   | +0.0469        | +0.0708       |
+| smollm-orpo  | +0.0496        | +0.0675       |
+
+Workshop reporting guidance:
+- aligned_only counts: report as point estimates (variance ≤20%)
+- cf_shift on shared_aligned: report seed-mean ± seed-range (single point misleading; sign can flip on small-shift cells)
+
+### The robust claim — family ratio across seeds
+
+For each base, compute `mean(aligned_only over DPO,SIMPO,GRPO) / mean(aligned_only over KTO,ORPO)`:
+
+| Base   | seed=42 | seed=99 | Cross-seed verdict |
+|--------|---------|---------|--------------------|
+| Llama-3.2-3B-Instruct | **3.2×** | **3.5×** | **rock-solid replication** |
+| SmolLM3-3B  | 1.4×  | 1.6× | weaker but consistent direction |
+| Qwen3-4B-Instruct-2507 | 74×  | 74× | dominated by KTO/ORPO degeneracy at L24 |
+
+**Llama-3.2-3B-Instruct is the cleanest demonstration of the broad-vs-concentrated partition.** SmolLM shows the same direction at lower magnitude (because SmolLM-ORPO produces 2079-2131 aligned_only — broad-recruitment-like, not concentrated like SmolLM-KTO). Qwen at L24 has the degenerate KTO/ORPO problem documented above.
+
+### Refined headline (what's actually safe to claim)
+
+> "On Llama-3.2-3B-Instruct at L11, broad-recruitment alignment algorithms (DPO/SimPO/GRPO) recruit ~3× more aligned-only features than concentrated-modification methods (KTO/ORPO). The 3× gap replicates across two random seeds (3.2× and 3.5×) and is mirrored in 95th-percentile counterfactual shift magnitudes (KTO/ORPO produce 4-30× larger per-feature shifts on the shared features they do touch). The same pattern appears at lower magnitude on SmolLM3-3B; on Qwen3-4B at L24, KTO and ORPO produce degenerate crosscoders that recruit <250 aligned-only features even with relaxed hyperparameters and 2× training, suggesting these algorithms either modify Qwen elsewhere in the network or modify it in ways the crosscoder cannot capture at this layer."
+
+This is the workshop thesis with the seed-2 results folded in. The Llama claim is now load-bearing; SmolLM is supporting evidence; Qwen is a "future work + limitations" cell.
+
+### Figures generated for writeup
+
+- `findings/fig_aligned_only_counts.{pdf,png}` — single-seed bar chart
+- `findings/fig_aligned_only_seeds.{pdf,png}` — paired bars (s1 vs s2) per cell
+- `findings/fig_family_ratio.{pdf,png}` — broad/concentrated ratio per base, both seeds
+- `findings/fig_shift_p95.{pdf,png}` — log-scale p95 shift comparison
+- `findings/fig_decoder_norm_ratio.{pdf,png}` — decoder amplification per cell
+- `findings/fig_partition_scatter.{pdf,png}` — original 2D log-log view
+- `findings/fig_partition_scatter_seeds.{pdf,png}` — same with seed-2 hollow markers + seed-pair connecting lines
 
 ## Candidate workshop thesis (one sentence)
 
