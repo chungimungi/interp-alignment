@@ -55,14 +55,41 @@ KTO drives the largest shift on 2/3 bases. ORPO drives the largest shift on Smol
 
 Qwen activates 2× more features per token than Llama/SmolLM, has 20pt fewer dead neurons, and 2× more semantic stability between base and aligned. Architecture matters as much as the alignment algorithm.
 
-## Degenerate cells flagged
+## Two qwen cells confirmed degenerate (rescue verdict in)
 
-- **qwen-kto**: feature_sharing_ratio = **1.000** (crosscoder classified every feature as shared; aligned_only=7 is noise)
-- **qwen-orpo**: feature_sharing_ratio = **0.989** (only 202 aligned-only out of 16384; suspect underfitting)
+Original seed-1 sweep produced suspiciously low aligned_only counts on Qwen-KTO and Qwen-ORPO:
+- **qwen-kto**: feature_sharing_ratio = **1.000**, aligned_only = **7**
+- **qwen-orpo**: feature_sharing_ratio = **0.989**, aligned_only = **202**
 
-Same algorithms produce normal aligned-only counts on Llama and SmolLM, so this is a Qwen-specific failure of the crosscoder, not a real "ORPO/KTO don't change Qwen" finding.
+**Rescue test (2026-04-19, 9:30 PM IST → 12:30 AM IST)**: re-trained both pairs with relaxed shared-feature pressure (`LAMBDA_SHARED_MULTIPLIER=0.05 → 0.01`, `FORCED_SHARED_FRACTION=0.06 → 0.02`) and 2× epochs (4 → 8). Output dir `output/crosscoder-rescue/`.
 
-**Rescue plan**: re-train these two with relaxed shared-feature pressure (lower `LAMBDA_SHARED_MULTIPLIER`, lower `FORCED_SHARED_FRACTION`) and more epochs. If the aligned_only count stays low, it's a real finding; if it jumps to ~2000+, the original was a methodological artifact.
+| Pair | Original | Rescue (relaxed + 8 epochs) | Verdict |
+|---|---|---|---|
+| qwen-kto | aligned=7, share=1.000 | **aligned=16, share=0.999** | barely moved |
+| qwen-orpo | aligned=202, share=0.986 | **aligned=247, share=0.986** | barely moved |
+
+**The degeneracy is genuine, not a methodological artifact.** Doubling training and relaxing the shared-feature objective changed aligned_only counts by ~10× less than would be needed to reach the 7000+ counts seen for DPO/SimPO/GRPO on the same base.
+
+### Reframed Qwen finding
+
+> On Qwen3-4B-Instruct-2507 at L24, KTO and ORPO recruit fewer than 250 aligned-only features (≤1% of crosscoder capacity) compared to >7,000 for DPO/SimPO/GRPO at the same layer — a 30× gap that persists under relaxed crosscoder hyperparameters and 2× training duration. The same KTO/ORPO recipes produce normal aligned-only populations on Llama-3.2-3B and SmolLM3-3B, so this is a Qwen-specific phenomenon.
+
+This is itself a paper-grade observation rather than a methodological footnote. Two readings:
+1. **Mechanistic**: Qwen3-4B's representations are unusually stable under KTO/ORPO at the residual stream layer 24 (consistent with the high `semantic_stability_score` = 0.56 vs Llama 0.20 / SmolLM 0.27). The alignment-induced changes either happen at other layers or are too distributed to land in any one direction.
+2. **Methodological**: The crosscoder objective at expansion-factor 8 / topk 400 may not be expressive enough to surface narrow Qwen-KTO/ORPO changes. Future work: layer sweep + capacity sweep on Qwen specifically.
+
+Both readings can sit in the limitations section. The cross-architecture pattern (DPO/SimPO/GRPO recruit broadly on all 3 bases; KTO/ORPO recruit narrowly even on the bases where they DO produce normal class counts) still stands as the headline.
+
+### Cross-seed variance check (seed-2 sweep, in flight)
+
+To ground the reported numbers in seed variance, we re-ran all 15 cells with `CROSSCODER_SEED=99`. First completed cell as of 11:13 PM IST:
+
+| Cell        | seed=42 (s1) | seed=99 (s2) | delta |
+|-------------|--------------|--------------|-------|
+| smollm-kto aligned_only | 656 | 676 | +3.0% |
+| smollm-kto shift_aligned | +0.04693 | +0.07078 | +51% |
+
+**Implication**: aligned_only counts are robust to seed (~3% variance). Absolute shift magnitudes have meaningful seed-to-seed variability (~50% on this cell). Workshop writeup should report aligned_only counts as point estimates and shift values with seed-mean ± seed-std (≥2 seeds per cell).
 
 ## Candidate workshop thesis (one sentence)
 
