@@ -5,28 +5,28 @@ For every ``results/<model_dir>/layer_metrics.json`` produced by linear-probe.py
 launcher:
 
 1. Picks ``best_layer = argmax(auroc)`` and ``mid_layer = num_layers // 2`` (a sanity
-   baseline so you can compare middle-of-network features against the probe-optimal
-   layer). Duplicates are de-duplicated.
+baseline so you can compare middle-of-network features against the probe-optimal
+layer). Duplicates are de-duplicated.
 2. Reverses the directory-name convention back to the HF id (``<org>_<name>`` ->
-   ``<org>/<name>``; the leading underscore is the org separator that linear-probe.py
-   writes).
+``<org>/<name>``; the leading underscore is the org separator that linear-probe.py
+writes).
 3. Builds **one** universal training corpus (default: `openbmb/UltraChat` on Hugging
-   Face — multi-round dialogues as alternating user/assistant strings in the ``data``
-   column; see https://huggingface.co/datasets/openbmb/UltraChat) as a local parquet
-   with a ``messages`` column so sae-lens's ``use_chat_formatting=True`` path can consume
-   it. Cached under ``data/sae_corpus/<sanitized-id>_full/`` or ``_n<rows>/`` so all models share
-   the same activations distribution. The HF split is read with ``streaming=True`` and written
-   to parquet in bounded batches so the full UltraChat split does not OOM the host RAM.
-   Use ``--sae-corpus`` to point at another HF dataset;
-   if the id does not match UltraChat, the legacy preference flattening
-   (chosen/rejected / KTO) from ``linear_probe_datasets.py`` is used instead.
+Face — multi-round dialogues as alternating user/assistant strings in the ``data``
+column; see https://huggingface.co/datasets/openbmb/UltraChat) as a local parquet
+with a ``messages`` column so sae-lens's ``use_chat_formatting=True`` path can consume
+it. Cached under ``data/sae_corpus/<sanitized-id>_full/`` or ``_n<rows>/`` so all models share
+the same activations distribution. The HF split is read with ``streaming=True`` and written
+to parquet in bounded batches so the full UltraChat split does not OOM the host RAM.
+Use ``--sae-corpus`` to point at another HF dataset;
+if the id does not match UltraChat, the legacy preference flattening
+(chosen/rejected / KTO) from ``linear_probe_datasets.py`` is used instead.
 4. Invokes ``sae.py`` as a subprocess per (model, layer) with:
-      --model-class-name AutoModelForCausalLM
-      --hook-name model.layers.<idx>
-      --use-chat-formatting
-      --dataset <local parquet dir>
-   Trust-remote-code is forwarded for SmolLM3 variants (same rule as
-   ``run_all_linear_probes.py``).
+    --model-class-name AutoModelForCausalLM
+    --hook-name model.layers.<idx>
+    --use-chat-formatting
+    --dataset <local parquet dir>
+Trust-remote-code is forwarded for SmolLM3 variants (same rule as
+``run_all_linear_probes.py``).
 
 Per-model outputs and checkpoints are written under ``output/sae/<model_dir>/layer_<idx>/``
 and ``checkpoints/sae/<model_dir>/layer_<idx>/`` respectively. Weights & Biases is
@@ -49,15 +49,13 @@ from typing import Any
 import dotenv
 from tqdm import tqdm
 
+sys.path.append(str(Path(__file__).resolve().parent.parent / "linear-probe"))
 from linear_probe_datasets import is_kto_dataset
 
-# Universal instruction-following corpus (same for every checkpoint).
 DEFAULT_SAE_CORPUS = "openbmb/UltraChat"
 
-
 def _repo_root() -> Path:
-    return Path(__file__).resolve().parent
-
+    return Path(__file__).resolve().parents[2]
 
 def _default_probe_results_root() -> Path:
     root = _repo_root()

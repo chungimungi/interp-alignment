@@ -11,3 +11,5 @@ tqdm
 safetensors
 mergekit
 trl
+dotenv
+wandb
