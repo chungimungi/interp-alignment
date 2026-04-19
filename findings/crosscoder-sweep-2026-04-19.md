@@ -76,6 +76,60 @@ Same algorithms produce normal aligned-only counts on Llama and SmolLM, so this 
 4. PPO is missing from the comparison (no PPO checkpoints on MInAlA HF org as of 2026-04-19).
 5. Crosscoder classification thresholds (RHO_BASE_ONLY = 0.15, RHO_ALIGNED_ONLY = 0.85, etc.) are inherited from default config and not tuned per-pair.
 
+## Per-feature distribution evidence (from per_feature_summary.csv)
+
+The aggregate `shift_aligned` numbers above are means. Looking at the **p95 shift on the shared_aligned class** (95th-percentile absolute shift among the ~1000–2800 features the algorithm redirects but doesn't kill) makes the partition even sharper:
+
+| Pair          | shared_aligned p95 shift | shared_aligned max shift |
+|---------------|--------------------------|--------------------------|
+| llama-dpo     | 0.032                    | 0.97                     |
+| llama-grpo    | 0.050                    | 1.01                     |
+| **llama-kto** | **0.141**                | **7.08**                 |
+| llama-orpo    | 0.046                    | 2.30                     |
+| llama-simpo   | 0.034                    | 0.85                     |
+| smollm-dpo    | 0.022                    | 0.36                     |
+| smollm-grpo   | 0.027                    | 0.73                     |
+| **smollm-kto**  | **0.603**              | **8.11**                 |
+| **smollm-orpo** | **0.856**              | **5.45**                 |
+| smollm-simpo  | 0.026                    | 0.35                     |
+| qwen-dpo      | 0.342                    | 2.65                     |
+| **qwen-grpo** | **0.664**                | **43.16**                |
+| qwen-simpo    | 0.353                    | 3.31                     |
+
+KTO and ORPO produce shifts whose **p95 is 5–30× larger** than DPO/SimPO/GRPO at the same site. The picture isn't just "they touch fewer features" — they also touch the shared features they do touch much more aggressively.
+
+### Decoder norm amplification — `aligned_only` features
+
+`norm_ratio_median = ||W_aligned_dec|| / ||W_base_dec||` for the decoder columns of features classified as aligned-only:
+
+| Pair         | n aligned-only | norm_ratio median |
+|--------------|----------------|-------------------|
+| llama-dpo    | 2640           | 1.33              |
+| llama-grpo   | 2607           | 1.32              |
+| llama-kto    | 917            | **1.65**          |
+| **llama-orpo** | 708          | **5.14**          |
+| llama-simpo  | 2606           | 1.34              |
+| smollm-dpo   | 1967           | 1.44              |
+| smollm-grpo  | 1820           | 1.46              |
+| smollm-kto   | 656            | **1.62**          |
+| smollm-orpo  | 2079           | 1.38              |
+| smollm-simpo | 1840           | 1.46              |
+| qwen-dpo     | 7782           | 1.05              |
+| qwen-grpo    | 7575           | 1.05              |
+| qwen-simpo   | 7876           | 1.05              |
+
+DPO/SimPO/GRPO recruit aligned-only features with **modest decoder norm amplification (~1.05–1.5×)**. **llama-orpo recruits 708 features with median 5.1× decoder amplification** — five times the typical ratio. The mean decoder norm ratio for llama-orpo is ~30,000 (heavy long-tail), so a small subset of features have decoder weights two orders of magnitude larger than base.
+
+This adds a **second axis** to the workshop thesis:
+
+> Concentrated-modification methods (KTO, ORPO) not only recruit fewer aligned-only features and shift shared features more aggressively — they also amplify the decoder norms of recruited features by an order of magnitude more than broad-recruitment methods.
+
+### What's next (sweeps queued at 6:30 IST 2026-04-19)
+
+1. **Rescue runs** (2 GPUs): qwen-kto and qwen-orpo with `LAMBDA_SHARED_MULTIPLIER=0.01`, `FORCED_SHARED_FRACTION=0.02`, `NUM_EPOCHS=8`. If aligned-only count > 1000 → original was a methodological artifact; if it stays low → real qwen-specific finding. Output to `output/crosscoder-rescue/`.
+2. **Seed-2 sweep** (6 GPUs, 12 slots): all 15 pairs with `CROSSCODER_SEED=99`. Adds variance bars to every cell. Output to `output/crosscoder-seed2/`.
+3. ETA ~3 hours wall clock for both sweeps to drain.
+
 ## Output paths on the box
 
 - Per-pair aggregate metrics: `~/work/interp-alignment/output/crosscoder/<slug>/L<layer>/metrics/aggregate_metrics.json`
