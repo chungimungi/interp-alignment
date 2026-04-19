@@ -13,6 +13,7 @@ from pathlib import Path
 import dotenv
 from tqdm import tqdm
 
+sys.path.append(str(Path(__file__).resolve().parent))
 from linear_probe_datasets import infer_dataset_for_model
 
 ORG = "MInAlA"
@@ -29,7 +30,7 @@ def _needs_trust_remote_code(model_id: str) -> bool:
 
 
 def _repo_root() -> Path:
-    return Path(__file__).resolve().parent
+    return Path(__file__).resolve().parents[2]
 
 
 def _load_env() -> None:
