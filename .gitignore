@@ -6,6 +6,10 @@ crosscoder/cache/
 cache
 outputs
 wandb
+<<<<<<< main
 *.log
 results
 .claude/
+=======
+*.log
+>>>>>>> main
