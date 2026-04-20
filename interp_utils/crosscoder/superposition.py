@@ -3,6 +3,7 @@ from typing import Dict, List, Optional, Tuple
 import numpy as np
 import pandas as pd
 import torch
+from joblib import Parallel, delayed
 from sklearn.linear_model import Lasso
 from tqdm import tqdm
 
@@ -86,6 +87,7 @@ def analyze_all_aligned_only_features(
     classification_df: pd.DataFrame,
     feature_activations: Dict,
     aligned_run_id: str,
+    n_jobs: int = 1,
 ) -> Dict:
     aligned_only_features = classification_df[
         classification_df["primary_class"] == "aligned_only"
@@ -106,16 +108,15 @@ def analyze_all_aligned_only_features(
     z_base = feature_activations["z_base"]
     z_aligned = feature_activations["z_aligned"]
 
-    results = {}
-    superposition_count = 0
-
-    for feature_id in tqdm(aligned_only_features, desc="Analyzing superposition"):
-        analysis = analyze_superposition_for_feature(
+    analyses = Parallel(n_jobs=n_jobs, prefer="threads")(
+        delayed(analyze_superposition_for_feature)(
             feature_id, W_aligned_dec, W_base_dec, z_aligned, z_base
         )
-        results[feature_id] = analysis
-        if analysis["is_superposition"]:
-            superposition_count += 1
+        for feature_id in tqdm(aligned_only_features, desc="Analyzing superposition")
+    )
+
+    results = {a["feature_id"]: a for a in analyses}
+    superposition_count = sum(1 for a in analyses if a["is_superposition"])
 
     superposition_fraction = superposition_count / len(aligned_only_features)
 

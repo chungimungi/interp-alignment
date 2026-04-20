@@ -34,6 +34,20 @@ def sanitize_model_slug(model_id: str) -> str:
     return s[:200] if len(s) > 200 else s
 
 
+def get_base_activations_cache_path(
+    base_model_id: str,
+    layer: int,
+    position: str,
+    dataset_name: str,
+) -> Path:
+    base_slug = sanitize_model_slug(base_model_id)
+    dataset_slug = sanitize_model_slug(dataset_name)
+    pos_slug = position.replace("_", "")
+    dir_name = f"{base_slug}__L{layer}__{pos_slug}__{dataset_slug}"
+    cache_path = config.BASE_ACTIVATIONS_CACHE_DIR / dir_name / "base_activations.pt"
+    return cache_path
+
+
 def get_results_dir(
     base_model_id: str,
     aligned_run_id: str,

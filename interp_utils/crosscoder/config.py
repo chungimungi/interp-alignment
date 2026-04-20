@@ -6,6 +6,8 @@ OUTPUT_DIR = PROJECT_ROOT / "output"
 CROSSCODER_RESULTS_DIR = PROJECT_ROOT / "crosscoder" / "results"
 # HuggingFace `datasets` save_to_disk cache for chat-normalized preference prompts (reused across runs).
 NORMALIZED_PROMPTS_CACHE_DIR = PROJECT_ROOT / "crosscoder" / "cache" / "normalized_prompts"
+# Base model activation cache — keyed by (base_model, layer, position, dataset); reused across aligned runs.
+BASE_ACTIVATIONS_CACHE_DIR = PROJECT_ROOT / "crosscoder" / "cache" / "base_activations"
 
 SEED = 42
 
