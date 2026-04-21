@@ -259,14 +259,17 @@ def run_analyze(
         crosscoder, classification_df, feature_activations, aligned_run_id,
         n_jobs=n_jobs_superposition,
     )
+    print("Saving superposition results...")
     save_superposition_results(superposition_results, features_dir / "superposition_analysis.json")
 
+    print("Computing shared feature geometry (CPU: pinv + SVD per class)...")
     decoder_weights = crosscoder.get_decoder_weights()
     shared_geometry = summarize_shared_geometry(
         classification_df, decoder_weights["W_base_dec"], decoder_weights["W_aligned_dec"]
     )
     save_json(shared_geometry, metrics_dir / "shared_geometry_metrics.json")
 
+    print("Building per-feature geometry dataframe...")
     shared_geom_df = get_shared_features_geometry_df(
         classification_df, decoder_weights["W_base_dec"], decoder_weights["W_aligned_dec"]
     )

@@ -102,7 +102,15 @@ def save_checkpoint(model, optimizer, epoch: int, metrics: dict, checkpoint_dir:
         "optimizer_state_dict": optimizer.state_dict(),
         "metrics": metrics,
     }
-    torch.save(checkpoint, checkpoint_dir / filename)
+    final_path = checkpoint_dir / filename
+    torch.save(checkpoint, final_path)
+
+    if is_final:
+        # Verify final.pt is valid before removing epoch checkpoints
+        loaded = torch.load(final_path, map_location="cpu", weights_only=True)
+        assert "model_state_dict" in loaded and "optimizer_state_dict" in loaded
+        for ep_ckpt in checkpoint_dir.glob("epoch_*.pt"):
+            ep_ckpt.unlink()
 
 
 def load_checkpoint(checkpoint_path: Path, model, optimizer=None):
