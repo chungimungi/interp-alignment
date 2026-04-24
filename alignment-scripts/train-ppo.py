@@ -56,11 +56,11 @@ from trl.experimental.ppo import PPOConfig, PPOTrainer
 
 dotenv.load_dotenv()
 
-MODEL_NAME = "Qwen/Qwen3-4B-Instruct-2507"
+MODEL_NAME = "meta-llama/Llama-3.2-3B-Instruct"
 DATASET_NAME = "argilla/ultrafeedback-multi-binarized-preferences-cleaned"
 
-OUTPUT_DIR = "results/Qwen3-4B-Instruct-2507-PPO-fast"
-RUN_NAME = "Qwen3-4B-Instruct-2507-PPO-fast"
+OUTPUT_DIR = "results/Llama-3.2-3B-Instruct-PPO-fast"
+RUN_NAME = "Llama-3.2-3B-Instruct-PPO-fast"
 
 DISABLE_THINKING = True
 
