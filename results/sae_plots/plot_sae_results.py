@@ -1,12 +1,12 @@
-"""Plot Sparse Autoencoder (SAE) training results grouped by alignment algorithm.
+"""Plot Sparse Autoencoder (SAE) training results.
 
 Reads ``output/sae/<model_dir>/<layer_dir>/metrics.jsonl`` files produced by
 ``run_all_saes.py`` / ``sae.py`` and generates NeurIPS-quality PDF figures:
 
 * Grouped bar plots of final-eval metrics (explained variance, reconstruction
-  cosine similarity, MSE, CE-loss preservation, sparsity) with alignment
-  algorithms (DPO / GRPO / KTO / ORPO / SimPO) and the unaligned baseline on the x-axis
-  and the base-model family as a seaborn hue.
+  cosine similarity, MSE, CE-loss preservation, sparsity) with the base
+  model on the x-axis and alignment algorithms (DPO / GRPO / KTO / ORPO / SimPO
+  plus unaligned baseline) as the color ``hue`` (magma palette).
 * Training-curve line plots (explained variance, MSE, overall loss, dead
   features) with one sub-panel per alignment algorithm + a separate baseline
   panel, again using the base-model family as the hue.
@@ -35,7 +35,13 @@ import pandas as pd
 import seaborn as sns
 
 LEGEND_LABEL_BAR = 26.0
-LEGEND_TITLE_BAR = 30.0
+LEGEND_TITLE_BAR = 29.0
+BAR_TITLE_SIZE = 50.0
+BAR_AXIS_LABEL = 48.0
+BAR_TICK = 44.0
+BAR_LEGEND_LABEL = 38.0
+BAR_LEGEND_TITLE = 40.0
+BAR_FIGSIZE = (25.0, 13.5)
 LEGEND_LABEL_CURVE = 23.0
 LEGEND_TITLE_CURVE = 25.0
 
@@ -87,11 +93,11 @@ def configure_plot_style() -> None:
             "pdf.fonttype": 42,
             "ps.fonttype": 42,
             "font.family": "sans-serif",
-            "font.size": 21,
-            "axes.titlesize": 24,
-            "axes.labelsize": 24,
-            "xtick.labelsize": 22,
-            "ytick.labelsize": 22,
+            "font.size": 24,
+            "axes.titlesize": 29,
+            "axes.labelsize": 28,
+            "xtick.labelsize": 25,
+            "ytick.labelsize": 25,
             "legend.fontsize": LEGEND_LABEL_BAR,
             "legend.title_fontsize": LEGEND_TITLE_BAR,
             "axes.linewidth": 1.2,
@@ -279,10 +285,9 @@ def _adjust_lightness(color: tuple[float, float, float], factor: float) -> tuple
 
 
 def _ordered_hue_palette(hue_levels: list[str]) -> dict[str, tuple]:
-    # Use perceptually-uniform ``viridis`` with slight trimming at the light
-    # end so the brightest bar still contrasts against the white background.
+    # Perceptually-uniform `magma`: skip the lightest slice so end colors stay visible on white.
     n = max(len(hue_levels), 3)
-    palette = sns.color_palette("viridis", n_colors=n + 1)[:n]
+    palette = sns.color_palette("magma", n_colors=n + 1)[:n]
     out = {lvl: palette[i] for i, lvl in enumerate(hue_levels)}
     if "Qwen3-4B-Instruct-2507" in out:
         out["Qwen3-4B-Instruct-2507"] = _adjust_lightness(
@@ -303,18 +308,21 @@ def _present_order(values: Iterable[str], order: Iterable[str]) -> list[str]:
 
 
 # Final-eval metrics we render as grouped bar plots.
+# Optional ``legend``: ``loc`` + ``bbox_to_anchor`` (axes coords, 0-1) per panel.
 BAR_METRICS: list[dict] = [
     {
         "column": "reconstruction_quality.explained_variance",
         "label": "Explained Variance",
         "filename": "bar_explained_variance",
         "higher_is_better": True,
+        "legend": {"loc": "upper center", "bbox_to_anchor": (0.5, 0.995), "ncol": 3},
     },
     {
         "column": "reconstruction_quality.cossim",
         "label": "Reconstruction Cosine Similarity",
         "filename": "bar_cossim",
         "higher_is_better": True,
+        "legend": {"loc": "upper center", "bbox_to_anchor": (0.5, 0.995), "ncol": 3},
     },
     {
         "column": "reconstruction_quality.mse",
@@ -322,18 +330,26 @@ BAR_METRICS: list[dict] = [
         "filename": "bar_mse",
         "higher_is_better": False,
         "log_y": True,
+        "log_ylim": {"lo_div": 2.0, "hi_mult": 18.0},
+        "legend": {
+            "loc": "upper center",
+            "bbox_to_anchor": (0.5, 0.995),
+            "ncol": 3,
+        },
     },
     {
         "column": "model_performance_preservation.ce_loss_score",
         "label": "CE-Loss Recovery",
         "filename": "bar_ce_loss_score",
         "higher_is_better": True,
+        "legend": {"loc": "upper center", "bbox_to_anchor": (0.5, 0.995), "ncol": 3},
     },
     {
         "column": "shrinkage.l2_ratio",
         "label": "L2 Norm Ratio (out/in)",
         "filename": "bar_l2_ratio",
         "higher_is_better": True,
+        "legend": {"loc": "upper center", "bbox_to_anchor": (0.5, 0.995), "ncol": 3},
     },
     {
         "column": "sparsity.l1",
@@ -341,6 +357,12 @@ BAR_METRICS: list[dict] = [
         "filename": "bar_l1",
         "higher_is_better": False,
         "log_y": True,
+        "log_ylim": {"lo_div": 2.0, "hi_mult": 14.0},
+        "legend": {
+            "loc": "upper center",
+            "bbox_to_anchor": (0.5, 0.995),
+            "ncol": 3,
+        },
     },
 ]
 
@@ -352,6 +374,9 @@ def plot_bar(
     output_path: Path,
     higher_is_better: bool,
     log_y: bool = False,
+    *,
+    legend: dict | None = None,
+    log_ylim: dict | None = None,
 ) -> None:
     if column not in df.columns:
         print(f"[skip] column missing for bar plot: {column}")
@@ -361,76 +386,130 @@ def plot_bar(
         print(f"[skip] no rows for {column}")
         return
 
-    x_order = _present_order(data["algorithm"], GROUP_ORDER)
-    hue_order = _present_order(data["base_model"], BASE_ORDER)
+    x_order = _present_order(data["base_model"], BASE_ORDER)
+    hue_order = _present_order(data["algorithm"], GROUP_ORDER)
     palette = _ordered_hue_palette(hue_order)
 
-    fig, ax = plt.subplots(figsize=(14, 8.5))
-    sns.barplot(
-        data=data,
-        x="algorithm",
-        y=column,
-        hue="base_model",
-        order=x_order,
-        hue_order=hue_order,
-        palette=palette,
-        edgecolor="black",
-        linewidth=1.0,
-        ax=ax,
-    )
-    ax.set_xlabel("Alignment Algorithm")
-    ax.set_ylabel(ylabel)
-    arrow = "higher is better" if higher_is_better else "lower is better"
-    ax.set_title(f"{ylabel} ({arrow})")
-    ax.grid(axis="y", alpha=0.3)
-    ax.set_axisbelow(True)
-
-    # Keep some headroom above the tallest bar so value labels / legend above
-    # the axes never clip the data, and never overlap bars (old ``loc="best"``
-    # landed on top of the SmolLM3-3B bars in several panels).
-    y_values = data[column].to_numpy()
-    if log_y:
-        positive = y_values[y_values > 0]
-        if positive.size:
-            ax.set_yscale("log")
-            lo = float(np.nanmin(positive)) / 3.0
-            hi = float(np.nanmax(y_values)) * 3.0
-            ax.set_ylim(lo, hi)
-    elif higher_is_better and np.nanmax(y_values) >= 0:
-        ax.set_ylim(0, max(1.05, np.nanmax(y_values) * 1.10))
-    else:
-        ymin = min(0.0, float(np.nanmin(y_values)))
-        ax.set_ylim(ymin, float(np.nanmax(y_values)) * 1.15)
-
-    # Remove the axes-attached legend and put a shared one above the figure
-    # instead so it never covers any bars.
-    if ax.get_legend() is not None:
-        ax.get_legend().remove()
-    handles = [
-        plt.Rectangle(
-            (0, 0), 1, 1, facecolor=palette[b], edgecolor="black", linewidth=1.0
+    bar_rc = {
+        "font.size": BAR_AXIS_LABEL,
+        "axes.titlesize": BAR_TITLE_SIZE,
+        "axes.labelsize": BAR_AXIS_LABEL,
+        "xtick.labelsize": BAR_TICK,
+        "ytick.labelsize": BAR_TICK,
+    }
+    with plt.rc_context(bar_rc):
+        fig, ax = plt.subplots(figsize=BAR_FIGSIZE)
+        sns.barplot(
+            data=data,
+            x="base_model",
+            y=column,
+            hue="algorithm",
+            order=x_order,
+            hue_order=hue_order,
+            palette=palette,
+            edgecolor="black",
+            linewidth=1.0,
+            ax=ax,
         )
-        for b in hue_order
-    ]
-    leg = fig.legend(
-        handles,
-        hue_order,
-        title="Base model",
-        loc="upper center",
-        bbox_to_anchor=(0.5, 1.03),
-        ncol=min(len(hue_order), 3),
-        frameon=False,
-        columnspacing=2.2,
-        handletextpad=1.0,
-        labelspacing=0.6,
-    )
-    _apply_legend_fontsizes(
-        leg,
-        label_fontsize=LEGEND_LABEL_BAR,
-        title_fontsize=LEGEND_TITLE_BAR,
-    )
-    fig.tight_layout(rect=(0.0, 0.0, 1.0, 0.88))
-    fig.savefig(output_path.with_suffix(".pdf"), dpi=600)
+        n_cat = len(x_order)
+        xtick_labels = [CURVE_LEGEND_LABELS.get(m, m) for m in x_order]
+        ax.set_xticks(np.arange(n_cat, dtype=float))
+        ax.set_xticklabels(
+            xtick_labels, rotation=0, ha="center", rotation_mode="default"
+        )
+        ax.set_xlabel("")
+        ax.set_ylabel(ylabel, fontsize=BAR_AXIS_LABEL, labelpad=12)
+        arrow = "higher is better" if higher_is_better else "lower is better"
+        ax.set_title(
+            f"{ylabel} ({arrow})",
+            fontsize=BAR_TITLE_SIZE,
+            pad=14,
+        )
+        ax.tick_params(
+            axis="x",
+            labelsize=BAR_TICK,
+            length=10,
+            width=1.0,
+        )
+        ax.tick_params(
+            axis="y",
+            labelsize=BAR_TICK,
+            length=10,
+            width=1.0,
+        )
+        ax.grid(axis="y", alpha=0.3)
+        ax.set_axisbelow(True)
+
+        y_values = data[column].to_numpy(dtype=float)
+        if log_y:
+            positive = y_values[y_values > 0]
+            if positive.size:
+                ax.set_yscale("log")
+                lo_div = 3.0
+                hi_mult = 6.0
+                if log_ylim:
+                    lo_div = float(log_ylim.get("lo_div", lo_div))
+                    hi_mult = float(log_ylim.get("hi_mult", hi_mult))
+                lo = float(np.nanmin(positive)) / lo_div
+                hi = float(np.nanmax(positive)) * hi_mult
+                ax.set_ylim(lo, hi)
+        elif higher_is_better and np.nanmax(y_values) >= 0:
+            ymax = max(1.05, np.nanmax(y_values) * 1.10)
+            head = 1.40 if n_cat <= 3 else 1.30
+            ax.set_ylim(0, ymax * head)
+        else:
+            ymin = min(0.0, float(np.nanmin(y_values)))
+            ymax = float(np.nanmax(y_values)) * 1.15
+            head = 1.35 if n_cat <= 3 else 1.28
+            ax.set_ylim(ymin, ymax * head)
+
+        if ax.get_legend() is not None:
+            ax.get_legend().remove()
+        handles = [
+            plt.Rectangle(
+                (0, 0), 1, 1, facecolor=palette[b], edgecolor="black", linewidth=0.8
+            )
+            for b in hue_order
+        ]
+        n_leg = len(hue_order)
+        if legend is not None and legend.get("ncol") is not None:
+            ncol_leg = int(legend["ncol"])
+        else:
+            ncol_leg = 2 if n_leg > 3 else n_leg
+        if legend and "loc" in legend and "bbox_to_anchor" in legend:
+            loc = str(legend["loc"])
+            bbo = (float(legend["bbox_to_anchor"][0]), float(legend["bbox_to_anchor"][1]))
+        elif log_y:
+            loc = "upper center"
+            bbo = (0.5, 0.995)
+        else:
+            loc = "upper center"
+            bbo = (0.5, 0.995)
+        leg = ax.legend(
+            handles,
+            hue_order,
+            title="Alignment algorithm",
+            loc=loc,
+            bbox_to_anchor=bbo,
+            borderaxespad=0.4,
+            frameon=True,
+            fancybox=False,
+            facecolor="white",
+            edgecolor="0.55",
+            framealpha=0.95,
+            ncol=ncol_leg,
+            columnspacing=0.9,
+            handletextpad=0.35,
+            labelspacing=0.35,
+        )
+        _apply_legend_fontsizes(
+            leg,
+            label_fontsize=BAR_LEGEND_LABEL,
+            title_fontsize=BAR_LEGEND_TITLE,
+        )
+
+        fig.tight_layout(pad=0.55)
+        fig.savefig(output_path.with_suffix(".pdf"), dpi=600, bbox_inches="tight")
     plt.close(fig)
 
 
@@ -653,7 +732,38 @@ def parse_args() -> argparse.Namespace:
         default="best",
         help="Which layer tag(s) to plot (default: best).",
     )
+    p.add_argument(
+        "--final-csv",
+        type=Path,
+        default=None,
+        help="Optional final-eval CSV for bar plots only (skips SAE run discovery).",
+    )
     return p.parse_args()
+
+
+def run_bars_from_csv(csv_path: Path, output_dir: Path, tag_label: str = "best") -> None:
+    if not csv_path.exists():
+        print(f"[error] CSV not found: {csv_path}")
+        return
+    output_dir.mkdir(parents=True, exist_ok=True)
+    final_df = pd.read_csv(csv_path)
+    if final_df.empty:
+        print(f"[warn] CSV is empty: {csv_path}")
+        return
+    print(f"\n=== Plotting bar charts from CSV: {csv_path} ===")
+    for spec in BAR_METRICS:
+        out = output_dir / f"{spec['filename']}_{tag_label}"
+        plot_bar(
+            final_df,
+            column=spec["column"],
+            ylabel=spec["label"],
+            output_path=out,
+            higher_is_better=spec["higher_is_better"],
+            log_y=spec.get("log_y", False),
+            legend=spec.get("legend"),
+            log_ylim=spec.get("log_ylim"),
+        )
+        print(f"  wrote {out.with_suffix('.pdf')}")
 
 
 def run_for_tag(runs: list[SaeRun], output_dir: Path, tag_label: str) -> None:
@@ -679,6 +789,8 @@ def run_for_tag(runs: list[SaeRun], output_dir: Path, tag_label: str) -> None:
             output_path=out,
             higher_is_better=spec["higher_is_better"],
             log_y=spec.get("log_y", False),
+            legend=spec.get("legend"),
+            log_ylim=spec.get("log_ylim"),
         )
         print(f"  wrote {out.with_suffix('.pdf')}")
 
@@ -704,6 +816,11 @@ def run_for_tag(runs: list[SaeRun], output_dir: Path, tag_label: str) -> None:
 def main() -> None:
     args = parse_args()
     configure_plot_style()
+
+    if args.final_csv is not None:
+        tag = args.layer_tag if args.layer_tag != "both" else "best"
+        run_bars_from_csv(args.final_csv, args.output_dir, tag)
+        return
 
     if args.layer_tag == "both":
         tags = ["best", "mid"]
