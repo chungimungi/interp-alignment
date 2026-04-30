@@ -13,6 +13,8 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
 THIS = Path(__file__).resolve().parent
+OUT = THIS / "crosscoder"
+OUT.mkdir(exist_ok=True)
 df = pd.read_csv(THIS / "per_feature_summary_all_seeds.csv")
 
 plt.rcParams.update({
@@ -61,8 +63,8 @@ for ax, base in zip(axes, BASE_ORDER):
     if base == "smollm":
         ax.legend(loc="upper right", frameon=False)
 fig.suptitle("Aligned-only feature recruitment, seed-1 (solid) vs seed-2 (hatched)", fontsize=14)
-fig.savefig(THIS / "fig_aligned_only_seeds.pdf")
-fig.savefig(THIS / "fig_aligned_only_seeds.png", dpi=150)
+fig.savefig(OUT / "fig_aligned_only_seeds.pdf")
+fig.savefig(OUT / "fig_aligned_only_seeds.png", dpi=150)
 plt.close(fig)
 
 # ============================================================
@@ -100,8 +102,8 @@ ax.axhline(1.0, color="black", linestyle="--", linewidth=0.8, alpha=0.6, label="
 ax.grid(axis="y", alpha=0.3)
 ax.set_axisbelow(True)
 ax.legend(frameon=False)
-fig.savefig(THIS / "fig_family_ratio.pdf")
-fig.savefig(THIS / "fig_family_ratio.png", dpi=150)
+fig.savefig(OUT / "fig_family_ratio.pdf")
+fig.savefig(OUT / "fig_family_ratio.png", dpi=150)
 plt.close(fig)
 
 # ============================================================
@@ -159,11 +161,11 @@ leg1 = ax.legend(handles=shape_legend, loc="upper right", title="Base", frameon=
 ax.add_artist(leg1)
 ax.legend(handles=algo_legend, loc="lower left", title="Algorithm", frameon=False)
 
-fig.savefig(THIS / "fig_partition_scatter_seeds.pdf")
-fig.savefig(THIS / "fig_partition_scatter_seeds.png", dpi=150)
+fig.savefig(OUT / "fig_partition_scatter_seeds.pdf")
+fig.savefig(OUT / "fig_partition_scatter_seeds.png", dpi=150)
 plt.close(fig)
 
 print()
-print("Figures written to", THIS)
-for p in sorted(THIS.glob("fig_*.png")):
+print("Figures written to", OUT)
+for p in sorted(OUT.glob("fig_*.png")):
     print("  ", p.name, p.stat().st_size // 1024, "KB")

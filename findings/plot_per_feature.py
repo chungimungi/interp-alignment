@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 THIS = Path(__file__).resolve().parent
+OUT = THIS / "crosscoder"
+OUT.mkdir(exist_ok=True)
 df = pd.read_csv(THIS / "per_feature_summary.csv")
 
 # Standard plot style.
@@ -44,8 +46,8 @@ for ax, base in zip(axes, BASE_ORDER):
     ax.grid(axis="y", alpha=0.3)
     ax.set_axisbelow(True)
 fig.suptitle("Aligned-only feature recruitment per (algorithm, base) — broad vs concentrated", fontsize=14)
-fig.savefig(THIS / "fig_aligned_only_counts.pdf")
-fig.savefig(THIS / "fig_aligned_only_counts.png", dpi=150)
+fig.savefig(OUT / "fig_aligned_only_counts.pdf")
+fig.savefig(OUT / "fig_aligned_only_counts.png", dpi=150)
 plt.close(fig)
 
 # ============================================================
@@ -68,8 +70,8 @@ for ax, base in zip(axes, BASE_ORDER):
     ax.grid(axis="y", which="both", alpha=0.3)
     ax.set_axisbelow(True)
 fig.suptitle("How aggressively each algorithm shifts shared features (95th percentile, log scale)", fontsize=14)
-fig.savefig(THIS / "fig_shift_p95.pdf")
-fig.savefig(THIS / "fig_shift_p95.png", dpi=150)
+fig.savefig(OUT / "fig_shift_p95.pdf")
+fig.savefig(OUT / "fig_shift_p95.png", dpi=150)
 plt.close(fig)
 
 # ============================================================
@@ -92,8 +94,8 @@ for ax, base in zip(axes, BASE_ORDER):
     ax.grid(axis="y", alpha=0.3)
     ax.set_axisbelow(True)
 fig.suptitle("Decoder norm amplification on aligned-only features (median across features)", fontsize=14)
-fig.savefig(THIS / "fig_decoder_norm_ratio.pdf")
-fig.savefig(THIS / "fig_decoder_norm_ratio.png", dpi=150)
+fig.savefig(OUT / "fig_decoder_norm_ratio.pdf")
+fig.savefig(OUT / "fig_decoder_norm_ratio.png", dpi=150)
 plt.close(fig)
 
 # ============================================================
@@ -132,10 +134,10 @@ leg1 = ax.legend(handles=shape_legend, loc="upper right", title="Base", frameon=
 ax.add_artist(leg1)
 ax.legend(handles=algo_legend, loc="lower left", title="Algorithm", frameon=False)
 
-fig.savefig(THIS / "fig_partition_scatter.pdf")
-fig.savefig(THIS / "fig_partition_scatter.png", dpi=150)
+fig.savefig(OUT / "fig_partition_scatter.pdf")
+fig.savefig(OUT / "fig_partition_scatter.png", dpi=150)
 plt.close(fig)
 
-print("Wrote 4 figures to", THIS)
-for p in sorted(THIS.glob("fig_*.png")):
+print("Wrote 4 figures to", OUT)
+for p in sorted(OUT.glob("fig_*.png")):
     print("  ", p.name, p.stat().st_size // 1024, "KB")

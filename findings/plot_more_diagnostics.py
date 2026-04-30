@@ -13,6 +13,8 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import LogNorm
 
 THIS = Path(__file__).resolve().parent
+OUT = THIS / "crosscoder"
+OUT.mkdir(exist_ok=True)
 df = pd.read_csv(THIS / "per_feature_summary_all_seeds.csv")
 
 plt.rcParams.update({
@@ -83,8 +85,8 @@ for ax, mat, title, run_label in zip(axes, [mat_s1, mat_s2], ["Seed = 42", "Seed
                         color="white" if np.log10(v + 0.1) < 3.0 else "black", fontsize=11)
     plt.colorbar(im, ax=ax, label="log10(aligned-only count + 0.1)")
 fig.suptitle("Aligned-only feature counts per (algorithm, base) heatmap. * = degenerate crosscoder.", fontsize=14)
-fig.savefig(THIS / "fig_heatmap_aligned_only.pdf")
-fig.savefig(THIS / "fig_heatmap_aligned_only.png", dpi=150)
+fig.savefig(OUT / "fig_heatmap_aligned_only.pdf")
+fig.savefig(OUT / "fig_heatmap_aligned_only.png", dpi=150)
 plt.close(fig)
 
 
@@ -119,8 +121,8 @@ for ax, base in zip(axes, BASE_ORDER):
 axes[0].legend(loc="upper left", bbox_to_anchor=(0.0, -0.12), ncol=4, frameon=False, fontsize=9)
 fig.suptitle("Feature class composition per (algorithm, base), seed = 42", fontsize=14)
 fig.subplots_adjust(bottom=0.22)
-fig.savefig(THIS / "fig_class_composition.pdf")
-fig.savefig(THIS / "fig_class_composition.png", dpi=150)
+fig.savefig(OUT / "fig_class_composition.pdf")
+fig.savefig(OUT / "fig_class_composition.png", dpi=150)
 plt.close(fig)
 
 
@@ -158,8 +160,8 @@ for ax, base in zip(axes, BASE_ORDER):
     if base == "smollm":
         ax.legend(loc="lower right", frameon=False)
 fig.suptitle("Feature sharing ratio per (algorithm, base). Values near 1.0 indicate degenerate crosscoders.", fontsize=14)
-fig.savefig(THIS / "fig_sharing_ratio.pdf")
-fig.savefig(THIS / "fig_sharing_ratio.png", dpi=150)
+fig.savefig(OUT / "fig_sharing_ratio.pdf")
+fig.savefig(OUT / "fig_sharing_ratio.png", dpi=150)
 plt.close(fig)
 
 
@@ -192,11 +194,11 @@ for i in range(len(ALGO_ORDER)):
                     color="white" if v > 0.1 else "black", fontsize=11)
 plt.colorbar(im, ax=ax, label="p95 |cf_shift| on shared_aligned (log scale)")
 ax.set_title("Per-feature shift magnitude (95th percentile) on shared_aligned class")
-fig.savefig(THIS / "fig_heatmap_shift_p95.pdf")
-fig.savefig(THIS / "fig_heatmap_shift_p95.png", dpi=150)
+fig.savefig(OUT / "fig_heatmap_shift_p95.pdf")
+fig.savefig(OUT / "fig_heatmap_shift_p95.png", dpi=150)
 plt.close(fig)
 
 
-print("Wrote 4 new figures to", THIS)
-for p in sorted(THIS.glob("fig_*.png")):
+print("Wrote 4 new figures to", OUT)
+for p in sorted(OUT.glob("fig_*.png")):
     print("  ", p.name, p.stat().st_size // 1024, "KB")
