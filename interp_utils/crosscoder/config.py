@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -9,7 +10,7 @@ NORMALIZED_PROMPTS_CACHE_DIR = PROJECT_ROOT / "crosscoder" / "cache" / "normaliz
 # Base model activation cache — keyed by (base_model, layer, position, dataset); reused across aligned runs.
 BASE_ACTIVATIONS_CACHE_DIR = PROJECT_ROOT / "crosscoder" / "cache" / "base_activations"
 
-SEED = 42
+SEED = int(os.environ.get("CROSSCODER_SEED", 42))
 
 # Preference dataset
 PREFERENCE_DATASET_NAME = "argilla/ultrafeedback-multi-binarized-preferences-cleaned"
@@ -24,28 +25,28 @@ CUDA_OPTIMIZATIONS = True
 FLUSH_GPU_EVERY_N_EPOCHS = 10
 FLUSH_GPU_EVERY_N_BATCHES = 50
 
-LEARNING_RATE = 3e-4
+LEARNING_RATE = float(os.environ.get("CROSSCODER_LR", 3e-4))
 WARMUP_FRACTION = 0.05
 BATCH_SIZE = 32
 # Full forward through both LMs is VRAM-heavy; raise if you have headroom.
 EXTRACT_BATCH_SIZE = 32
-NUM_EPOCHS = 4
+NUM_EPOCHS = int(os.environ.get("CROSSCODER_NUM_EPOCHS", 4))
 # Crosscoder is small; AMP mainly cuts activation memory during topk/linear.
 USE_TRAIN_AMP = True
 # Batched inference over all samples in analyze.py
 ANALYZE_FEATURE_BATCH_SIZE = 64
 CHECKPOINT_EVERY = 1
 
-LAMBDA_SPARSITY = 1e-3
-LAMBDA_CROSS = 0.4
+LAMBDA_SPARSITY = float(os.environ.get("CROSSCODER_LAMBDA_SPARSITY", 1e-3))
+LAMBDA_CROSS = float(os.environ.get("CROSSCODER_LAMBDA_CROSS", 0.4))
 GRAD_CLIP_NORM = 1.0
 WEIGHT_DECAY = 1e-5
-LAMBDA_SHARED_MULTIPLIER = 0.05
-FORCED_SHARED_FRACTION = 0.06
+LAMBDA_SHARED_MULTIPLIER = float(os.environ.get("CROSSCODER_LAMBDA_SHARED_MULT", 0.05))
+FORCED_SHARED_FRACTION = float(os.environ.get("CROSSCODER_FORCED_SHARED_FRAC", 0.06))
 
 # Single-stream LLM hidden activations
-TOPK_LLM = 400
-EXPANSION_FACTOR_LLM = 8
+TOPK_LLM = int(os.environ.get("CROSSCODER_TOPK", 400))
+EXPANSION_FACTOR_LLM = int(os.environ.get("CROSSCODER_EXPANSION", 8))
 
 # Quality Control
 FVE_THRESHOLD = 0.5
