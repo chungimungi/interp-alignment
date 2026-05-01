@@ -1,3 +1,4 @@
+import time
 import warnings
 from typing import Dict, List, Optional, Tuple, Union
 
@@ -5,6 +6,7 @@ import numpy as np
 import pandas as pd
 import torch
 from scipy.stats import pearsonr
+from tqdm import tqdm
 
 from . import config
 
@@ -299,9 +301,14 @@ def compute_linear_map_summary(
         return None
     V_A = np.asarray(V_A, dtype=np.float64)
     V_B = np.asarray(V_B, dtype=np.float64)
+    d = V_A.shape[0]
+    t0 = time.perf_counter()
     T = V_B @ V_A.T @ np.linalg.pinv(V_A @ V_A.T)
-    T_restricted = T  # T maps from col space of V_A to output; we work in feature subspace
+    tqdm.write(f"    pinv({d}×{d}, k={k}) — {time.perf_counter()-t0:.1f}s")
+    t1 = time.perf_counter()
+    T_restricted = T
     U, s, Vh = np.linalg.svd(T_restricted)
+    tqdm.write(f"    SVD({d}×{d}) — {time.perf_counter()-t1:.1f}s")
     cond = float(s[0] / (s[-1] + 1e-12)) if len(s) > 0 and s[-1] > 1e-12 else float("inf")
     T_V_A = T @ V_A
     cos_angles = np.diag(V_A.T @ T_V_A) / (
@@ -360,7 +367,7 @@ def summarize_shared_geometry(
 
     result: Dict = {}
     classes_to_process: List[str] = list(SHARED_CLASSES) + ["all_shared"]
-    for cls in classes_to_process:
+    for cls in tqdm(classes_to_process, desc="Shared geometry"):
         if cls == "all_shared":
             subclass_df = shared_df
         else:
@@ -383,8 +390,11 @@ def summarize_shared_geometry(
         ids = subclass_df["feature_id"].astype(int).tolist()
         V_A = W_b_np[:, ids]
         V_B = W_a_np[:, ids]
+        tqdm.write(f"  {cls}: {n} features — fitting linear map...")
+        t0 = time.perf_counter()
         lin_summary = compute_linear_map_summary(V_A, V_B, k_min=k_min)
         if lin_summary is not None:
+            tqdm.write(f"  {cls}: done in {time.perf_counter()-t0:.1f}s")
             row["linear_map"] = lin_summary
 
         result[cls] = row

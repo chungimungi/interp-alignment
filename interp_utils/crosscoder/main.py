@@ -48,7 +48,9 @@ def run_extract(
     use_prompts_cache: bool = True,
     extract_batch_size: Optional[int] = None,
 ):
+    import torch
     from .activations import extract_activations_llm
+    from .utils import get_base_activations_cache_path
 
     print(f"\n{'='*60}")
     print(f"EXTRACTION: {base_model} vs {aligned_model} ({aligned_run_id}) L{layer} {position}")
@@ -62,6 +64,13 @@ def run_extract(
     if out_path.exists():
         print(f"Activations already exist at {out_path}, skipping extraction.")
         return
+
+    # Check for cached base activations — avoids re-running the base LLM for new aligned runs
+    base_cache_path = get_base_activations_cache_path(base_model, layer, position, dataset_name)
+    base_activations_cache = None
+    if base_cache_path.exists():
+        print(f"Loading cached base activations: {base_cache_path}")
+        base_activations_cache = torch.load(base_cache_path, weights_only=False)
 
     hf_token = os.environ.get("HF_TOKEN")
     result = extract_activations_llm(
@@ -77,7 +86,27 @@ def run_extract(
         prompts_cache_dir=prompts_cache_dir,
         use_prompts_cache=use_prompts_cache,
         extract_batch_size=extract_batch_size,
+        base_activations_cache=base_activations_cache,
     )
+
+    # Persist base activations cache for future aligned runs on the same base model
+    if not base_cache_path.exists():
+        base_cache_path.parent.mkdir(parents=True, exist_ok=True)
+        torch.save(
+            {
+                "activations_base": result["activations_base"],
+                "sample_ids": result["sample_ids"],
+                "splits": result["splits"],
+                "base_model": base_model,
+                "layer": layer,
+                "position": position,
+                "dataset_name": dataset_name,
+                "hidden_size": result["hidden_size"],
+            },
+            base_cache_path,
+        )
+        print(f"Cached base activations: {base_cache_path}")
+
     save_activations(result, out_path)
     save_json(
         {
@@ -151,6 +180,7 @@ def run_analyze(
     layer: int,
     position: str,
     output_dir: Optional[Path] = None,
+    n_jobs_superposition: int = 1,
 ):
     from .classify import classify_all_features, save_classification_results
     from .counterfactual import (
@@ -202,6 +232,10 @@ def run_analyze(
     print("Computing feature activations...")
     feature_activations = compute_all_feature_activations(crosscoder, activations_data)
 
+    # Free GPU memory — remaining crosscoder use is decoder weight reads, not forward passes
+    crosscoder.cpu()
+    import torch as _torch; _torch.cuda.empty_cache()
+
     print("Classifying features...")
     classification_df = classify_all_features(crosscoder)
     save_classification_results(classification_df, features_dir / "feature_classification.csv")
@@ -222,16 +256,20 @@ def run_analyze(
 
     print("Analyzing superposition (aligned-only features)...")
     superposition_results = analyze_all_aligned_only_features(
-        crosscoder, classification_df, feature_activations, aligned_run_id
+        crosscoder, classification_df, feature_activations, aligned_run_id,
+        n_jobs=n_jobs_superposition,
     )
+    print("Saving superposition results...")
     save_superposition_results(superposition_results, features_dir / "superposition_analysis.json")
 
+    print("Computing shared feature geometry (CPU: pinv + SVD per class)...")
     decoder_weights = crosscoder.get_decoder_weights()
     shared_geometry = summarize_shared_geometry(
         classification_df, decoder_weights["W_base_dec"], decoder_weights["W_aligned_dec"]
     )
     save_json(shared_geometry, metrics_dir / "shared_geometry_metrics.json")
 
+    print("Building per-feature geometry dataframe...")
     shared_geom_df = get_shared_features_geometry_df(
         classification_df, decoder_weights["W_base_dec"], decoder_weights["W_aligned_dec"]
     )
@@ -310,6 +348,7 @@ def run_all(
     extract_batch_size: Optional[int] = None,
     train_batch_size: Optional[int] = None,
     use_train_amp: Optional[bool] = None,
+    n_jobs_superposition: int = 1,
 ):
     run_extract(
         base_model,
@@ -335,7 +374,8 @@ def run_all(
         train_batch_size=train_batch_size,
         use_train_amp=use_train_amp,
     )
-    run_analyze(base_model, aligned_run_id, layer, position, output_dir=output_dir)
+    run_analyze(base_model, aligned_run_id, layer, position, output_dir=output_dir,
+                n_jobs_superposition=n_jobs_superposition)
     run_visualize(
         base_model, aligned_run_id, layer, position, force=force, output_dir=output_dir
     )
@@ -354,6 +394,7 @@ def run_manifest(manifest_path: Path, force: bool = False):
         ebs = row.get("extract_batch_size")
         tbs = row.get("train_batch_size")
         uta = row.get("use_train_amp")
+        njs = row.get("n_jobs_superposition")
         run_all(
             base_model=row["base_model"],
             aligned_model=row["aligned_model"],
@@ -370,6 +411,7 @@ def run_manifest(manifest_path: Path, force: bool = False):
             extract_batch_size=int(ebs) if ebs is not None else None,
             train_batch_size=int(tbs) if tbs is not None else None,
             use_train_amp=None if uta is None else bool(uta),
+            n_jobs_superposition=int(njs) if njs is not None else 1,
         )
 
 
@@ -379,20 +421,20 @@ def main():
         description="SPARC Cross-Coder: base vs aligned LLM activations (GRPO-style preference data)",
         formatter_class=argparse.RawDescriptionHelpFormatter
         )
-    parser.add_argument("--base-model", type=str, required=True, help="Base HF model id")
+    parser.add_argument("--base-model", type=str, default=None, help="Base HF model id")
     parser.add_argument(
         "--aligned-model",
         type=str,
-        required=True,
+        default=None,
         help="Aligned checkpoint: HF id, local dir (merged weights), or PEFT adapter dir",
     )
     parser.add_argument(
         "--aligned-run-id",
         type=str,
-        required=True,
+        default=None,
         help="Short slug for artifact directory naming",
     )
-    parser.add_argument("--layer", type=int, required=True, help="Decoder layer index for hook")
+    parser.add_argument("--layer", type=int, default=None, help="Decoder layer index for hook")
     parser.add_argument(
         "--position",
         type=str,
@@ -470,6 +512,13 @@ def main():
         action="store_true",
         help="Disable autocast (bf16/fp16) during crosscoder training",
     )
+    parser.add_argument(
+        "--n-jobs-superposition",
+        type=int,
+        default=1,
+        metavar="N",
+        help="Number of parallel jobs for superposition analysis (default: 1, use -1 for all cores)",
+    )
 
     args = parser.parse_args()
     set_seed()
@@ -482,6 +531,12 @@ def main():
             parser.error("--manifest required for stage=manifest")
         run_manifest(Path(args.manifest), force=args.force)
         return
+
+    # For all non-manifest stages, these args are required
+    for name, val in [("--base-model", args.base_model), ("--aligned-model", args.aligned_model),
+                      ("--aligned-run-id", args.aligned_run_id), ("--layer", args.layer)]:
+        if val is None:
+            parser.error(f"{name} is required for stage={args.stage}")
 
     use_train_amp = False if args.no_train_amp else None
 
@@ -517,6 +572,7 @@ def main():
             args.layer,
             args.position,
             output_dir=output_dir,
+            n_jobs_superposition=args.n_jobs_superposition,
         )
     elif args.stage == "visualize":
         run_visualize(

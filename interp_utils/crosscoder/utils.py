@@ -34,6 +34,20 @@ def sanitize_model_slug(model_id: str) -> str:
     return s[:200] if len(s) > 200 else s
 
 
+def get_base_activations_cache_path(
+    base_model_id: str,
+    layer: int,
+    position: str,
+    dataset_name: str,
+) -> Path:
+    base_slug = sanitize_model_slug(base_model_id)
+    dataset_slug = sanitize_model_slug(dataset_name)
+    pos_slug = position.replace("_", "")
+    dir_name = f"{base_slug}__L{layer}__{pos_slug}__{dataset_slug}"
+    cache_path = config.BASE_ACTIVATIONS_CACHE_DIR / dir_name / "base_activations.pt"
+    return cache_path
+
+
 def get_results_dir(
     base_model_id: str,
     aligned_run_id: str,
@@ -88,7 +102,15 @@ def save_checkpoint(model, optimizer, epoch: int, metrics: dict, checkpoint_dir:
         "optimizer_state_dict": optimizer.state_dict(),
         "metrics": metrics,
     }
-    torch.save(checkpoint, checkpoint_dir / filename)
+    final_path = checkpoint_dir / filename
+    torch.save(checkpoint, final_path)
+
+    if is_final:
+        # Verify final.pt is valid before removing epoch checkpoints
+        loaded = torch.load(final_path, map_location="cpu", weights_only=True)
+        assert "model_state_dict" in loaded and "optimizer_state_dict" in loaded
+        for ep_ckpt in checkpoint_dir.glob("epoch_*.pt"):
+            ep_ckpt.unlink()
 
 
 def load_checkpoint(checkpoint_path: Path, model, optimizer=None):

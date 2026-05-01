@@ -183,6 +183,7 @@ def extract_activations_llm(
     prompts_cache_dir: Optional[Path] = None,
     use_prompts_cache: bool = True,
     extract_batch_size: Optional[int] = None,
+    base_activations_cache: Optional[Dict] = None,
 ) -> Dict[str, Any]:
     set_seed()
     device = get_device()
@@ -198,15 +199,22 @@ def extract_activations_llm(
         use_prompts_cache=use_prompts_cache,
     )
 
-    print(f"Loading base LLM: {base_model_id}")
-    model_base = load_base_llm(base_model_id, trust_remote_code=trust_remote_code)
+    use_base_cache = base_activations_cache is not None
+    if use_base_cache:
+        print(f"Using cached base activations — skipping base LLM load")
+        model_base = None
+        ext_base = None
+        hidden_size = base_activations_cache["hidden_size"]
+    else:
+        print(f"Loading base LLM: {base_model_id}")
+        model_base = load_base_llm(base_model_id, trust_remote_code=trust_remote_code)
+        ext_base = LayerActivationExtractor(model_base, layer)
+        hidden_size = model_base.config.hidden_size
+
     print(f"Loading aligned LLM: {aligned_model_path}")
     model_aligned, is_peft = load_aligned_llm(aligned_model_path, base_model_id, trust_remote_code=trust_remote_code)
-
-    ext_base = LayerActivationExtractor(model_base, layer)
     ext_aligned = LayerActivationExtractor(model_aligned, layer)
 
-    hidden_size = model_base.config.hidden_size
     if model_aligned.config.hidden_size != hidden_size:
         raise ValueError(f"Hidden size mismatch: base {hidden_size} vs aligned {model_aligned.config.hidden_size}")
 
@@ -220,20 +228,21 @@ def extract_activations_llm(
 
     items = [ds[i] for i in range(len(ds))]
 
+    desc = "Batches (aligned only)" if use_base_cache else "Batches"
     print(f"Extracting LLM activations (batched forward, batch_size={batch_size})...")
-    for batch_idx, start in enumerate(tqdm(range(0, len(items), batch_size), desc="Batches")):
+    for batch_idx, start in enumerate(tqdm(range(0, len(items), batch_size), desc=desc)):
         chunk = items[start : start + batch_size]
         prompts = [it["prompt"] for it in chunk]
 
         enc = tokenizer(prompts, return_tensors="pt", padding=True, truncation=True, max_length=max_prompt_tokens + 64)
         enc = {k: v.to(device) for k, v in enc.items()}
 
-        ext_base.clear()
-        ext_aligned.clear()
-        with torch.no_grad():
-            model_base(**enc)
-            h_b = ext_base.get()
-            pooled_b = _pool_hidden(h_b, enc["attention_mask"], position)
+        if not use_base_cache:
+            ext_base.clear()
+            with torch.no_grad():
+                model_base(**enc)
+                h_b = ext_base.get()
+                pooled_b = _pool_hidden(h_b, enc["attention_mask"], position)
 
         ext_aligned.clear()
         with torch.no_grad():
@@ -241,8 +250,9 @@ def extract_activations_llm(
             h_a = ext_aligned.get()
             pooled_a = _pool_hidden(h_a, enc["attention_mask"], position)
 
-        for j in range(pooled_b.shape[0]):
-            activations_base_list.append(pooled_b[j].cpu().float())
+        for j in range(pooled_a.shape[0]):
+            if not use_base_cache:
+                activations_base_list.append(pooled_b[j].cpu().float())
             activations_aligned_list.append(pooled_a[j].cpu().float())
             sample_ids.append(chunk[j]["sample_id"])
             splits.append(chunk[j]["split"])
@@ -250,13 +260,24 @@ def extract_activations_llm(
         if (batch_idx + 1) % flush_interval == 0:
             flush_gpu()
 
-    ext_base.remove()
+    if ext_base is not None:
+        ext_base.remove()
     ext_aligned.remove()
 
-    activations_base = torch.stack(activations_base_list, dim=0)
     activations_aligned = torch.stack(activations_aligned_list, dim=0)
 
-    del model_base, model_aligned, tokenizer
+    if use_base_cache:
+        if sample_ids != base_activations_cache["sample_ids"]:
+            raise RuntimeError(
+                "Sample ID mismatch between base activation cache and current dataset extraction. "
+                "Cache may be stale or dataset ordering changed."
+            )
+        activations_base = base_activations_cache["activations_base"]
+    else:
+        activations_base = torch.stack(activations_base_list, dim=0)
+
+    models_to_del = [m for m in [model_base, model_aligned] if m is not None]
+    del models_to_del, tokenizer
     flush_gpu()
 
     return {

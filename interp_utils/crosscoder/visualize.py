@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -96,7 +97,11 @@ def compute_adaptive_rho_thresholds(
     Returns boundaries for uncompressed-only, shared (low, high), and compressed-only.
     Falls back to config defaults when GMM cannot be fit (e.g. degenerate rho).
     Used by feature_classification.csv, plots, and all evaluation.
+    Set FORCE_FIXED_RHO=1 to skip GMM and use config defaults directly.
     """
+    if os.environ.get("FORCE_FIXED_RHO") == "1":
+        return _config_threshold_defaults()
+
     rho = np.asarray(classification_df["rho"].values, dtype=float)
     rho = rho[(rho >= 0) & (rho <= 1)]
     if len(rho) == 0:
