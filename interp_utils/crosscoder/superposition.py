@@ -108,7 +108,7 @@ def analyze_all_aligned_only_features(
     z_base = feature_activations["z_base"]
     z_aligned = feature_activations["z_aligned"]
 
-    analyses = Parallel(n_jobs=n_jobs, prefer="threads")(
+    analyses = Parallel(n_jobs=n_jobs, prefer="processes")(
         delayed(analyze_superposition_for_feature)(
             feature_id, W_aligned_dec, W_base_dec, z_aligned, z_base
         )

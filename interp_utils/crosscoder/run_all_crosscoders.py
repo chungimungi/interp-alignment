@@ -40,6 +40,10 @@ DEFAULT_PAIRS: list[tuple[str, int, str, str, bool]] = [
     ("Qwen/Qwen3-4B-Instruct-2507", 24, "MInAlA/Qwen3-4B-Instruct-2507-KTO-merged",  "qwen-kto",   False),
     ("Qwen/Qwen3-4B-Instruct-2507", 24, "MInAlA/Qwen3-4B-Instruct-2507-SimPO-merged","qwen-simpo", False),
     ("Qwen/Qwen3-4B-Instruct-2507", 24, "MInAlA/Qwen3-4B-ORPO-merged",                "qwen-orpo",  False),
+    # PPO runs (probe-best layers from ppo_runs.json; ultrafeedback-binarized dataset)
+    ("HuggingFaceTB/SmolLM3-3B",           19, "MInAlA/SmolLM3-3B-PPO-merged",                    "smollm3-ppo",  True),
+    ("meta-llama/Llama-3.2-3B-Instruct",   11, "MInAlA/Llama-3.2-3B-Instruct-PPO-merged",         "llama32-3b-ppo", False),
+    ("Qwen/Qwen3-4B-Instruct-2507",        24, "MInAlA/Qwen3-4B-Instruct-2507-PPO-merged",         "qwen3-4b-ppo", True),
 ]
 
 
@@ -87,6 +91,7 @@ def _build_cmd(
     dataset: str | None,
     output_root: Path | None,
     extra: list[str],
+    n_jobs_superposition: int = 1,
 ) -> tuple[list[str], Path | None]:
     out_dir: Path | None = None
     if output_root is not None:
@@ -112,6 +117,8 @@ def _build_cmd(
         cmd += ["--dataset-name", dataset]
     if out_dir is not None:
         cmd += ["--output-dir", str(out_dir)]
+    if n_jobs_superposition != 1:
+        cmd += ["--n-jobs-superposition", str(n_jobs_superposition)]
     cmd.extend(extra)
     return cmd, out_dir
 
@@ -185,7 +192,17 @@ def main() -> None:
         action="store_true",
         help="Print the planned commands and exit without running.",
     )
+    parser.add_argument(
+        "--num-cpus",
+        type=int,
+        default=None,
+        metavar="N",
+        help="CPUs for superposition analysis per job (--n-jobs-superposition). "
+        "Defaults to max(1, cpu_count - 1).",
+    )
     args = parser.parse_args()
+
+    n_jobs_superposition = args.num_cpus if args.num_cpus is not None else max(1, (os.cpu_count() or 2) - 1)
 
     pairs = list(DEFAULT_PAIRS)
     if args.only_base:
@@ -213,6 +230,7 @@ def main() -> None:
 
     print(f"Pairs:        {len(pairs)}")
     print(f"GPU pool:     {gpu_ids}  (parallelism={len(gpu_ids)})")
+    print(f"CPU jobs:     {n_jobs_superposition}  (superposition analysis per pair)")
     print(f"Output root:  {output_root}")
     if extra_args:
         print(f"Extra args:   {extra_args}")
@@ -248,6 +266,7 @@ def main() -> None:
                 dataset=args.dataset_name,
                 output_root=output_root,
                 extra=extra_args,
+                n_jobs_superposition=n_jobs_superposition,
             )
             print("DRY:", " ".join(cmd))
         print(f"\n{len(runnable)} jobs planned (skipped={skipped}).")
@@ -270,6 +289,7 @@ def main() -> None:
                 dataset=args.dataset_name,
                 output_root=output_root,
                 extra=extra_args,
+                n_jobs_superposition=n_jobs_superposition,
             )
             env = os.environ.copy()
             env["CUDA_VISIBLE_DEVICES"] = str(gpu)
