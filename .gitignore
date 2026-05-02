@@ -9,3 +9,4 @@ wandb
 *.log
 results
 .claude/
+**/results*/**
