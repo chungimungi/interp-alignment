@@ -7,5 +7,4 @@ cache
 outputs
 wandb
 *.log
-results
 .claude/
