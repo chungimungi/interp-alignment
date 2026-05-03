@@ -31,7 +31,6 @@ WARMUP_FRACTION = 0.05
 BATCH_SIZE = 32
 # Full forward through both LMs is VRAM-heavy; raise if you have headroom.
 EXTRACT_BATCH_SIZE = 32
-PROGRESS_LOG_EVERY_N_BATCHES = int(os.environ.get("CROSSCODER_PROGRESS_EVERY_N_BATCHES", 100))
 NUM_EPOCHS = int(os.environ.get("CROSSCODER_NUM_EPOCHS", 4))
 # Crosscoder is small; AMP mainly cuts activation memory during topk/linear.
 USE_TRAIN_AMP = True
@@ -49,8 +48,6 @@ FORCED_SHARED_FRACTION = float(os.environ.get("CROSSCODER_FORCED_SHARED_FRAC", 0
 # Single-stream LLM hidden activations
 TOPK_LLM = int(os.environ.get("CROSSCODER_TOPK", 400))
 EXPANSION_FACTOR_LLM = int(os.environ.get("CROSSCODER_EXPANSION", 8))
-MULTILAYER_TOPK_MODE = os.environ.get("CROSSCODER_MULTILAYER_TOPK_MODE", "model_balanced_layer_agg")
-MULTILAYER_TOPK_MODES = ("model_balanced_layer_agg", "global_sum")
 
 # Quality Control
 FVE_THRESHOLD = 0.5

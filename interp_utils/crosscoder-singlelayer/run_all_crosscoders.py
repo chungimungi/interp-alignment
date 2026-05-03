@@ -19,8 +19,6 @@ from queue import Queue
 
 from tqdm import tqdm
 
-from .utils import layers_slug
-
 # (base_model_id, base_layer, aligned_model_id, aligned_run_id, trust_remote_code)
 # base_layer is the base model's probe-best layer from chungimungi's SAE CSV.
 DEFAULT_PAIRS: list[tuple[str, int, str, str, bool]] = [
@@ -94,17 +92,10 @@ def _build_cmd(
     output_root: Path | None,
     extra: list[str],
     n_jobs_superposition: int = 1,
-    multilayer: bool = False,
-    layer_window: int = 1,
-    topk_mode: str = "model_balanced_layer_agg",
 ) -> tuple[list[str], Path | None]:
     out_dir: Path | None = None
     if output_root is not None:
-        if multilayer:
-            layer_list = list(range(layer - layer_window, layer + layer_window + 1))
-            out_dir = output_root / run_id / layers_slug(layer_list)
-        else:
-            out_dir = output_root / run_id / f"L{layer}"
+        out_dir = output_root / run_id / f"L{layer}"
     cmd: list[str] = [
         sys.executable,
         "-m",
@@ -117,20 +108,9 @@ def _build_cmd(
         aligned,
         "--aligned-run-id",
         run_id,
+        "--layer",
+        str(layer),
     ]
-    if multilayer:
-        cmd += [
-            "--crosscoder-kind",
-            "multilayer_sparc",
-            "--center-layer",
-            str(layer),
-            "--layer-window",
-            str(layer_window),
-            "--topk-mode",
-            topk_mode,
-        ]
-    else:
-        cmd += ["--layer", str(layer)]
     if trust_rc:
         cmd.append("--trust-remote-code")
     if dataset:
@@ -220,23 +200,6 @@ def main() -> None:
         help="CPUs for superposition analysis per job (--n-jobs-superposition). "
         "Defaults to max(1, cpu_count - 1).",
     )
-    parser.add_argument(
-        "--multilayer",
-        action="store_true",
-        help="Launch the multi-layer SPARC pipeline using each pair's layer as center-layer.",
-    )
-    parser.add_argument(
-        "--layer-window",
-        type=int,
-        default=1,
-        help="Layer radius for --multilayer jobs.",
-    )
-    parser.add_argument(
-        "--topk-mode",
-        choices=["model_balanced_layer_agg", "global_sum"],
-        default="model_balanced_layer_agg",
-        help="TopK support rule for --multilayer jobs.",
-    )
     args = parser.parse_args()
 
     n_jobs_superposition = args.num_cpus if args.num_cpus is not None else max(1, (os.cpu_count() or 2) - 1)
@@ -269,8 +232,6 @@ def main() -> None:
     print(f"GPU pool:     {gpu_ids}  (parallelism={len(gpu_ids)})")
     print(f"CPU jobs:     {n_jobs_superposition}  (superposition analysis per pair)")
     print(f"Output root:  {output_root}")
-    if args.multilayer:
-        print(f"Mode:         multilayer_sparc  (window=+/-{args.layer_window}, topk={args.topk_mode})")
     if extra_args:
         print(f"Extra args:   {extra_args}")
 
@@ -282,13 +243,9 @@ def main() -> None:
     skipped = 0
     for p in pairs:
         base, layer, aligned, run_id, trust_rc = p
-        if args.multilayer:
-            layer_list = list(range(layer - args.layer_window, layer + args.layer_window + 1))
-            out_dir = output_root / run_id / layers_slug(layer_list)
-        else:
-            out_dir = output_root / run_id / f"L{layer}"
+        out_dir = output_root / run_id / f"L{layer}"
         if args.skip_existing and _existing_complete(out_dir):
-            print(f"  skip (existing): {run_id} {out_dir.name}")
+            print(f"  skip (existing): {run_id} L{layer}")
             skipped += 1
             continue
         runnable.append(p)
@@ -310,9 +267,6 @@ def main() -> None:
                 output_root=output_root,
                 extra=extra_args,
                 n_jobs_superposition=n_jobs_superposition,
-                multilayer=args.multilayer,
-                layer_window=args.layer_window,
-                topk_mode=args.topk_mode,
             )
             print("DRY:", " ".join(cmd))
         print(f"\n{len(runnable)} jobs planned (skipped={skipped}).")
@@ -336,17 +290,13 @@ def main() -> None:
                 output_root=output_root,
                 extra=extra_args,
                 n_jobs_superposition=n_jobs_superposition,
-                multilayer=args.multilayer,
-                layer_window=args.layer_window,
-                topk_mode=args.topk_mode,
             )
             env = os.environ.copy()
             env["CUDA_VISIBLE_DEVICES"] = str(gpu)
-            layer_label = layers_slug(list(range(layer - args.layer_window, layer + args.layer_window + 1))) if args.multilayer else f"L{layer}"
-            log_path = log_dir / f"{run_id}-{layer_label}.log"
+            log_path = log_dir / f"{run_id}-L{layer}.log"
             with log_path.open("w") as f:
                 f.write(
-                    f"# {run_id} {layer_label}\n"
+                    f"# {run_id} L{layer}\n"
                     f"# base    = {base}\n"
                     f"# aligned = {aligned}\n"
                     f"# GPU     = {gpu}\n"
@@ -371,8 +321,7 @@ def main() -> None:
             for fut in as_completed(futures):
                 run_id, layer, gpu, rc, log = fut.result()
                 tag = "OK" if rc == 0 else f"FAIL({rc})"
-                layer_label = layers_slug(list(range(layer - args.layer_window, layer + args.layer_window + 1))) if args.multilayer else f"L{layer}"
-                tqdm.write(f"[GPU{gpu}] {tag} {run_id} {layer_label}  log={log}")
+                tqdm.write(f"[GPU{gpu}] {tag} {run_id} L{layer}  log={log}")
                 if rc != 0:
                     failures.append((run_id, layer, rc, log))
                 pbar.update(1)
