@@ -48,6 +48,29 @@ def get_base_activations_cache_path(
     return cache_path
 
 
+def layers_slug(layers: list[int] | tuple[int, ...]) -> str:
+    layers = [int(l) for l in layers]
+    if not layers:
+        raise ValueError("layers must be non-empty")
+    if layers == list(range(layers[0], layers[-1] + 1)):
+        return f"L{layers[0]}-{layers[-1]}"
+    return "L" + "-".join(str(l) for l in layers)
+
+
+def get_base_activations_cache_path_multilayer(
+    base_model_id: str,
+    layers: list[int] | tuple[int, ...],
+    position: str,
+    dataset_name: str,
+) -> Path:
+    base_slug = sanitize_model_slug(base_model_id)
+    dataset_slug = sanitize_model_slug(dataset_name)
+    pos_slug = position.replace("_", "")
+    dir_name = f"{base_slug}__{layers_slug(layers)}__{pos_slug}__{dataset_slug}"
+    cache_path = config.BASE_ACTIVATIONS_CACHE_DIR / dir_name / "base_activations.pt"
+    return cache_path
+
+
 def get_results_dir(
     base_model_id: str,
     aligned_run_id: str,
@@ -58,6 +81,22 @@ def get_results_dir(
     base_slug = sanitize_model_slug(base_model_id)
     pos_slug = position.replace("_", "")
     dir_name = f"{base_slug}__{aligned_run_id}__L{layer}__{pos_slug}"
+    root = base_dir if base_dir is not None else config.CROSSCODER_RESULTS_DIR
+    results_dir = root / dir_name
+    results_dir.mkdir(parents=True, exist_ok=True)
+    return results_dir
+
+
+def get_results_dir_multilayer(
+    base_model_id: str,
+    aligned_run_id: str,
+    layers: list[int] | tuple[int, ...],
+    position: str,
+    base_dir: Optional[Path] = None,
+) -> Path:
+    base_slug = sanitize_model_slug(base_model_id)
+    pos_slug = position.replace("_", "")
+    dir_name = f"{base_slug}__{aligned_run_id}__{layers_slug(layers)}__{pos_slug}"
     root = base_dir if base_dir is not None else config.CROSSCODER_RESULTS_DIR
     results_dir = root / dir_name
     results_dir.mkdir(parents=True, exist_ok=True)
