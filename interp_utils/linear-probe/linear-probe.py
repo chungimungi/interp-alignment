@@ -13,6 +13,10 @@ import random
 import sys
 from pathlib import Path
 
+_LP_DIR = Path(__file__).resolve().parent
+if str(_LP_DIR) not in sys.path:
+    sys.path.insert(0, str(_LP_DIR))
+
 import numpy as np
 import torch
 import matplotlib.pyplot as plt
@@ -31,6 +35,35 @@ from sklearn.metrics import (
 )
 from sklearn.model_selection import StratifiedKFold
 from sklearn.decomposition import PCA
+
+from pca_plot import plot_best_layer_pca_figure
+
+
+def _umap_z_from_scaled(X_scaled: np.ndarray, seed: int) -> np.ndarray:
+    """1D UMAP embedding of row-wise scaled activations (third plot axis)."""
+    try:
+        from umap import UMAP
+    except ImportError as e:
+        raise SystemExit(
+            "umap-learn is required (pip install umap-learn) for the UMAP z-axis."
+        ) from e
+    n, d = X_scaled.shape
+    if n < 3:
+        return np.zeros(n, dtype=np.float64)
+    Xw = np.asarray(X_scaled, dtype=np.float64)
+    if d > 64:
+        npc = min(50, n - 1, d)
+        Xw = PCA(n_components=npc, random_state=seed).fit_transform(Xw)
+    n_neighbors = min(15, max(2, n - 1))
+    emb = UMAP(
+        n_components=1,
+        n_neighbors=n_neighbors,
+        min_dist=0.1,
+        metric="cosine",
+        random_state=seed,
+        n_epochs=200,
+    ).fit_transform(Xw)
+    return emb.ravel()
 
 
 def _parse_args() -> argparse.Namespace:
@@ -360,16 +393,21 @@ def main() -> None:
     y_pca = np.concatenate([np.zeros(len(X_r_b)), np.ones(len(X_c_b))])
     mask_pca = np.isfinite(X_pca_in).all(axis=1)
     X_pca_in, y_pca = X_pca_in[mask_pca], y_pca[mask_pca]
-    pca = PCA(n_components=2, random_state=args.seed)
+    n_pca = min(2, X_pca_in.shape[0], X_pca_in.shape[1])
+    pca = PCA(n_components=max(1, n_pca), random_state=args.seed)
     X_scaled = StandardScaler().fit_transform(X_pca_in)
     X_pca = pca.fit_transform(X_scaled)
+    n_pc_cols = X_pca.shape[1]
+    umap_z = _umap_z_from_scaled(X_scaled, args.seed)
     pca_payload = {
         "best_layer": int(best_layer),
         "y_test": y_pca.tolist(),
-        "pc1": X_pca[:, 0].tolist(),
-        "pc2": X_pca[:, 1].tolist(),
         "explained_variance_ratio": pca.explained_variance_ratio_.tolist(),
+        "pc1": X_pca[:, 0].tolist(),
+        "umap_z": umap_z.tolist(),
     }
+    if n_pc_cols >= 2:
+        pca_payload["pc2"] = X_pca[:, 1].tolist()
     with (out_dir / "best_layer_pca.json").open("w") as f:
         json.dump(pca_payload, f, indent=2)
 
@@ -421,18 +459,7 @@ def main() -> None:
     fig.savefig(out_dir / "best_layer_roc_curve.pdf")
     plt.close(fig)
 
-    pc1 = np.array(pca_payload["pc1"])
-    pc2 = np.array(pca_payload["pc2"])
-    pca_y = np.array(pca_payload["y_test"])
-    fig, ax = plt.subplots(figsize=(12, 10))
-    ax.scatter(pc1[pca_y == 0], pc2[pca_y == 0], alpha=0.7, s=80, label="Rejected")
-    ax.scatter(pc1[pca_y == 1], pc2[pca_y == 1], alpha=0.7, s=80, label="Chosen")
-    ax.set_xlabel("PC1")
-    ax.set_ylabel("PC2")
-    ax.grid(alpha=0.25)
-    ax.legend(frameon=False)
-    fig.savefig(out_dir / "best_layer_pca.pdf")
-    plt.close(fig)
+    plot_best_layer_pca_figure(pca_payload, out_dir / "best_layer_pca.pdf")
 
     print(f"Done. Outputs in {out_dir}", flush=True)
 
