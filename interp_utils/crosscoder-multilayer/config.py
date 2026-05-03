@@ -1,14 +1,15 @@
 import os
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
+PACKAGE_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = PACKAGE_DIR.parent
 DATA_DIR = PROJECT_ROOT / "data"
 OUTPUT_DIR = PROJECT_ROOT / "output"
-CROSSCODER_RESULTS_DIR = PROJECT_ROOT / "crosscoder" / "results"
+CROSSCODER_RESULTS_DIR = PACKAGE_DIR / "results"
 # HuggingFace `datasets` save_to_disk cache for chat-normalized preference prompts (reused across runs).
-NORMALIZED_PROMPTS_CACHE_DIR = PROJECT_ROOT / "crosscoder" / "cache" / "normalized_prompts"
-# Base model activation cache — keyed by (base_model, layer, position, dataset); reused across aligned runs.
-BASE_ACTIVATIONS_CACHE_DIR = PROJECT_ROOT / "crosscoder" / "cache" / "base_activations"
+NORMALIZED_PROMPTS_CACHE_DIR = PACKAGE_DIR / "cache" / "normalized_prompts"
+# Base model activation cache - keyed by (base_model, layer, position, dataset); reused across aligned runs.
+BASE_ACTIVATIONS_CACHE_DIR = PACKAGE_DIR / "cache" / "base_activations"
 
 SEED = int(os.environ.get("CROSSCODER_SEED", 42))
 

@@ -108,7 +108,7 @@ def _build_cmd(
     cmd: list[str] = [
         sys.executable,
         "-m",
-        "interp_utils.crosscoder.main",
+        f"{__package__}.main",
         "--stage",
         "all",
         "--base-model",

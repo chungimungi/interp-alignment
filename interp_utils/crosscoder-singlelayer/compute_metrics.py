@@ -92,7 +92,7 @@ def explain_no_configs(results_root: Path) -> None:
     if parsed is None:
         print(
             "No runs with features/feature_classification.csv found under this path. "
-            "Use --results-root pointing at crosscoder/results (parent of run dirs) "
+            "Use --results-root pointing at interp_utils/crosscoder-singlelayer/results (parent of run dirs) "
             "or at a single run directory named like BASE__runid__L15__lastprompt."
         )
         return
@@ -103,7 +103,7 @@ def explain_no_configs(results_root: Path) -> None:
         print(
             f"This looks like a single run directory ({results_root.name}) but "
             f"{feat_csv} is missing. Run analysis first (needs a trained checkpoint), e.g.:\n"
-            f"  python -m crosscoder.main --base-model <BASE_HF_ID> --aligned-model <ALIGNED_HF_OR_PATH> "
+            f"  python -m interp_utils.crosscoder-singlelayer.main --base-model <BASE_HF_ID> --aligned-model <ALIGNED_HF_OR_PATH> "
             f"--aligned-run-id {parsed['aligned_run_id']} --layer {parsed['layer']} --position {pos} "
             f"--stage analyze --output-dir {results_root}"
         )

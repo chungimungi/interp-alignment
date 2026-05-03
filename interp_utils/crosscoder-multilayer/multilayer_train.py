@@ -177,14 +177,23 @@ def train_multilayer_crosscoder(
         "val_fve_aligned": [],
         "val_fve_base_by_layer": [],
         "val_fve_aligned_by_layer": [],
+        "train_fve_base_by_layer": [],
+        "train_fve_aligned_by_layer": [],
         "dead_neurons": [],
         "l0_base": [],
         "l0_aligned": [],
         "l0_base_by_layer": [],
         "l0_aligned_by_layer": [],
+        "val_l0_base": [],
+        "val_l0_aligned": [],
+        "val_l0_base_by_layer": [],
+        "val_l0_aligned_by_layer": [],
         "self_recon": [],
         "cross_recon": [],
         "sparsity": [],
+        "val_self_recon": [],
+        "val_cross_recon": [],
+        "val_sparsity": [],
         "layers": layers,
         "topk_mode": topk_mode,
     }
@@ -202,6 +211,8 @@ def train_multilayer_crosscoder(
         train_losses = []
         train_fve_base_list = []
         train_fve_aligned_list = []
+        train_fve_base_by_layer = []
+        train_fve_aligned_by_layer = []
         train_dead_list = []
         train_l0_base_list = []
         train_l0_aligned_list = []
@@ -243,6 +254,8 @@ def train_multilayer_crosscoder(
             train_losses.append(losses["total"].item())
             train_fve_base_list.append(fve["fve_base"])
             train_fve_aligned_list.append(fve["fve_aligned"])
+            train_fve_base_by_layer.append(fve["fve_base_by_layer"])
+            train_fve_aligned_by_layer.append(fve["fve_aligned_by_layer"])
             train_dead_list.append(dead)
             train_l0_base_list.append(l0["l0_base"])
             train_l0_aligned_list.append(l0["l0_aligned"])
@@ -270,6 +283,13 @@ def train_multilayer_crosscoder(
         val_fve_aligned_list = []
         val_fve_base_by_layer = []
         val_fve_aligned_by_layer = []
+        val_l0_base_list = []
+        val_l0_aligned_list = []
+        val_l0_base_by_layer = []
+        val_l0_aligned_by_layer = []
+        val_self_recon = []
+        val_cross_recon = []
+        val_sparsity = []
 
         with torch.no_grad():
             for batch in val_loader:
@@ -279,12 +299,20 @@ def train_multilayer_crosscoder(
                     outputs = crosscoder(x_base, x_aligned)
                     losses = crosscoder.compute_loss(x_base, x_aligned, outputs)
                     fve = crosscoder.compute_fve(x_base, x_aligned, outputs)
+                    l0 = crosscoder.compute_l0_sparsity(outputs["z_base"], outputs["z_aligned"])
                 val_losses.append(losses["total"].item())
                 val_fve_base_list.append(fve["fve_base"])
                 val_fve_aligned_list.append(fve["fve_aligned"])
                 val_fve_base_by_layer.append(fve["fve_base_by_layer"])
                 val_fve_aligned_by_layer.append(fve["fve_aligned_by_layer"])
-                del x_base, x_aligned, outputs, losses, fve
+                val_l0_base_list.append(l0["l0_base"])
+                val_l0_aligned_list.append(l0["l0_aligned"])
+                val_l0_base_by_layer.append(l0["l0_base_by_layer"])
+                val_l0_aligned_by_layer.append(l0["l0_aligned_by_layer"])
+                val_self_recon.append(losses["self_recon"].item())
+                val_cross_recon.append(losses["cross_recon"].item())
+                val_sparsity.append(losses["sparsity"].item())
+                del x_base, x_aligned, outputs, losses, fve, l0
 
         avg_train_loss = sum(train_losses) / len(train_losses)
         avg_val_loss = sum(val_losses) / len(val_losses) if val_losses else 0
@@ -295,6 +323,8 @@ def train_multilayer_crosscoder(
         avg_dead = sum(train_dead_list) / len(train_dead_list)
         avg_l0_base = sum(train_l0_base_list) / len(train_l0_base_list)
         avg_l0_aligned = sum(train_l0_aligned_list) / len(train_l0_aligned_list)
+        avg_val_l0_base = sum(val_l0_base_list) / len(val_l0_base_list) if val_l0_base_list else 0
+        avg_val_l0_aligned = sum(val_l0_aligned_list) / len(val_l0_aligned_list) if val_l0_aligned_list else 0
 
         training_history["epochs"].append(epoch + 1)
         training_history["train_loss"].append(avg_train_loss)
@@ -303,6 +333,8 @@ def train_multilayer_crosscoder(
         training_history["train_fve_aligned"].append(avg_train_fve_aligned)
         training_history["val_fve_base"].append(avg_val_fve_base)
         training_history["val_fve_aligned"].append(avg_val_fve_aligned)
+        training_history["train_fve_base_by_layer"].append(_mean_lists(train_fve_base_by_layer))
+        training_history["train_fve_aligned_by_layer"].append(_mean_lists(train_fve_aligned_by_layer))
         training_history["val_fve_base_by_layer"].append(_mean_lists(val_fve_base_by_layer))
         training_history["val_fve_aligned_by_layer"].append(_mean_lists(val_fve_aligned_by_layer))
         training_history["dead_neurons"].append(avg_dead)
@@ -310,9 +342,16 @@ def train_multilayer_crosscoder(
         training_history["l0_aligned"].append(avg_l0_aligned)
         training_history["l0_base_by_layer"].append(_mean_lists(train_l0_base_by_layer))
         training_history["l0_aligned_by_layer"].append(_mean_lists(train_l0_aligned_by_layer))
+        training_history["val_l0_base"].append(avg_val_l0_base)
+        training_history["val_l0_aligned"].append(avg_val_l0_aligned)
+        training_history["val_l0_base_by_layer"].append(_mean_lists(val_l0_base_by_layer))
+        training_history["val_l0_aligned_by_layer"].append(_mean_lists(val_l0_aligned_by_layer))
         training_history["self_recon"].append(sum(train_self_recon) / len(train_self_recon))
         training_history["cross_recon"].append(sum(train_cross_recon) / len(train_cross_recon))
         training_history["sparsity"].append(sum(train_sparsity) / len(train_sparsity))
+        training_history["val_self_recon"].append(sum(val_self_recon) / len(val_self_recon) if val_self_recon else 0)
+        training_history["val_cross_recon"].append(sum(val_cross_recon) / len(val_cross_recon) if val_cross_recon else 0)
+        training_history["val_sparsity"].append(sum(val_sparsity) / len(val_sparsity) if val_sparsity else 0)
 
         epoch_pbar.set_postfix(
             {
@@ -345,9 +384,17 @@ def train_multilayer_crosscoder(
         "fve_aligned": training_history["val_fve_aligned"][-1],
         "fve_base_by_layer": training_history["val_fve_base_by_layer"][-1],
         "fve_aligned_by_layer": training_history["val_fve_aligned_by_layer"][-1],
+        "val_fve_base_by_layer": training_history["val_fve_base_by_layer"][-1],
+        "val_fve_aligned_by_layer": training_history["val_fve_aligned_by_layer"][-1],
         "dead_neurons": training_history["dead_neurons"][-1],
         "l0_base": training_history["l0_base"][-1],
         "l0_aligned": training_history["l0_aligned"][-1],
+        "l0_base_by_layer": training_history["l0_base_by_layer"][-1],
+        "l0_aligned_by_layer": training_history["l0_aligned_by_layer"][-1],
+        "val_l0_base": training_history["val_l0_base"][-1],
+        "val_l0_aligned": training_history["val_l0_aligned"][-1],
+        "val_l0_base_by_layer": training_history["val_l0_base_by_layer"][-1],
+        "val_l0_aligned_by_layer": training_history["val_l0_aligned_by_layer"][-1],
         "layers": layers,
         "topk_mode": topk_mode,
     }
@@ -444,10 +491,13 @@ def compute_all_multilayer_feature_activations(crosscoder: MultiLayerSPARCCrossC
     if torch.cuda.is_available():
         flush_gpu()
 
-    return {
+    result = {
         "z_base": torch.cat(all_z_base, dim=0),
         "z_aligned": torch.cat(all_z_aligned, dim=0),
         "sample_ids": activations_data["sample_ids"],
         "splits": activations_data["splits"],
         "layers": activations_data["layers"],
     }
+    if "prompt_texts" in activations_data:
+        result["prompt_texts"] = activations_data["prompt_texts"]
+    return result

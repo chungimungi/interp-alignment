@@ -425,6 +425,7 @@ def extract_activations_llm_multilayer(
     activations_aligned_list: List[torch.Tensor] = []
     sample_ids: List[str] = []
     splits: List[str] = []
+    prompt_texts: List[str] = []
 
     batch_size = extract_batch_size if extract_batch_size is not None else config.EXTRACT_BATCH_SIZE
     flush_interval = getattr(config, "FLUSH_GPU_EVERY_N_BATCHES", 50)
@@ -466,6 +467,7 @@ def extract_activations_llm_multilayer(
                 activations_aligned_list.append(pooled_a[j].cpu().float())
             sample_ids.append(chunk[j]["sample_id"])
             splits.append(chunk[j]["split"])
+            prompt_texts.append(chunk[j]["prompt"])
 
         if (batch_idx + 1) % flush_interval == 0:
             flush_gpu()
@@ -480,6 +482,7 @@ def extract_activations_llm_multilayer(
     result: Dict[str, Any] = {
         "sample_ids": sample_ids,
         "splits": splits,
+        "prompt_texts": prompt_texts,
         "base_model": base_model_id,
         "aligned_model": aligned_model_path,
         "aligned_run_id": aligned_run_id,

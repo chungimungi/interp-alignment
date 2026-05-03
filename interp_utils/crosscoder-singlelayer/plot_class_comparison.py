@@ -1,7 +1,7 @@
 """
 Compare primary_class distributions from two crosscoder result directories.
 Example:
-  python -m crosscoder.plot_class_comparison --dir-a path/to/run_a --dir-b path/to/run_b
+  python -m interp_utils.crosscoder-singlelayer.plot_class_comparison --dir-a path/to/run_a --dir-b path/to/run_b
 """
 
 import argparse

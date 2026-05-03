@@ -107,7 +107,7 @@ def _resolve_multilayer_layers_for_stage(
             layer_window=args.layer_window,
             layers_arg=args.layers,
         )
-        if output_dir is not None and args.stage in {"train", "analyze"}:
+        if output_dir is not None and args.stage in {"train", "analyze", "visualize"}:
             artifact_layers = _load_artifact_layers(output_dir)
             if artifact_layers is not None and artifact_layers != cli_layers:
                 raise ValueError(
@@ -115,7 +115,7 @@ def _resolve_multilayer_layers_for_stage(
                 )
         return cli_layers
 
-    if output_dir is not None and args.stage in {"train", "analyze"}:
+    if output_dir is not None and args.stage in {"train", "analyze", "visualize"}:
         artifact_layers = _load_artifact_layers(output_dir)
         if artifact_layers is not None:
             return artifact_layers
@@ -585,6 +585,7 @@ def run_assemble_multilayer(
         "activations_aligned": aligned_tensor.contiguous(),
         "sample_ids": aligned_data["sample_ids"],
         "splits": aligned_data["splits"],
+        "prompt_texts": aligned_data.get("prompt_texts", base_data.get("prompt_texts")),
         "base_model": base_data.get("base_model", aligned_data.get("base_model")),
         "aligned_model": aligned_data.get("aligned_model"),
         "aligned_run_id": aligned_data.get("aligned_run_id"),
@@ -853,12 +854,24 @@ def run_analyze_multilayer(
     position: str,
     topk_mode: str = config.MULTILAYER_TOPK_MODE,
     output_dir: Optional[Path] = None,
+    n_jobs_superposition: int = 1,
 ):
     from .metrics import save_metrics
     from .multilayer_classify import (
         classify_multilayer_features,
+        cross_layer_cosine_drift_df,
+        derive_layer_classes,
         get_multilayer_class_counts,
+        get_multilayer_classification_thresholds,
+        get_multilayer_semantic_class_counts,
+        get_multilayer_threshold_sensitivity,
+        model_layer_stream_patterns_df,
+        multilayer_counterfactual_scores,
         multilayer_decoder_profile_df,
+        multilayer_superposition_analysis,
+        summarize_counterfactual_by_layer,
+        summarize_layer_metrics,
+        top_activating_examples_df,
     )
     from .multilayer_train import compute_all_multilayer_feature_activations, load_trained_multilayer_crosscoder
 
@@ -876,7 +889,19 @@ def run_analyze_multilayer(
     metrics_dir = get_metrics_dir(results_dir)
 
     aggregate_path = metrics_dir / "aggregate_metrics.json"
-    if aggregate_path.exists():
+    expected_analysis_outputs = [
+        aggregate_path,
+        features_dir / "feature_classification.csv",
+        features_dir / "decoder_layer_profiles.csv",
+        features_dir / "feature_activations.pt",
+        features_dir / "cross_layer_cosine_drift.csv",
+        features_dir / "model_layer_stream_patterns.csv",
+        features_dir / "superposition_analysis.json",
+        features_dir / "counterfactual_scores.csv",
+        features_dir / "counterfactual_scores_by_layer.csv",
+        features_dir / "merged_classification.csv",
+    ]
+    if all(path.exists() for path in expected_analysis_outputs):
         print(f"Analysis outputs already exist at {aggregate_path}, skipping analysis.")
         return
 
@@ -894,11 +919,17 @@ def run_analyze_multilayer(
         layers=layers,
     )
 
-    print("Computing multi-layer feature activations...")
-    feature_activations = compute_all_multilayer_feature_activations(crosscoder, activations_data)
+    feature_activations_path = features_dir / "feature_activations.pt"
     import torch as _torch
-    _torch.save(feature_activations, features_dir / "feature_activations.pt")
+    if feature_activations_path.exists():
+        print("Loading cached multi-layer feature activations...")
+        feature_activations = _torch.load(feature_activations_path, weights_only=False)
+    else:
+        print("Computing multi-layer feature activations...")
+        feature_activations = compute_all_multilayer_feature_activations(crosscoder, activations_data)
+        _torch.save(feature_activations, feature_activations_path)
 
+    del activations_data
     crosscoder.cpu()
     if _torch.cuda.is_available():
         _torch.cuda.empty_cache()
@@ -909,7 +940,56 @@ def run_analyze_multilayer(
 
     print("Writing per-layer decoder profiles...")
     profile_df = multilayer_decoder_profile_df(crosscoder, layers)
+    profile_df = derive_layer_classes(profile_df)
     profile_df.to_csv(features_dir / "decoder_layer_profiles.csv", index=False)
+
+    print("Writing cross-layer geometry artifacts...")
+    drift_df = cross_layer_cosine_drift_df(crosscoder, layers)
+    drift_df.to_csv(features_dir / "cross_layer_cosine_drift.csv", index=False)
+
+    stream_patterns_df = model_layer_stream_patterns_df(profile_df, feature_activations)
+    stream_patterns_df.to_csv(features_dir / "model_layer_stream_patterns.csv", index=False)
+
+    superposition_path = features_dir / "superposition_analysis.json"
+    if superposition_path.exists():
+        print("Loading cached superposition analysis...")
+        superposition_results = load_json(superposition_path)
+    else:
+        superposition_results = multilayer_superposition_analysis(
+            crosscoder, layers, classification_df, n_jobs=n_jobs_superposition
+        )
+        save_json(superposition_results, superposition_path)
+
+    crosscoder_topk = int(crosscoder.topk)
+    crosscoder_expansion_factor = int(crosscoder.expansion_factor)
+    crosscoder_dict_size = int(crosscoder.dict_size)
+    crosscoder_forced_shared_fraction = float(crosscoder.forced_shared_fraction)
+    del crosscoder
+    import gc as _gc
+    _gc.collect()
+
+    import pandas as _pd
+    cf_scores_path = features_dir / "counterfactual_scores.csv"
+    cf_layer_path = features_dir / "counterfactual_scores_by_layer.csv"
+    if cf_scores_path.exists() and cf_layer_path.exists():
+        print("Loading cached counterfactual scores...")
+        cf_scores_df = _pd.read_csv(cf_scores_path)
+        cf_layer_df = _pd.read_csv(cf_layer_path)
+    else:
+        cf_scores_df, cf_layer_df = multilayer_counterfactual_scores(feature_activations, layers)
+        if not cf_scores_df.empty:
+            cf_scores_df.to_csv(cf_scores_path, index=False)
+        if not cf_layer_df.empty:
+            cf_layer_df.to_csv(cf_layer_path, index=False)
+    if not cf_scores_df.empty:
+        merged_df = classification_df.merge(cf_scores_df, on="feature_id", how="left")
+        merged_df.to_csv(features_dir / "merged_classification.csv", index=False)
+    else:
+        merged_df = classification_df
+
+    top_examples_df = top_activating_examples_df(feature_activations, classification_df)
+    if not top_examples_df.empty:
+        top_examples_df.to_csv(features_dir / "top_activating_examples.csv", index=False)
 
     training_metrics_path = metrics_dir / "training_metrics.json"
     if not training_metrics_path.is_file():
@@ -919,11 +999,29 @@ def run_analyze_multilayer(
         )
     training_history = load_json(training_metrics_path)
     class_counts = get_multilayer_class_counts(classification_df)
+    multilayer_class_counts = get_multilayer_semantic_class_counts(classification_df)
+    classification_thresholds = get_multilayer_classification_thresholds(classification_df)
+    threshold_sensitivity = get_multilayer_threshold_sensitivity(classification_df)
+    layer_summaries = summarize_layer_metrics(profile_df)
+    cf_layer_summary = summarize_counterfactual_by_layer(cf_layer_df, classification_df)
     aggregate_metrics = {
         "crosscoder_kind": "multilayer_sparc",
         "layers": layers,
         "topk_mode": topk_mode,
+        "topk": crosscoder_topk,
+        "expansion_factor": crosscoder_expansion_factor,
+        "dict_size": crosscoder_dict_size,
+        "forced_shared_fraction": crosscoder_forced_shared_fraction,
         "class_counts": class_counts,
+        "multilayer_class_counts": multilayer_class_counts,
+        "classification_thresholds": classification_thresholds,
+        "threshold_sensitivity": threshold_sensitivity,
+        "class_counts_by_layer": layer_summaries["class_counts_by_layer"],
+        "feature_sharing_ratio_by_layer": layer_summaries["feature_sharing_ratio_by_layer"],
+        "decoder_amplification_by_layer": layer_summaries["decoder_amplification_by_layer"],
+        "classification_thresholds_by_layer": layer_summaries["classification_thresholds_by_layer"],
+        "threshold_sensitivity_by_layer": layer_summaries["threshold_sensitivity_by_layer"],
+        "counterfactual_shift_by_layer": cf_layer_summary,
         "total_features": int(len(classification_df)),
         "fve_base": training_history["val_fve_base"][-1] if training_history.get("val_fve_base") else 0.0,
         "fve_aligned": training_history["val_fve_aligned"][-1] if training_history.get("val_fve_aligned") else 0.0,
@@ -933,11 +1031,39 @@ def run_analyze_multilayer(
         "fve_aligned_by_layer": training_history["val_fve_aligned_by_layer"][-1]
         if training_history.get("val_fve_aligned_by_layer")
         else [],
+        "val_fve_base_by_layer": training_history["val_fve_base_by_layer"][-1]
+        if training_history.get("val_fve_base_by_layer")
+        else [],
+        "val_fve_aligned_by_layer": training_history["val_fve_aligned_by_layer"][-1]
+        if training_history.get("val_fve_aligned_by_layer")
+        else [],
         "dead_neuron_fraction": training_history["dead_neurons"][-1]
         if training_history.get("dead_neurons")
         else 0.0,
         "l0_sparsity_base": training_history["l0_base"][-1] if training_history.get("l0_base") else 0.0,
         "l0_sparsity_aligned": training_history["l0_aligned"][-1] if training_history.get("l0_aligned") else 0.0,
+        "l0_base_by_layer": training_history["l0_base_by_layer"][-1]
+        if training_history.get("l0_base_by_layer")
+        else [],
+        "l0_aligned_by_layer": training_history["l0_aligned_by_layer"][-1]
+        if training_history.get("l0_aligned_by_layer")
+        else [],
+        "val_l0_base": training_history["val_l0_base"][-1]
+        if training_history.get("val_l0_base")
+        else training_history["l0_base"][-1] if training_history.get("l0_base") else 0.0,
+        "val_l0_aligned": training_history["val_l0_aligned"][-1]
+        if training_history.get("val_l0_aligned")
+        else training_history["l0_aligned"][-1] if training_history.get("l0_aligned") else 0.0,
+        "val_l0_base_by_layer": training_history["val_l0_base_by_layer"][-1]
+        if training_history.get("val_l0_base_by_layer")
+        else training_history["l0_base_by_layer"][-1] if training_history.get("l0_base_by_layer") else [],
+        "val_l0_aligned_by_layer": training_history["val_l0_aligned_by_layer"][-1]
+        if training_history.get("val_l0_aligned_by_layer")
+        else training_history["l0_aligned_by_layer"][-1] if training_history.get("l0_aligned_by_layer") else [],
+        "superposition_fraction": (
+            sum(1 for item in superposition_results["features"].values() if item.get("is_superposition"))
+            / max(1, len(superposition_results["features"]))
+        ),
     }
     save_metrics(aggregate_metrics, aggregate_path)
 
@@ -987,6 +1113,74 @@ def run_visualize(
 
     print(f"\nPlots saved to: {plots_dir}")
     print("Visualization complete!")
+
+
+def run_visualize_multilayer(
+    base_model: str,
+    aligned_run_id: str,
+    layers: list[int],
+    position: str,
+    force: bool = False,
+    output_dir: Optional[Path] = None,
+):
+    from .multilayer_visualize import generate_multilayer_plots
+    import pandas as pd
+
+    results_dir = _resolve_results_dir_multilayer(
+        base_model, aligned_run_id, layers, position, output_dir
+    )
+
+    print(f"\n{'='*60}")
+    print(f"VISUALIZATION: {base_model} / {aligned_run_id} {layers_slug(layers)} {position}")
+    print(f"{'='*60}")
+
+    features_dir = get_features_dir(results_dir)
+    metrics_dir = get_metrics_dir(results_dir)
+    plots_dir = get_plots_dir(results_dir)
+
+    loss_curves_path = plots_dir / "loss_curves.png"
+    if loss_curves_path.exists() and not force:
+        print(f"Plots already exist at {plots_dir}, skipping. Use --force to regenerate.")
+        return
+
+    required_paths = [
+        metrics_dir / "training_metrics.json",
+        features_dir / "feature_classification.csv",
+        features_dir / "decoder_layer_profiles.csv",
+        metrics_dir / "aggregate_metrics.json",
+    ]
+    missing = [path for path in required_paths if not path.is_file()]
+    if missing:
+        joined = "\n  ".join(str(path) for path in missing)
+        raise FileNotFoundError(
+            "Missing multi-layer analysis outputs. Run stage=analyze first. Missing:\n  " + joined
+        )
+
+    training_history = load_json(metrics_dir / "training_metrics.json")
+    aggregate_metrics = load_json(metrics_dir / "aggregate_metrics.json")
+    classification_df = pd.read_csv(features_dir / "feature_classification.csv")
+    profile_df = pd.read_csv(features_dir / "decoder_layer_profiles.csv")
+
+    superposition_path = features_dir / "superposition_analysis.json"
+    superposition_results = load_json(superposition_path) if superposition_path.is_file() else None
+    drift_path = features_dir / "cross_layer_cosine_drift.csv"
+    drift_df = pd.read_csv(drift_path) if drift_path.is_file() else None
+    cf_layer_path = features_dir / "counterfactual_scores_by_layer.csv"
+    cf_layer_df = pd.read_csv(cf_layer_path) if cf_layer_path.is_file() else None
+
+    generate_multilayer_plots(
+        training_history=training_history,
+        classification_df=classification_df,
+        profile_df=profile_df,
+        aggregate_metrics=aggregate_metrics,
+        plots_dir=plots_dir,
+        superposition_results=superposition_results,
+        drift_df=drift_df,
+        cf_layer_df=cf_layer_df,
+    )
+
+    print(f"\nPlots saved to: {plots_dir}")
+    print("Multi-layer visualization complete!")
 
 
 def run_all(
@@ -1058,6 +1252,7 @@ def run_all_multilayer(
     center_layer: Optional[int] = None,
     layer_window: Optional[int] = None,
     topk_mode: str = config.MULTILAYER_TOPK_MODE,
+    n_jobs_superposition: int = 1,
 ):
     run_extract_multilayer(
         base_model,
@@ -1093,6 +1288,15 @@ def run_all_multilayer(
         layers,
         position,
         topk_mode=topk_mode,
+        output_dir=output_dir,
+        n_jobs_superposition=n_jobs_superposition,
+    )
+    run_visualize_multilayer(
+        base_model,
+        aligned_run_id,
+        layers,
+        position,
+        force=force,
         output_dir=output_dir,
     )
     flush_gpu()
@@ -1234,7 +1438,7 @@ def _build_manifest_cmd(row: dict, force: bool, output_root: Optional[Path]) -> 
     cmd = [
         sys.executable,
         "-m",
-        "interp_utils.crosscoder.main",
+        f"{__package__}.main",
         "--stage",
         stage,
         "--crosscoder-kind",
@@ -1668,7 +1872,15 @@ def main():
         layers = _resolve_multilayer_layers_for_stage(args=args, output_dir=output_dir)
         center_layer = args.center_layer if args.center_layer is not None else args.layer
         if args.stage == "visualize":
-            parser.error("visualize is not implemented for --crosscoder-kind multilayer_sparc")
+            run_visualize_multilayer(
+                args.base_model,
+                args.aligned_run_id,
+                layers,
+                args.position,
+                force=args.force,
+                output_dir=output_dir,
+            )
+            return
         if args.stage == "extract":
             run_extract_multilayer(
                 args.base_model,
@@ -1707,6 +1919,7 @@ def main():
                 args.position,
                 topk_mode=args.topk_mode,
                 output_dir=output_dir,
+                n_jobs_superposition=args.n_jobs_superposition,
             )
         elif args.stage == "all":
             run_all_multilayer(
@@ -1728,6 +1941,7 @@ def main():
                 center_layer=center_layer,
                 layer_window=args.layer_window,
                 topk_mode=args.topk_mode,
+                n_jobs_superposition=args.n_jobs_superposition,
             )
         return
 
