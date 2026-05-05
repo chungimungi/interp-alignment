@@ -1,0 +1,680 @@
+{
+  "sae_repo": "chungimungi/SAE-MInAlA_SmolLM3-3B-KTO-merged-layer_19_best",
+  "base_model": "MInAlA/SmolLM3-3B-KTO-merged",
+  "layer": 19,
+  "selection": "mean",
+  "min_density": 0.0001,
+  "stopwords_lang": "english",
+  "num_prompts": 400,
+  "context_size": 512,
+  "total_tokens": 204800,
+  "interpretation_methodology": {
+    "why_this_analysis": [
+      "Record which latent directions get large activations under the chosen corpus and chat template.",
+      "Separate dead or ultra-rare features from dense ones using per-feature statistics.",
+      "Provide concrete token contexts for follow-up causal work (ablation, patching, steering), not as final semantics."
+    ],
+    "known_limitations": [
+      "SAEs optimize reconstruction under sparsity, not axis-aligned semantics; strong features often track templates, delimiters, and high-frequency n-grams.",
+      "Magnitude on frequent structural tokens can overshadow rarer semantic concepts in top-k mining.",
+      "Human-readable labels are post-hoc summaries of co-activation with text; they do not prove a feature causally implements a behavior."
+    ],
+    "keyword_summaries": "Content words are ranked after NLTK stopword removal; tags are simple surface heuristics. Use likely_surface_structure to flag obvious formatting-like patterns.",
+    "stopwords_source": "nltk.corpus.stopwords",
+    "stopwords_lang": "english"
+  },
+  "features": [
+    {
+      "feature_id": 11516,
+      "description": "punctuation/code/math | solution, section, based",
+      "keywords": [
+        "solution",
+        "section",
+        "based"
+      ],
+      "tags": [
+        "punctuation",
+        "code",
+        "math"
+      ],
+      "mean_act": 0.6435714960098267,
+      "max_act": 2.0835700035095215,
+      "density": 0.475927734375,
+      "avg_fired_token_len": 1.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.0835700035095215,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 6,
+          "position_idx": 208
+        },
+        {
+          "activation": 2.0835700035095215,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 7,
+          "position_idx": 208
+        },
+        {
+          "activation": 2.0835700035095215,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 4,
+          "position_idx": 208
+        },
+        {
+          "activation": 2.0835700035095215,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 5,
+          "position_idx": 208
+        },
+        {
+          "activation": 2.0835700035095215,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 0,
+          "position_idx": 208
+        },
+        {
+          "activation": 2.0835700035095215,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 1,
+          "position_idx": 208
+        },
+        {
+          "activation": 2.0835700035095215,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 3,
+          "position_idx": 208
+        },
+        {
+          "activation": 2.0835700035095215,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 2,
+          "position_idx": 208
+        },
+        {
+          "activation": 2.0835700035095215,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 10,
+          "position_idx": 208
+        },
+        {
+          "activation": 2.0835700035095215,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 11,
+          "position_idx": 208
+        },
+        {
+          "activation": 2.0835700035095215,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 9,
+          "position_idx": 208
+        },
+        {
+          "activation": 2.0835700035095215,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 8,
+          "position_idx": 208
+        }
+      ]
+    },
+    {
+      "feature_id": 15168,
+      "description": "code/math | cycle, systematic, thinking",
+      "keywords": [
+        "cycle",
+        "systematic",
+        "thinking"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.4913582503795624,
+      "max_act": 1.5683352947235107,
+      "density": 0.4760205078125,
+      "avg_fired_token_len": 6.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 1.5683352947235107,
+          "text": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "fired_token": " cycle",
+          "pre_context": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive",
+          "post_context": " of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "example_idx": 6,
+          "position_idx": 83
+        },
+        {
+          "activation": 1.5683352947235107,
+          "text": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "fired_token": " cycle",
+          "pre_context": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive",
+          "post_context": " of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "example_idx": 7,
+          "position_idx": 83
+        },
+        {
+          "activation": 1.5683352947235107,
+          "text": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "fired_token": " cycle",
+          "pre_context": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive",
+          "post_context": " of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "example_idx": 4,
+          "position_idx": 83
+        },
+        {
+          "activation": 1.5683352947235107,
+          "text": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "fired_token": " cycle",
+          "pre_context": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive",
+          "post_context": " of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "example_idx": 5,
+          "position_idx": 83
+        },
+        {
+          "activation": 1.5683352947235107,
+          "text": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "fired_token": " cycle",
+          "pre_context": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive",
+          "post_context": " of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "example_idx": 0,
+          "position_idx": 83
+        },
+        {
+          "activation": 1.5683352947235107,
+          "text": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "fired_token": " cycle",
+          "pre_context": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive",
+          "post_context": " of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "example_idx": 1,
+          "position_idx": 83
+        },
+        {
+          "activation": 1.5683352947235107,
+          "text": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "fired_token": " cycle",
+          "pre_context": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive",
+          "post_context": " of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "example_idx": 3,
+          "position_idx": 83
+        },
+        {
+          "activation": 1.5683352947235107,
+          "text": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "fired_token": " cycle",
+          "pre_context": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive",
+          "post_context": " of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "example_idx": 2,
+          "position_idx": 83
+        },
+        {
+          "activation": 1.5683352947235107,
+          "text": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "fired_token": " cycle",
+          "pre_context": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive",
+          "post_context": " of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "example_idx": 10,
+          "position_idx": 83
+        },
+        {
+          "activation": 1.5683352947235107,
+          "text": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "fired_token": " cycle",
+          "pre_context": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive",
+          "post_context": " of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "example_idx": 11,
+          "position_idx": 83
+        },
+        {
+          "activation": 1.5683352947235107,
+          "text": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "fired_token": " cycle",
+          "pre_context": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive",
+          "post_context": " of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "example_idx": 9,
+          "position_idx": 83
+        },
+        {
+          "activation": 1.5683352947235107,
+          "text": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "fired_token": " cycle",
+          "pre_context": " through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive",
+          "post_context": " of analysis, summarizing, exploration, reassessment, reflection, backtracking, and iteration to develop",
+          "example_idx": 8,
+          "position_idx": 83
+        }
+      ]
+    },
+    {
+      "feature_id": 13253,
+      "description": "code/refusal/safety/math | reach, conclusion, user",
+      "keywords": [
+        "reach",
+        "conclusion",
+        "user"
+      ],
+      "tags": [
+        "code",
+        "refusal/safety",
+        "math"
+      ],
+      "mean_act": 0.47702738642692566,
+      "max_act": 2.650055408477783,
+      "density": 0.6371728515625,
+      "avg_fired_token_len": 4.916666666666667,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.650055408477783,
+          "text": " to reach the conclusion.\n\nuser\nCreate a portfolio showcasing your animation or motion graphics work, with a specific focus on a particular style or technique. Include at least five examples of your best work using the",
+          "fired_token": " a",
+          "pre_context": " to reach the conclusion.\n\nuser\nCreate a portfolio showcasing your animation or motion graphics work, with",
+          "post_context": " specific focus on a particular style or technique. Include at least five examples of your best work using the",
+          "example_idx": 253,
+          "position_idx": 255
+        },
+        {
+          "activation": 2.640608787536621,
+          "text": " needed to reach the conclusion.\n\nuser\nCreate a portfolio showcasing your animation or motion graphics work, with a specific focus on a particular style or technique. Include at least five examples of your best work using",
+          "fired_token": " with",
+          "pre_context": " needed to reach the conclusion.\n\nuser\nCreate a portfolio showcasing your animation or motion graphics work,",
+          "post_context": " a specific focus on a particular style or technique. Include at least five examples of your best work using",
+          "example_idx": 253,
+          "position_idx": 254
+        },
+        {
+          "activation": 2.5193428993225098,
+          "text": ", and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWrite an essay that evaluates the positive and negative influence of social media on personal relationships, citing specific examples and research to support your",
+          "fired_token": " evaluates",
+          "pre_context": ", and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWrite an essay that",
+          "post_context": " the positive and negative influence of social media on personal relationships, citing specific examples and research to support your",
+          "example_idx": 4,
+          "position_idx": 247
+        },
+        {
+          "activation": 2.4947705268859863,
+          "text": " reach the conclusion.\n\nuser\nConduct a thorough analysis of a company's supply chain management system, including all processes, procedures, and practices currently in place. Based on your findings, develop a comprehensive",
+          "fired_token": ",",
+          "pre_context": " reach the conclusion.\n\nuser\nConduct a thorough analysis of a company's supply chain management system",
+          "post_context": " including all processes, procedures, and practices currently in place. Based on your findings, develop a comprehensive",
+          "example_idx": 269,
+          "position_idx": 256
+        },
+        {
+          "activation": 2.485665798187256,
+          "text": " concise and detail necessary steps needed to reach the conclusion.\n\nuser\nProvide a comprehensive analysis that examines the similarities and differences between Eastern and Western medicine practices. Include an examination of the philosophical and cultural underp",
+          "fired_token": " the",
+          "pre_context": " concise and detail necessary steps needed to reach the conclusion.\n\nuser\nProvide a comprehensive analysis that examines",
+          "post_context": " similarities and differences between Eastern and Western medicine practices. Include an examination of the philosophical and cultural underp",
+          "example_idx": 250,
+          "position_idx": 249
+        },
+        {
+          "activation": 2.4826385974884033,
+          "text": " secret ingredients, timed challenges, and high-pressure cooking conditions to keep viewers engaged throughout the season. Additionally, think about how you can generate drama and conflict between the chefs, whether through personality clashes or intense competitive",
+          "fired_token": ",",
+          "pre_context": " secret ingredients, timed challenges, and high-pressure cooking conditions to keep viewers engaged throughout the season. Additionally",
+          "post_context": " think about how you can generate drama and conflict between the chefs, whether through personality clashes or intense competitive",
+          "example_idx": 287,
+          "position_idx": 307
+        },
+        {
+          "activation": 2.4689764976501465,
+          "text": " with both clients and colleagues in order to accomplish project goals and fulfill customer needs.\"\nassistant\nI don't have any colleagues, but I'd be happy to provide suggestions for how to accomplish effective",
+          "fired_token": "\n",
+          "pre_context": " with both clients and colleagues in order to accomplish project goals and fulfill customer needs.\"\nassistant",
+          "post_context": "I don't have any colleagues, but I'd be happy to provide suggestions for how to accomplish effective",
+          "example_idx": 234,
+          "position_idx": 287
+        },
+        {
+          "activation": 2.4575324058532715,
+          "text": " and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nProvide a comprehensive analysis that examines the similarities and differences between Eastern and Western medicine practices. Include an examination of the philosophical and cultural under",
+          "fired_token": " examines",
+          "pre_context": " and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nProvide a comprehensive analysis that",
+          "post_context": " the similarities and differences between Eastern and Western medicine practices. Include an examination of the philosophical and cultural under",
+          "example_idx": 250,
+          "position_idx": 248
+        },
+        {
+          "activation": 2.451585292816162,
+          "text": " and detail necessary steps needed to reach the conclusion.\n\nuser\nCreate a 10-minute presentation that highlights the significance of engaging in self-reflection as a means of achieving personal growth. Organize your content",
+          "fired_token": " highlights",
+          "pre_context": " and detail necessary steps needed to reach the conclusion.\n\nuser\nCreate a 10-minute presentation that",
+          "post_context": " the significance of engaging in self-reflection as a means of achieving personal growth. Organize your content",
+          "example_idx": 55,
+          "position_idx": 250
+        },
+        {
+          "activation": 2.450502395629883,
+          "text": " and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nProvide a comprehensive lesson plan that covers techniques for practicing mindful eating and how it can prevent obesity in individuals. Include practical exercises, interactive",
+          "fired_token": " that",
+          "pre_context": " and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nProvide a comprehensive lesson plan",
+          "post_context": " covers techniques for practicing mindful eating and how it can prevent obesity in individuals. Include practical exercises, interactive",
+          "example_idx": 104,
+          "position_idx": 248
+        },
+        {
+          "activation": 2.4491443634033203,
+          "text": " necessary steps needed to reach the conclusion.\n\nuser\nDevelop an outline for a workplace safety training program that includes the following topics: emergency procedures, hazard identification and reporting, personal protective equipment, safe lifting techniques",
+          "fired_token": " that",
+          "pre_context": " necessary steps needed to reach the conclusion.\n\nuser\nDevelop an outline for a workplace safety training program",
+          "post_context": " includes the following topics: emergency procedures, hazard identification and reporting, personal protective equipment, safe lifting techniques",
+          "example_idx": 256,
+          "position_idx": 252
+        },
+        {
+          "activation": 2.4363479614257812,
+          "text": " and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nCreate a new marketing campaign that targets high-end audiences for a new line of luxury watches that has distinctive features and design. Ensure that",
+          "fired_token": " that",
+          "pre_context": " and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nCreate a new marketing campaign",
+          "post_context": " targets high-end audiences for a new line of luxury watches that has distinctive features and design. Ensure that",
+          "example_idx": 49,
+          "position_idx": 248
+        }
+      ]
+    },
+    {
+      "feature_id": 12431,
+      "description": "code/math | festivals, user, activities",
+      "keywords": [
+        "festivals",
+        "user",
+        "activities"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.45300373435020447,
+      "max_act": 2.6213762760162354,
+      "density": 0.5816796875,
+      "avg_fired_token_len": 4.75,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.6213762760162354,
+          "text": " conclusion.\n\nuser\nPay per click advertisements can give an effective boost to your internet marketing campaign. These ads show up at the top and to the side of organic search results and are a quick way of",
+          "fired_token": " These",
+          "pre_context": " conclusion.\n\nuser\nPay per click advertisements can give an effective boost to your internet marketing campaign.",
+          "post_context": " ads show up at the top and to the side of organic search results and are a quick way of",
+          "example_idx": 160,
+          "position_idx": 258
+        },
+        {
+          "activation": 2.584848642349243,
+          "text": " necessary steps needed to reach the conclusion.\n\nuser\n\"Utilize various communication tools such as email, instant messaging, and video conferencing to effectively work together and exchange ideas with both clients and colleagues in",
+          "fired_token": ",",
+          "pre_context": " necessary steps needed to reach the conclusion.\n\nuser\n\"Utilize various communication tools such as email",
+          "post_context": " instant messaging, and video conferencing to effectively work together and exchange ideas with both clients and colleagues in",
+          "example_idx": 234,
+          "position_idx": 252
+        },
+        {
+          "activation": 2.529703378677368,
+          "text": " and detail necessary steps needed to reach the conclusion.\n\nuser\n\"Utilize various communication tools such as email, instant messaging, and video conferencing to effectively work together and exchange ideas with both clients and",
+          "fired_token": " as",
+          "pre_context": " and detail necessary steps needed to reach the conclusion.\n\nuser\n\"Utilize various communication tools such",
+          "post_context": " email, instant messaging, and video conferencing to effectively work together and exchange ideas with both clients and",
+          "example_idx": 234,
+          "position_idx": 250
+        },
+        {
+          "activation": 2.509608745574951,
+          "text": "user\nTheir festivals with great pomp and show. For some, festivals are unnecessary distractions but for others, they are very important. Types of Festivals, every religion has got its own set of festivals based",
+          "fired_token": ",",
+          "pre_context": "user\nTheir festivals with great pomp and show. For some, festivals are unnecessary distractions but for others",
+          "post_context": " they are very important. Types of Festivals, every religion has got its own set of festivals based",
+          "example_idx": 336,
+          "position_idx": 261
+        },
+        {
+          "activation": 2.471707344055176,
+          "text": " practicing grammar, and mastering pronunciation. Incorporate interactive activities such as quizzes, games, and audio exercises to engage learners and reinforce concepts. Emphasize practical conversation skills and provide resources for accessing authentic language materials",
+          "fired_token": " to",
+          "pre_context": " practicing grammar, and mastering pronunciation. Incorporate interactive activities such as quizzes, games, and audio exercises",
+          "post_context": " engage learners and reinforce concepts. Emphasize practical conversation skills and provide resources for accessing authentic language materials",
+          "example_idx": 47,
+          "position_idx": 283
+        },
+        {
+          "activation": 2.4481611251831055,
+          "text": "pieces?\nGenerate according to: Love is a strong feeling and it is a central theme in art. Artists and poets have depicted love in everlasting masterpieces. For those who don't understand the feeling, poetry",
+          "fired_token": " Artists",
+          "pre_context": "pieces?\nGenerate according to: Love is a strong feeling and it is a central theme in art.",
+          "post_context": " and poets have depicted love in everlasting masterpieces. For those who don't understand the feeling, poetry",
+          "example_idx": 191,
+          "position_idx": 277
+        },
+        {
+          "activation": 2.444422960281372,
+          "text": "Their festivals with great pomp and show. For some, festivals are unnecessary distractions but for others, they are very important. Types of Festivals, every religion has got its own set of festivals based upon Myth",
+          "fired_token": " are",
+          "pre_context": "Their festivals with great pomp and show. For some, festivals are unnecessary distractions but for others, they",
+          "post_context": " very important. Types of Festivals, every religion has got its own set of festivals based upon Myth",
+          "example_idx": 336,
+          "position_idx": 263
+        },
+        {
+          "activation": 2.424114227294922,
+          "text": " a new language with a focus on building vocabulary, practicing grammar, and mastering pronunciation. Incorporate interactive activities such as quizzes, games, and audio exercises to engage learners and reinforce concepts. Emphasize practical",
+          "fired_token": " activities",
+          "pre_context": " a new language with a focus on building vocabulary, practicing grammar, and mastering pronunciation. Incorporate interactive",
+          "post_context": " such as quizzes, games, and audio exercises to engage learners and reinforce concepts. Emphasize practical",
+          "example_idx": 47,
+          "position_idx": 273
+        },
+        {
+          "activation": 2.408107042312622,
+          "text": " captures the unique taste, texture, and aroma of your favorite type of ice cream. Include vivid descriptions that convey the specific flavors, colors, and ingredients of your chosen ice cream flavor. Use sensory language to",
+          "fired_token": " that",
+          "pre_context": " captures the unique taste, texture, and aroma of your favorite type of ice cream. Include vivid descriptions",
+          "post_context": " convey the specific flavors, colors, and ingredients of your chosen ice cream flavor. Use sensory language to",
+          "example_idx": 100,
+          "position_idx": 273
+        },
+        {
+          "activation": 2.3757190704345703,
+          "text": " use of symbolism affects the audience's understanding of the themes and motifs throughout the play. Provide specific examples of the symbolism used and its impact on the audience.\nassistant\nThe play \"The Glass",
+          "fired_token": " of",
+          "pre_context": " use of symbolism affects the audience's understanding of the themes and motifs throughout the play. Provide specific examples",
+          "post_context": " the symbolism used and its impact on the audience.\nassistant\nThe play \"The Glass",
+          "example_idx": 177,
+          "position_idx": 270
+        },
+        {
+          "activation": 2.372123956680298,
+          "text": ".\n\nuser\nPay per click advertisements can give an effective boost to your internet marketing campaign. These ads show up at the top and to the side of organic search results and are a quick way of getting",
+          "fired_token": " ads",
+          "pre_context": ".\n\nuser\nPay per click advertisements can give an effective boost to your internet marketing campaign. These",
+          "post_context": " show up at the top and to the side of organic search results and are a quick way of getting",
+          "example_idx": 160,
+          "position_idx": 259
+        },
+        {
+          "activation": 2.3641185760498047,
+          "text": " practices around the world that exist to manage water resources. Ensure that your article sheds light on the different methods employed while taking into consideration the environmental and cultural contexts. Additionally, your article should include references to the",
+          "fired_token": " methods",
+          "pre_context": " practices around the world that exist to manage water resources. Ensure that your article sheds light on the different",
+          "post_context": " employed while taking into consideration the environmental and cultural contexts. Additionally, your article should include references to the",
+          "example_idx": 247,
+          "position_idx": 276
+        }
+      ]
+    },
+    {
+      "feature_id": 13541,
+      "description": "code/math | engaging, involves, thoroughly",
+      "keywords": [
+        "engaging",
+        "involves",
+        "thoroughly"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.34016871452331543,
+      "max_act": 1.6279938220977783,
+      "density": 0.362236328125,
+      "avg_fired_token_len": 9.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 1.6279938220977783,
+          "text": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "fired_token": " engaging",
+          "pre_context": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires",
+          "post_context": " in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "example_idx": 6,
+          "position_idx": 79
+        },
+        {
+          "activation": 1.6279938220977783,
+          "text": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "fired_token": " engaging",
+          "pre_context": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires",
+          "post_context": " in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "example_idx": 7,
+          "position_idx": 79
+        },
+        {
+          "activation": 1.6279938220977783,
+          "text": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "fired_token": " engaging",
+          "pre_context": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires",
+          "post_context": " in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "example_idx": 4,
+          "position_idx": 79
+        },
+        {
+          "activation": 1.6279938220977783,
+          "text": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "fired_token": " engaging",
+          "pre_context": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires",
+          "post_context": " in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "example_idx": 5,
+          "position_idx": 79
+        },
+        {
+          "activation": 1.6279938220977783,
+          "text": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "fired_token": " engaging",
+          "pre_context": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires",
+          "post_context": " in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "example_idx": 0,
+          "position_idx": 79
+        },
+        {
+          "activation": 1.6279938220977783,
+          "text": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "fired_token": " engaging",
+          "pre_context": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires",
+          "post_context": " in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "example_idx": 1,
+          "position_idx": 79
+        },
+        {
+          "activation": 1.6279938220977783,
+          "text": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "fired_token": " engaging",
+          "pre_context": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires",
+          "post_context": " in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "example_idx": 3,
+          "position_idx": 79
+        },
+        {
+          "activation": 1.6279938220977783,
+          "text": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "fired_token": " engaging",
+          "pre_context": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires",
+          "post_context": " in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "example_idx": 2,
+          "position_idx": 79
+        },
+        {
+          "activation": 1.6279938220977783,
+          "text": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "fired_token": " engaging",
+          "pre_context": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires",
+          "post_context": " in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "example_idx": 10,
+          "position_idx": 79
+        },
+        {
+          "activation": 1.6279938220977783,
+          "text": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "fired_token": " engaging",
+          "pre_context": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires",
+          "post_context": " in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "example_idx": 11,
+          "position_idx": 79
+        },
+        {
+          "activation": 1.6279938220977783,
+          "text": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "fired_token": " engaging",
+          "pre_context": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires",
+          "post_context": " in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "example_idx": 9,
+          "position_idx": 79
+        },
+        {
+          "activation": 1.6279938220977783,
+          "text": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "fired_token": " engaging",
+          "pre_context": " involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires",
+          "post_context": " in a comprehensive cycle of analysis, summarizing, exploration, reassessment, reflection, backtracking,",
+          "example_idx": 8,
+          "position_idx": 79
+        }
+      ]
+    }
+  ]
+}

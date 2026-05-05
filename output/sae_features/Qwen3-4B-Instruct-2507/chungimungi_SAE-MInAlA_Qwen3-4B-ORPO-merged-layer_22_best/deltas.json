@@ -1,0 +1,12 @@
+{
+  "alive_features_aligned": 3853,
+  "alive_features_baseline": 4672,
+  "mean_density_aligned": 0.004050705091347307,
+  "mean_density_baseline": 0.004063668195158243,
+  "mean_max_act_aligned": 4.298482894897461,
+  "mean_max_act_baseline": 4.750946521759033,
+  "delta_alive": -819,
+  "delta_mean_density": -1.2963103810935926e-05,
+  "delta_mean_max_act": -0.45246362686157227,
+  "baseline_metadata_path": "/home/vng598/C-ANNs/interp-alignment/output/sae_features/Qwen3-4B-Instruct-2507/chungimungi_SAE-Qwen_Qwen3-4B-Instruct-2507-layer_24_best/replot_metadata.npz"
+}

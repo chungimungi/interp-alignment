@@ -1,0 +1,680 @@
+{
+  "sae_repo": "chungimungi/SAE-MInAlA_SmolLM3-3B-PPO-merged-layer_18_best",
+  "base_model": "MInAlA/SmolLM3-3B-PPO-merged",
+  "layer": 18,
+  "selection": "mean",
+  "min_density": 0.0001,
+  "stopwords_lang": "english",
+  "num_prompts": 400,
+  "context_size": 512,
+  "total_tokens": 204800,
+  "interpretation_methodology": {
+    "why_this_analysis": [
+      "Record which latent directions get large activations under the chosen corpus and chat template.",
+      "Separate dead or ultra-rare features from dense ones using per-feature statistics.",
+      "Provide concrete token contexts for follow-up causal work (ablation, patching, steering), not as final semantics."
+    ],
+    "known_limitations": [
+      "SAEs optimize reconstruction under sparsity, not axis-aligned semantics; strong features often track templates, delimiters, and high-frequency n-grams.",
+      "Magnitude on frequent structural tokens can overshadow rarer semantic concepts in top-k mining.",
+      "Human-readable labels are post-hoc summaries of co-activation with text; they do not prove a feature causally implements a behavior."
+    ],
+    "keyword_summaries": "Content words are ranked after NLTK stopword removal; tags are simple surface heuristics. Use likely_surface_structure to flag obvious formatting-like patterns.",
+    "stopwords_source": "nltk.corpus.stopwords",
+    "stopwords_lang": "english"
+  },
+  "features": [
+    {
+      "feature_id": 2298,
+      "description": "code/math | smollm, trained, hugging",
+      "keywords": [
+        "smollm",
+        "trained",
+        "hugging"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.7249108552932739,
+      "max_act": 1.9991142749786377,
+      "density": 0.4738134765625,
+      "avg_fired_token_len": 2.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 1.9991142749786377,
+          "text": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "fired_token": " a",
+          "pre_context": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through",
+          "post_context": " systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "example_idx": 6,
+          "position_idx": 64
+        },
+        {
+          "activation": 1.9991142749786377,
+          "text": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "fired_token": " a",
+          "pre_context": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through",
+          "post_context": " systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "example_idx": 7,
+          "position_idx": 64
+        },
+        {
+          "activation": 1.9991142749786377,
+          "text": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "fired_token": " a",
+          "pre_context": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through",
+          "post_context": " systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "example_idx": 4,
+          "position_idx": 64
+        },
+        {
+          "activation": 1.9991142749786377,
+          "text": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "fired_token": " a",
+          "pre_context": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through",
+          "post_context": " systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "example_idx": 5,
+          "position_idx": 64
+        },
+        {
+          "activation": 1.9991142749786377,
+          "text": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "fired_token": " a",
+          "pre_context": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through",
+          "post_context": " systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "example_idx": 0,
+          "position_idx": 64
+        },
+        {
+          "activation": 1.9991142749786377,
+          "text": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "fired_token": " a",
+          "pre_context": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through",
+          "post_context": " systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "example_idx": 1,
+          "position_idx": 64
+        },
+        {
+          "activation": 1.9991142749786377,
+          "text": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "fired_token": " a",
+          "pre_context": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through",
+          "post_context": " systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "example_idx": 3,
+          "position_idx": 64
+        },
+        {
+          "activation": 1.9991142749786377,
+          "text": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "fired_token": " a",
+          "pre_context": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through",
+          "post_context": " systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "example_idx": 2,
+          "position_idx": 64
+        },
+        {
+          "activation": 1.9991142749786377,
+          "text": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "fired_token": " a",
+          "pre_context": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through",
+          "post_context": " systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "example_idx": 10,
+          "position_idx": 64
+        },
+        {
+          "activation": 1.9991142749786377,
+          "text": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "fired_token": " a",
+          "pre_context": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through",
+          "post_context": " systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "example_idx": 11,
+          "position_idx": 64
+        },
+        {
+          "activation": 1.9991142749786377,
+          "text": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "fired_token": " a",
+          "pre_context": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through",
+          "post_context": " systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "example_idx": 9,
+          "position_idx": 64
+        },
+        {
+          "activation": 1.9991142749786377,
+          "text": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "fired_token": " a",
+          "pre_context": " SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through",
+          "post_context": " systematic thinking process before providing the final precise and accurate solutions. This requires engaging in a comprehensive cycle of",
+          "example_idx": 8,
+          "position_idx": 64
+        }
+      ]
+    },
+    {
+      "feature_id": 11307,
+      "description": "code/politeness/math | benefits, language, activities",
+      "keywords": [
+        "benefits",
+        "language",
+        "activities"
+      ],
+      "tags": [
+        "code",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 0.684873640537262,
+      "max_act": 2.9647397994995117,
+      "density": 0.6798779296875,
+      "avg_fired_token_len": 6.333333333333333,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.9647397994995117,
+          "text": " practicing grammar, and mastering pronunciation. Incorporate interactive activities such as quizzes, games, and audio exercises to engage learners and reinforce concepts. Emphasize practical conversation skills and provide resources for accessing authentic language materials",
+          "fired_token": " to",
+          "pre_context": " practicing grammar, and mastering pronunciation. Incorporate interactive activities such as quizzes, games, and audio exercises",
+          "post_context": " engage learners and reinforce concepts. Emphasize practical conversation skills and provide resources for accessing authentic language materials",
+          "example_idx": 47,
+          "position_idx": 283
+        },
+        {
+          "activation": 2.9475457668304443,
+          "text": " creating a successful lead magnet that includes information about choosing a topic, designing visually appealing content, incorporating persuasive language, selecting an appropriate format, and effective distribution tactics.\nassistant\nStep 1:",
+          "fired_token": " language",
+          "pre_context": " creating a successful lead magnet that includes information about choosing a topic, designing visually appealing content, incorporating persuasive",
+          "post_context": ", selecting an appropriate format, and effective distribution tactics.\nassistant\nStep 1:",
+          "example_idx": 192,
+          "position_idx": 270
+        },
+        {
+          "activation": 2.946963310241699,
+          "text": " business strategy, including a detailed analysis and evaluation of the proposed approach. The paper should articulate the potential benefits, risks, and challenges of the strategy, and offer recommendations for how best to implement it. Additionally",
+          "fired_token": " benefits",
+          "pre_context": " business strategy, including a detailed analysis and evaluation of the proposed approach. The paper should articulate the potential",
+          "post_context": ", risks, and challenges of the strategy, and offer recommendations for how best to implement it. Additionally",
+          "example_idx": 153,
+          "position_idx": 273
+        },
+        {
+          "activation": 2.8623528480529785,
+          "text": " include visually appealing graphics, engaging content, and clear messaging to promote the environmental, economic, and social benefits of geothermal energy. Make sure to target different demographics and platforms, such as Instagram, Twitter,",
+          "fired_token": " benefits",
+          "pre_context": " include visually appealing graphics, engaging content, and clear messaging to promote the environmental, economic, and social",
+          "post_context": " of geothermal energy. Make sure to target different demographics and platforms, such as Instagram, Twitter,",
+          "example_idx": 365,
+          "position_idx": 294
+        },
+        {
+          "activation": 2.856842041015625,
+          "text": ". Organize your content to clearly communicate the benefits of self-reflection, such as enhancing self-awareness, making positive life changes, developing critical thinking skills, and improving relationships. Incorporate relatable examples",
+          "fired_token": "ness",
+          "pre_context": ". Organize your content to clearly communicate the benefits of self-reflection, such as enhancing self-aware",
+          "post_context": ", making positive life changes, developing critical thinking skills, and improving relationships. Incorporate relatable examples",
+          "example_idx": 55,
+          "position_idx": 286
+        },
+        {
+          "activation": 2.8472092151641846,
+          "text": " the budget and resources required for the implementation of the new recognition and rewards program in addition to outlining the benefits and expected outcomes. Ensure that the proposal includes measurable goals, implementation timelines, employee feedback mechanisms and program",
+          "fired_token": " benefits",
+          "pre_context": " the budget and resources required for the implementation of the new recognition and rewards program in addition to outlining the",
+          "post_context": " and expected outcomes. Ensure that the proposal includes measurable goals, implementation timelines, employee feedback mechanisms and program",
+          "example_idx": 267,
+          "position_idx": 268
+        },
+        {
+          "activation": 2.834716796875,
+          "text": " a Jupyter Notebook that conducts a data analysis of a real-world dataset and provides insights through visualization and statistical testing.\nassistant\nI don't have the capability of creating a jupyter notebook.",
+          "fired_token": " statistical",
+          "pre_context": " a Jupyter Notebook that conducts a data analysis of a real-world dataset and provides insights through visualization and",
+          "post_context": " testing.\nassistant\nI don't have the capability of creating a jupyter notebook.",
+          "example_idx": 392,
+          "position_idx": 264
+        },
+        {
+          "activation": 2.8291015625,
+          "text": " to efficiently and accurately store and retrieve music data. Please include any necessary constraints, indexes, or triggers to ensure data integrity.\nassistant\nHere is a sample schema for a music database:\n\nTABLE",
+          "fired_token": " to",
+          "pre_context": " to efficiently and accurately store and retrieve music data. Please include any necessary constraints, indexes, or triggers",
+          "post_context": " ensure data integrity.\nassistant\nHere is a sample schema for a music database:\n\nTABLE",
+          "example_idx": 224,
+          "position_idx": 268
+        },
+        {
+          "activation": 2.802781820297241,
+          "text": " the mental, physical, and emotional benefits of spending time in nature. Use scientific research and personal anecdotes to support your claims, and include suggestions for ways that readers can incorporate more nature time into their lives.",
+          "fired_token": " to",
+          "pre_context": " the mental, physical, and emotional benefits of spending time in nature. Use scientific research and personal anecdotes",
+          "post_context": " support your claims, and include suggestions for ways that readers can incorporate more nature time into their lives.",
+          "example_idx": 395,
+          "position_idx": 277
+        },
+        {
+          "activation": 2.7744600772857666,
+          "text": " a new language with a focus on building vocabulary, practicing grammar, and mastering pronunciation. Incorporate interactive activities such as quizzes, games, and audio exercises to engage learners and reinforce concepts. Emphasize practical",
+          "fired_token": " activities",
+          "pre_context": " a new language with a focus on building vocabulary, practicing grammar, and mastering pronunciation. Incorporate interactive",
+          "post_context": " such as quizzes, games, and audio exercises to engage learners and reinforce concepts. Emphasize practical",
+          "example_idx": 47,
+          "position_idx": 273
+        },
+        {
+          "activation": 2.7629427909851074,
+          "text": ", renewable source of energy. Your campaign should include visually appealing graphics, engaging content, and clear messaging to promote the environmental, economic, and social benefits of geothermal energy. Make sure to target different demographics",
+          "fired_token": " to",
+          "pre_context": ", renewable source of energy. Your campaign should include visually appealing graphics, engaging content, and clear messaging",
+          "post_context": " promote the environmental, economic, and social benefits of geothermal energy. Make sure to target different demographics",
+          "example_idx": 365,
+          "position_idx": 285
+        },
+        {
+          "activation": 2.761565923690796,
+          "text": " on a new project which includes details on the scope of the partnership, roles and responsibilities of each party, ownership of intellectual property, confidentiality provisions, dispute resolution mechanisms, termination conditions, financial contributions, reporting requirements",
+          "fired_token": ",",
+          "pre_context": " on a new project which includes details on the scope of the partnership, roles and responsibilities of each party",
+          "post_context": " ownership of intellectual property, confidentiality provisions, dispute resolution mechanisms, termination conditions, financial contributions, reporting requirements",
+          "example_idx": 279,
+          "position_idx": 273
+        }
+      ]
+    },
+    {
+      "feature_id": 12389,
+      "description": "code/politeness/math | steps, solution, deem",
+      "keywords": [
+        "steps",
+        "solution",
+        "deem"
+      ],
+      "tags": [
+        "code",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 0.4170304536819458,
+      "max_act": 2.2406091690063477,
+      "density": 0.49484375,
+      "avg_fired_token_len": 6.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.2406091690063477,
+          "text": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWrite a Python program that can identify and remove duplicate images",
+          "fired_token": " steps",
+          "pre_context": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary",
+          "post_context": " needed to reach the conclusion.\n\nuser\nWrite a Python program that can identify and remove duplicate images",
+          "example_idx": 6,
+          "position_idx": 233
+        },
+        {
+          "activation": 2.2406091690063477,
+          "text": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nPlease provide a specific cooking method for the salmon, as",
+          "fired_token": " steps",
+          "pre_context": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary",
+          "post_context": " needed to reach the conclusion.\n\nuser\nPlease provide a specific cooking method for the salmon, as",
+          "example_idx": 7,
+          "position_idx": 233
+        },
+        {
+          "activation": 2.2406091690063477,
+          "text": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWrite an essay that evaluates the positive and negative influence of",
+          "fired_token": " steps",
+          "pre_context": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary",
+          "post_context": " needed to reach the conclusion.\n\nuser\nWrite an essay that evaluates the positive and negative influence of",
+          "example_idx": 4,
+          "position_idx": 233
+        },
+        {
+          "activation": 2.2406091690063477,
+          "text": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWhat many companies do when planning their global marketing strategies is",
+          "fired_token": " steps",
+          "pre_context": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary",
+          "post_context": " needed to reach the conclusion.\n\nuser\nWhat many companies do when planning their global marketing strategies is",
+          "example_idx": 5,
+          "position_idx": 233
+        },
+        {
+          "activation": 2.2406091690063477,
+          "text": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nThese instructions apply to section-based themes (Responsive 6",
+          "fired_token": " steps",
+          "pre_context": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary",
+          "post_context": " needed to reach the conclusion.\n\nuser\nThese instructions apply to section-based themes (Responsive 6",
+          "example_idx": 0,
+          "position_idx": 233
+        },
+        {
+          "activation": 2.2406091690063477,
+          "text": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWhich famous landmarks should I visit in London, beyond the",
+          "fired_token": " steps",
+          "pre_context": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary",
+          "post_context": " needed to reach the conclusion.\n\nuser\nWhich famous landmarks should I visit in London, beyond the",
+          "example_idx": 1,
+          "position_idx": 233
+        },
+        {
+          "activation": 2.2406091690063477,
+          "text": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nDe León, previewing the speech he will give",
+          "fired_token": " steps",
+          "pre_context": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary",
+          "post_context": " needed to reach the conclusion.\n\nuser\nDe León, previewing the speech he will give",
+          "example_idx": 3,
+          "position_idx": 233
+        },
+        {
+          "activation": 2.2406091690063477,
+          "text": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWrite a comprehensive blog post of at least 1000",
+          "fired_token": " steps",
+          "pre_context": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary",
+          "post_context": " needed to reach the conclusion.\n\nuser\nWrite a comprehensive blog post of at least 1000",
+          "example_idx": 2,
+          "position_idx": 233
+        },
+        {
+          "activation": 2.2406091690063477,
+          "text": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nExpressing your emotions is what keeps a relationship going.",
+          "fired_token": " steps",
+          "pre_context": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary",
+          "post_context": " needed to reach the conclusion.\n\nuser\nExpressing your emotions is what keeps a relationship going.",
+          "example_idx": 10,
+          "position_idx": 233
+        },
+        {
+          "activation": 2.2406091690063477,
+          "text": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nHow did the Spanish conquest of the Low Countries in the",
+          "fired_token": " steps",
+          "pre_context": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary",
+          "post_context": " needed to reach the conclusion.\n\nuser\nHow did the Spanish conquest of the Low Countries in the",
+          "example_idx": 11,
+          "position_idx": 233
+        },
+        {
+          "activation": 2.2406091690063477,
+          "text": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWrite step-by-step instructions detailing how to make a creamy",
+          "fired_token": " steps",
+          "pre_context": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary",
+          "post_context": " needed to reach the conclusion.\n\nuser\nWrite step-by-step instructions detailing how to make a creamy",
+          "example_idx": 9,
+          "position_idx": 233
+        },
+        {
+          "activation": 2.2406091690063477,
+          "text": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWhat are the classic cocktails that every bartender should know how",
+          "fired_token": " steps",
+          "pre_context": " solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary",
+          "post_context": " needed to reach the conclusion.\n\nuser\nWhat are the classic cocktails that every bartender should know how",
+          "example_idx": 8,
+          "position_idx": 233
+        }
+      ]
+    },
+    {
+      "feature_id": 1487,
+      "description": "code/politeness/math | process, exploration, reassessment",
+      "keywords": [
+        "process",
+        "exploration",
+        "reassessment"
+      ],
+      "tags": [
+        "code",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 0.278044193983078,
+      "max_act": 2.073887348175049,
+      "density": 0.37921875,
+      "avg_fired_token_len": 8.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.073887348175049,
+          "text": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking process. Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "fired_token": " process",
+          "pre_context": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking",
+          "post_context": ". Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "example_idx": 6,
+          "position_idx": 109
+        },
+        {
+          "activation": 2.073887348175049,
+          "text": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking process. Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "fired_token": " process",
+          "pre_context": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking",
+          "post_context": ". Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "example_idx": 7,
+          "position_idx": 109
+        },
+        {
+          "activation": 2.073887348175049,
+          "text": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking process. Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "fired_token": " process",
+          "pre_context": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking",
+          "post_context": ". Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "example_idx": 4,
+          "position_idx": 109
+        },
+        {
+          "activation": 2.073887348175049,
+          "text": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking process. Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "fired_token": " process",
+          "pre_context": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking",
+          "post_context": ". Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "example_idx": 5,
+          "position_idx": 109
+        },
+        {
+          "activation": 2.073887348175049,
+          "text": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking process. Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "fired_token": " process",
+          "pre_context": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking",
+          "post_context": ". Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "example_idx": 0,
+          "position_idx": 109
+        },
+        {
+          "activation": 2.073887348175049,
+          "text": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking process. Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "fired_token": " process",
+          "pre_context": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking",
+          "post_context": ". Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "example_idx": 1,
+          "position_idx": 109
+        },
+        {
+          "activation": 2.073887348175049,
+          "text": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking process. Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "fired_token": " process",
+          "pre_context": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking",
+          "post_context": ". Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "example_idx": 3,
+          "position_idx": 109
+        },
+        {
+          "activation": 2.073887348175049,
+          "text": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking process. Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "fired_token": " process",
+          "pre_context": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking",
+          "post_context": ". Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "example_idx": 2,
+          "position_idx": 109
+        },
+        {
+          "activation": 2.073887348175049,
+          "text": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking process. Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "fired_token": " process",
+          "pre_context": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking",
+          "post_context": ". Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "example_idx": 10,
+          "position_idx": 109
+        },
+        {
+          "activation": 2.073887348175049,
+          "text": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking process. Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "fired_token": " process",
+          "pre_context": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking",
+          "post_context": ". Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "example_idx": 11,
+          "position_idx": 109
+        },
+        {
+          "activation": 2.073887348175049,
+          "text": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking process. Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "fired_token": " process",
+          "pre_context": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking",
+          "post_context": ". Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "example_idx": 9,
+          "position_idx": 109
+        },
+        {
+          "activation": 2.073887348175049,
+          "text": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking process. Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "fired_token": " process",
+          "pre_context": ", exploration, reassessment, reflection, backtracking, and iteration to develop well-considered thinking",
+          "post_context": ". Please structure your response into two main sections: Thought and Solution using the specified format: <think>",
+          "example_idx": 8,
+          "position_idx": 109
+        }
+      ]
+    },
+    {
+      "feature_id": 13377,
+      "description": "code | reflections, solution, section",
+      "keywords": [
+        "reflections",
+        "solution",
+        "section"
+      ],
+      "tags": [
+        "code"
+      ],
+      "mean_act": 0.2746739983558655,
+      "max_act": 1.0577576160430908,
+      "density": 0.4617822265625,
+      "avg_fired_token_len": 12.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 1.0577576160430908,
+          "text": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "fired_token": " reflections",
+          "pre_context": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and",
+          "post_context": " from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "example_idx": 6,
+          "position_idx": 203
+        },
+        {
+          "activation": 1.0577576160430908,
+          "text": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "fired_token": " reflections",
+          "pre_context": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and",
+          "post_context": " from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "example_idx": 7,
+          "position_idx": 203
+        },
+        {
+          "activation": 1.0577576160430908,
+          "text": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "fired_token": " reflections",
+          "pre_context": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and",
+          "post_context": " from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "example_idx": 4,
+          "position_idx": 203
+        },
+        {
+          "activation": 1.0577576160430908,
+          "text": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "fired_token": " reflections",
+          "pre_context": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and",
+          "post_context": " from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "example_idx": 5,
+          "position_idx": 203
+        },
+        {
+          "activation": 1.0577576160430908,
+          "text": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "fired_token": " reflections",
+          "pre_context": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and",
+          "post_context": " from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "example_idx": 0,
+          "position_idx": 203
+        },
+        {
+          "activation": 1.0577576160430908,
+          "text": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "fired_token": " reflections",
+          "pre_context": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and",
+          "post_context": " from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "example_idx": 1,
+          "position_idx": 203
+        },
+        {
+          "activation": 1.0577576160430908,
+          "text": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "fired_token": " reflections",
+          "pre_context": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and",
+          "post_context": " from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "example_idx": 3,
+          "position_idx": 203
+        },
+        {
+          "activation": 1.0577576160430908,
+          "text": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "fired_token": " reflections",
+          "pre_context": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and",
+          "post_context": " from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "example_idx": 2,
+          "position_idx": 203
+        },
+        {
+          "activation": 1.0577576160430908,
+          "text": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "fired_token": " reflections",
+          "pre_context": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and",
+          "post_context": " from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "example_idx": 10,
+          "position_idx": 203
+        },
+        {
+          "activation": 1.0577576160430908,
+          "text": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "fired_token": " reflections",
+          "pre_context": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and",
+          "post_context": " from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "example_idx": 11,
+          "position_idx": 203
+        },
+        {
+          "activation": 1.0577576160430908,
+          "text": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "fired_token": " reflections",
+          "pre_context": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and",
+          "post_context": " from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "example_idx": 9,
+          "position_idx": 203
+        },
+        {
+          "activation": 1.0577576160430908,
+          "text": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "fired_token": " reflections",
+          "pre_context": " and revisiting previous steps. In the Solution section, based on various attempts, explorations, and",
+          "post_context": " from the Thought section, systematically present the final solution that you deem correct. The Solution section should be",
+          "example_idx": 8,
+          "position_idx": 203
+        }
+      ]
+    }
+  ]
+}

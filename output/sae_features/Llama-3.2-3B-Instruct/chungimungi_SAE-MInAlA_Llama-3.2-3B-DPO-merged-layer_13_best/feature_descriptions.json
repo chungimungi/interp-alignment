@@ -1,0 +1,675 @@
+{
+  "sae_repo": "chungimungi/SAE-MInAlA_Llama-3.2-3B-DPO-merged-layer_13_best",
+  "base_model": "MInAlA/Llama-3.2-3B-DPO-merged",
+  "layer": 13,
+  "selection": "mean",
+  "min_density": 0.0001,
+  "stopwords_lang": "english",
+  "num_prompts": 400,
+  "context_size": 512,
+  "total_tokens": 202771,
+  "interpretation_methodology": {
+    "why_this_analysis": [
+      "Record which latent directions get large activations under the chosen corpus and chat template.",
+      "Separate dead or ultra-rare features from dense ones using per-feature statistics.",
+      "Provide concrete token contexts for follow-up causal work (ablation, patching, steering), not as final semantics."
+    ],
+    "known_limitations": [
+      "SAEs optimize reconstruction under sparsity, not axis-aligned semantics; strong features often track templates, delimiters, and high-frequency n-grams.",
+      "Magnitude on frequent structural tokens can overshadow rarer semantic concepts in top-k mining.",
+      "Human-readable labels are post-hoc summaries of co-activation with text; they do not prove a feature causally implements a behavior."
+    ],
+    "keyword_summaries": "Content words are ranked after NLTK stopword removal; tags are simple surface heuristics. Use likely_surface_structure to flag obvious formatting-like patterns.",
+    "stopwords_source": "nltk.corpus.stopwords",
+    "stopwords_lang": "english"
+  },
+  "features": [
+    {
+      "feature_id": 1292,
+      "description": "code/math | indoor, space, designed",
+      "keywords": [
+        "indoor",
+        "space",
+        "designed"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.8898990750312805,
+      "max_act": 3.1679189205169678,
+      "density": 0.8750215760636384,
+      "avg_fired_token_len": 5.083333333333333,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 3.1679189205169678,
+          "text": "Bard’s One Ton Air Conditioner is a self contained energy efficient heating and cooling system, which is designed to offer maximum indoor comfort at a minimal cost without using valuable indoor floor space or outside ground space",
+          "fired_token": " is",
+          "pre_context": "Bard’s One Ton Air Conditioner is a self contained energy efficient heating and cooling system, which",
+          "post_context": " designed to offer maximum indoor comfort at a minimal cost without using valuable indoor floor space or outside ground space",
+          "example_idx": 175,
+          "position_idx": 51
+        },
+        {
+          "activation": 3.0309770107269287,
+          "text": " of Kingstonآ® Technology Company, Inc., the independent world leader in memory products, today announced a new fierce look to its Predator DDR4 and DDR3 DRAM. The aggressive design offers greater heat diss",
+          "fired_token": " new",
+          "pre_context": " of Kingstonآ® Technology Company, Inc., the independent world leader in memory products, today announced a",
+          "post_context": " fierce look to its Predator DDR4 and DDR3 DRAM. The aggressive design offers greater heat diss",
+          "example_idx": 53,
+          "position_idx": 64
+        },
+        {
+          "activation": 3.018990993499756,
+          "text": "ard’s One Ton Air Conditioner is a self contained energy efficient heating and cooling system, which is designed to offer maximum indoor comfort at a minimal cost without using valuable indoor floor space or outside ground space.",
+          "fired_token": " designed",
+          "pre_context": "ard’s One Ton Air Conditioner is a self contained energy efficient heating and cooling system, which is",
+          "post_context": " to offer maximum indoor comfort at a minimal cost without using valuable indoor floor space or outside ground space.",
+          "example_idx": 175,
+          "position_idx": 52
+        },
+        {
+          "activation": 2.982970714569092,
+          "text": " minimalist shelf to store your towels, then our Options Traditional Towel Shelf is the perfect solution. It has an upper shelf for stacking your towels plus an additional rail underneath for hanging additional towels ready for use.",
+          "fired_token": " has",
+          "pre_context": " minimalist shelf to store your towels, then our Options Traditional Towel Shelf is the perfect solution. It",
+          "post_context": " an upper shelf for stacking your towels plus an additional rail underneath for hanging additional towels ready for use.",
+          "example_idx": 58,
+          "position_idx": 76
+        },
+        {
+          "activation": 2.9352827072143555,
+          "text": " appeal to your target audience. Get feedback from people in the target audience if possible.\n\nIn summary, creating visually appealing marketing graphics involves defining the target audience, determining the message, selecting relevant images, choosing an",
+          "fired_token": " creating",
+          "pre_context": " appeal to your target audience. Get feedback from people in the target audience if possible.\n\nIn summary,",
+          "post_context": " visually appealing marketing graphics involves defining the target audience, determining the message, selecting relevant images, choosing an",
+          "example_idx": 83,
+          "position_idx": 443
+        },
+        {
+          "activation": 2.9305226802825928,
+          "text": "’s One Ton Air Conditioner is a self contained energy efficient heating and cooling system, which is designed to offer maximum indoor comfort at a minimal cost without using valuable indoor floor space or outside ground space. The",
+          "fired_token": " to",
+          "pre_context": "’s One Ton Air Conditioner is a self contained energy efficient heating and cooling system, which is designed",
+          "post_context": " offer maximum indoor comfort at a minimal cost without using valuable indoor floor space or outside ground space. The",
+          "example_idx": 175,
+          "position_idx": 53
+        },
+        {
+          "activation": 2.8897969722747803,
+          "text": "user\n\nDe León, previewing the speech he will give today, said he will highlight his Senate Bill 535, which directs a quarter of the proceeds from the Greenhouse Gas Reduction",
+          "fired_token": " will",
+          "pre_context": "user\n\nDe León, previewing the speech he will give today, said he",
+          "post_context": " highlight his Senate Bill 535, which directs a quarter of the proceeds from the Greenhouse Gas Reduction",
+          "example_idx": 3,
+          "position_idx": 46
+        },
+        {
+          "activation": 2.88277530670166,
+          "text": ", including persuasive language, selecting an appropriate format, and effective distribution tactics. When done right, a lead magnet can help you generate more leads and boost your sales.user\n\nCan you provide",
+          "fired_token": " lead",
+          "pre_context": ", including persuasive language, selecting an appropriate format, and effective distribution tactics. When done right, a",
+          "post_context": " magnet can help you generate more leads and boost your sales.user\n\nCan you provide",
+          "example_idx": 192,
+          "position_idx": 455
+        },
+        {
+          "activation": 2.855529308319092,
+          "text": "’t know how to get it out there? Well, in this article I am going to give you some tips and advice on how to get noticed on Social Media! First let’s talk about social media platforms",
+          "fired_token": " some",
+          "pre_context": "’t know how to get it out there? Well, in this article I am going to give you",
+          "post_context": " tips and advice on how to get noticed on Social Media! First let’s talk about social media platforms",
+          "example_idx": 296,
+          "position_idx": 79
+        },
+        {
+          "activation": 2.8264377117156982,
+          "text": " energy efficient heating and cooling system, which is designed to offer maximum indoor comfort at a minimal cost without using valuable indoor floor space or outside ground space. The One Ton is the ideal product for versatile applications portable",
+          "fired_token": " using",
+          "pre_context": " energy efficient heating and cooling system, which is designed to offer maximum indoor comfort at a minimal cost without",
+          "post_context": " valuable indoor floor space or outside ground space. The One Ton is the ideal product for versatile applications portable",
+          "example_idx": 175,
+          "position_idx": 63
+        },
+        {
+          "activation": 2.8206357955932617,
+          "text": "Here is a piece of text: The game room in the 17,728-square-foot home includes a two-lane bowling alley, a Skee-Ball arcade game, a Claw-Machine grabber",
+          "fired_token": " a",
+          "pre_context": "Here is a piece of text: The game room in the 17,728-square-foot home includes",
+          "post_context": " two-lane bowling alley, a Skee-Ball arcade game, a Claw-Machine grabber",
+          "example_idx": 274,
+          "position_idx": 51
+        },
+        {
+          "activation": 2.8099331855773926,
+          "text": " One Ton Air Conditioner is a self contained energy efficient heating and cooling system, which is designed to offer maximum indoor comfort at a minimal cost without using valuable indoor floor space or outside ground space. The One",
+          "fired_token": " offer",
+          "pre_context": " One Ton Air Conditioner is a self contained energy efficient heating and cooling system, which is designed to",
+          "post_context": " maximum indoor comfort at a minimal cost without using valuable indoor floor space or outside ground space. The One",
+          "example_idx": 175,
+          "position_idx": 54
+        }
+      ]
+    },
+    {
+      "feature_id": 5062,
+      "description": "begin, text, date",
+      "keywords": [
+        "begin",
+        "text",
+        "date"
+      ],
+      "tags": [],
+      "mean_act": 0.8263671398162842,
+      "max_act": 7.362382888793945,
+      "density": 0.6772763363597359,
+      "avg_fired_token_len": 17.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 7.362382888793945,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 2,
+          "position_idx": 0
+        },
+        {
+          "activation": 7.362382888793945,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 0,
+          "position_idx": 0
+        },
+        {
+          "activation": 7.362382888793945,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 1,
+          "position_idx": 0
+        },
+        {
+          "activation": 7.362382888793945,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 1,
+          "position_idx": 1
+        },
+        {
+          "activation": 7.362382888793945,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 0,
+          "position_idx": 1
+        },
+        {
+          "activation": 7.362382888793945,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 3,
+          "position_idx": 1
+        },
+        {
+          "activation": 7.362382888793945,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 2,
+          "position_idx": 1
+        },
+        {
+          "activation": 7.362382888793945,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 3,
+          "position_idx": 0
+        },
+        {
+          "activation": 7.362382888793945,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 5,
+          "position_idx": 0
+        },
+        {
+          "activation": 7.362382888793945,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 4,
+          "position_idx": 0
+        },
+        {
+          "activation": 7.362382888793945,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 5,
+          "position_idx": 1
+        },
+        {
+          "activation": 7.362382888793945,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 6,
+          "position_idx": 0
+        }
+      ]
+    },
+    {
+      "feature_id": 8662,
+      "description": "code/math | instruction, pivot, table",
+      "keywords": [
+        "instruction",
+        "pivot",
+        "table"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.42106500267982483,
+      "max_act": 3.2002155780792236,
+      "density": 0.4673054825394164,
+      "avg_fired_token_len": 7.666666666666667,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 3.2002155780792236,
+          "text": " with After Effects Templates and how to fix them. If you didn't already know from the title, this posts covers the most common errors with After Effects templates, and how to solve them. Learn how to",
+          "fired_token": " this",
+          "pre_context": " with After Effects Templates and how to fix them. If you didn't already know from the title,",
+          "post_context": " posts covers the most common errors with After Effects templates, and how to solve them. Learn how to",
+          "example_idx": 197,
+          "position_idx": 69
+        },
+        {
+          "activation": 3.143789052963257,
+          "text": " the current workbook. Options are provided for specifying the Cube data source, cube, and location of the pivot table and pivot chart on the current or new worksheet.\nUpdates the data source for an OLAP Pivot",
+          "fired_token": " pivot",
+          "pre_context": " the current workbook. Options are provided for specifying the Cube data source, cube, and location of the",
+          "post_context": " table and pivot chart on the current or new worksheet.\nUpdates the data source for an OLAP Pivot",
+          "example_idx": 288,
+          "position_idx": 366
+        },
+        {
+          "activation": 3.1092066764831543,
+          "text": " current workbook. Options are provided for specifying the Cube data source, cube, and location of the pivot table and pivot chart on the current or new worksheet.\nUpdates the data source for an OLAP Pivot Table",
+          "fired_token": " table",
+          "pre_context": " current workbook. Options are provided for specifying the Cube data source, cube, and location of the pivot",
+          "post_context": " and pivot chart on the current or new worksheet.\nUpdates the data source for an OLAP Pivot Table",
+          "example_idx": 288,
+          "position_idx": 367
+        },
+        {
+          "activation": 3.0662059783935547,
+          "text": " Srivaddhanaprabha, died with four others when his helicopter plummeted into a car park outside the King Power stadium shortly after a match against West Ham.\n“I was terribly shaken by the news",
+          "fired_token": " park",
+          "pre_context": " Srivaddhanaprabha, died with four others when his helicopter plummeted into a car",
+          "post_context": " outside the King Power stadium shortly after a match against West Ham.\n“I was terribly shaken by the news",
+          "example_idx": 248,
+          "position_idx": 406
+        },
+        {
+          "activation": 3.0567166805267334,
+          "text": ". Dig it.\n\nBased on the text material above, generate the response to the following quesion or instruction: How does Johnny Flynn's portrayal of young Einstein in the new series, Genius, reveal a more",
+          "fired_token": " instruction",
+          "pre_context": ". Dig it.\n\nBased on the text material above, generate the response to the following quesion or",
+          "post_context": ": How does Johnny Flynn's portrayal of young Einstein in the new series, Genius, reveal a more",
+          "example_idx": 245,
+          "position_idx": 363
+        },
+        {
+          "activation": 3.0387911796569824,
+          "text": " 2026\n\nuser\n\nRead the passage below and answer the question or follow the instruction: Can you reason why having a larger pool of eligible organ donors is important and what factors determine whether",
+          "fired_token": " instruction",
+          "pre_context": " 2026\n\nuser\n\nRead the passage below and answer the question or follow the",
+          "post_context": ": Can you reason why having a larger pool of eligible organ donors is important and what factors determine whether",
+          "example_idx": 252,
+          "position_idx": 42
+        },
+        {
+          "activation": 3.0387911796569824,
+          "text": " 2026\n\nuser\n\nRead the passage below and answer the question or follow the instruction: Can you paraphrase the text material and explain why it was significant for \"The Life of Pablo",
+          "fired_token": " instruction",
+          "pre_context": " 2026\n\nuser\n\nRead the passage below and answer the question or follow the",
+          "post_context": ": Can you paraphrase the text material and explain why it was significant for \"The Life of Pablo",
+          "example_idx": 335,
+          "position_idx": 42
+        },
+        {
+          "activation": 3.0387911796569824,
+          "text": " 2026\n\nuser\n\nRead the passage below and answer the question or follow the instruction: Why is GeForce NOW only available through NVIDIA's SHIELD family of devices?\n\nPassage: On",
+          "fired_token": " instruction",
+          "pre_context": " 2026\n\nuser\n\nRead the passage below and answer the question or follow the",
+          "post_context": ": Why is GeForce NOW only available through NVIDIA's SHIELD family of devices?\n\nPassage: On",
+          "example_idx": 261,
+          "position_idx": 42
+        },
+        {
+          "activation": 3.025056838989258,
+          "text": " needs or preferences. Use clear and concise language and provide visual aids, such as photos or videos, if possible.assistant\n\nStep-by-Step Guide to Making Homemade Cilantro Pesto",
+          "fired_token": " if",
+          "pre_context": " needs or preferences. Use clear and concise language and provide visual aids, such as photos or videos,",
+          "post_context": " possible.assistant\n\nStep-by-Step Guide to Making Homemade Cilantro Pesto",
+          "example_idx": 79,
+          "position_idx": 89
+        },
+        {
+          "activation": 3.0171566009521484,
+          "text": " free throw line.\n\nBased on the text material above, generate the response to the following quesion or instruction: What is the status of Malcolm Brogdon, and how might Tim Frazier help bolster the",
+          "fired_token": " instruction",
+          "pre_context": " free throw line.\n\nBased on the text material above, generate the response to the following quesion or",
+          "post_context": ": What is the status of Malcolm Brogdon, and how might Tim Frazier help bolster the",
+          "example_idx": 118,
+          "position_idx": 305
+        },
+        {
+          "activation": 3.008362293243408,
+          "text": " The name thalassemia comes from the Greek word \"thalassa\" meaning \"the sea\" because the condition was first described in populations living near the Mediterranean Sea (Nathan, 1998",
+          "fired_token": "\"",
+          "pre_context": " The name thalassemia comes from the Greek word \"thalassa\" meaning \"the sea",
+          "post_context": " because the condition was first described in populations living near the Mediterranean Sea (Nathan, 1998",
+          "example_idx": 69,
+          "position_idx": 145
+        },
+        {
+          "activation": 2.9945967197418213,
+          "text": "?: This isn’t exactly a copy-paste of my Christmas wish-list, but it’s pretty darn close. Would love to hear other suggestions or feedback if you’ve tried one of these products or have one",
+          "fired_token": " close",
+          "pre_context": "?: This isn’t exactly a copy-paste of my Christmas wish-list, but it’s pretty darn",
+          "post_context": ". Would love to hear other suggestions or feedback if you’ve tried one of these products or have one",
+          "example_idx": 214,
+          "position_idx": 76
+        }
+      ]
+    },
+    {
+      "feature_id": 13540,
+      "description": "code/math | arcade, game, towels",
+      "keywords": [
+        "arcade",
+        "game",
+        "towels"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.39259496331214905,
+      "max_act": 2.352421760559082,
+      "density": 0.5669203189805249,
+      "avg_fired_token_len": 5.166666666666667,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.352421760559082,
+          "text": " 17,728-square-foot home includes a two-lane bowling alley, a Skee-Ball arcade game, a Claw-Machine grabber game, air hockey, pinball machines, a racing-car",
+          "fired_token": " arcade",
+          "pre_context": " 17,728-square-foot home includes a two-lane bowling alley, a Skee-Ball",
+          "post_context": " game, a Claw-Machine grabber game, air hockey, pinball machines, a racing-car",
+          "example_idx": 274,
+          "position_idx": 63
+        },
+        {
+          "activation": 2.3478970527648926,
+          "text": " to deliver the content your audience wants. Savvy content marketers are on top of the latest industry trends, and optimize for timely keywords that get the most traction. Google Trends is a great tool to utilize to",
+          "fired_token": ",",
+          "pre_context": " to deliver the content your audience wants. Savvy content marketers are on top of the latest industry trends",
+          "post_context": " and optimize for timely keywords that get the most traction. Google Trends is a great tool to utilize to",
+          "example_idx": 254,
+          "position_idx": 190
+        },
+        {
+          "activation": 2.282512664794922,
+          "text": " the muscles necessary for me to chew and swallow became very weak. After months of high-calorie shakes and sometimes even straight Häagen-Dazs, my parents drove me to Sutter Memorial Hospital where I",
+          "fired_token": " and",
+          "pre_context": " the muscles necessary for me to chew and swallow became very weak. After months of high-calorie shakes",
+          "post_context": " sometimes even straight Häagen-Dazs, my parents drove me to Sutter Memorial Hospital where I",
+          "example_idx": 340,
+          "position_idx": 64
+        },
+        {
+          "activation": 2.2570064067840576,
+          "text": " Buddha Purnima, it is celebrated by Buddhists, particularly by people of Mahayana sect in remembrance. It is a wonderful event that brings happiness to the lives of the people. Thus this",
+          "fired_token": " in",
+          "pre_context": " Buddha Purnima, it is celebrated by Buddhists, particularly by people of Mahayana sect",
+          "post_context": " remembrance. It is a wonderful event that brings happiness to the lives of the people. Thus this",
+          "example_idx": 336,
+          "position_idx": 109
+        },
+        {
+          "activation": 2.1998701095581055,
+          "text": " to reach the right people. But today’s digital marketing gives you an ability to structure personalised marketing campaigns that will make your prospects really feel your love – and be more inclined to become a customer, and even",
+          "fired_token": " that",
+          "pre_context": " to reach the right people. But today’s digital marketing gives you an ability to structure personalised marketing campaigns",
+          "post_context": " will make your prospects really feel your love – and be more inclined to become a customer, and even",
+          "example_idx": 222,
+          "position_idx": 65
+        },
+        {
+          "activation": 2.1639163494110107,
+          "text": "Given the text: ​A BioPharma company that leverages it's operational data with clinical trial analytics is likely to get it's drug to market faster—potentially resulting in more revenue, increased market",
+          "fired_token": " analytics",
+          "pre_context": "Given the text: ​A BioPharma company that leverages it's operational data with clinical trial",
+          "post_context": " is likely to get it's drug to market faster—potentially resulting in more revenue, increased market",
+          "example_idx": 25,
+          "position_idx": 51
+        },
+        {
+          "activation": 2.150002956390381,
+          "text": " towels, then our Options Traditional Towel Shelf is the perfect solution. It has an upper shelf for stacking your towels plus an additional rail underneath for hanging additional towels ready for use. This will be fine in",
+          "fired_token": " stacking",
+          "pre_context": " towels, then our Options Traditional Towel Shelf is the perfect solution. It has an upper shelf for",
+          "post_context": " your towels plus an additional rail underneath for hanging additional towels ready for use. This will be fine in",
+          "example_idx": 58,
+          "position_idx": 81
+        },
+        {
+          "activation": 2.1391355991363525,
+          "text": " and photographs.\nVote in local and state-wide elections. Register to vote, research issues you care about, learn about where your local and state-level officials stand on those issues, and then head to the polls",
+          "fired_token": ",",
+          "pre_context": " and photographs.\nVote in local and state-wide elections. Register to vote, research issues you care about",
+          "post_context": " learn about where your local and state-level officials stand on those issues, and then head to the polls",
+          "example_idx": 56,
+          "position_idx": 150
+        },
+        {
+          "activation": 2.136556386947632,
+          "text": " to: Blender 2.5 has been slowly progressing, as more developers start focusing on bug fixing, and well rounding, instead of Sintel (which has enjoy lots of success). Blender 2.",
+          "fired_token": ",",
+          "pre_context": " to: Blender 2.5 has been slowly progressing, as more developers start focusing on bug fixing",
+          "post_context": " and well rounding, instead of Sintel (which has enjoy lots of success). Blender 2.",
+          "example_idx": 295,
+          "position_idx": 66
+        },
+        {
+          "activation": 2.1359546184539795,
+          "text": ", then our Options Traditional Towel Shelf is the perfect solution. It has an upper shelf for stacking your towels plus an additional rail underneath for hanging additional towels ready for use. This will be fine in a",
+          "fired_token": " your",
+          "pre_context": ", then our Options Traditional Towel Shelf is the perfect solution. It has an upper shelf for stacking",
+          "post_context": " towels plus an additional rail underneath for hanging additional towels ready for use. This will be fine in a",
+          "example_idx": 58,
+          "position_idx": 82
+        },
+        {
+          "activation": 2.109593629837036,
+          "text": "-square-foot game room.\nThe room features a two-lane bowling alley, a Skee-Ball arcade game, a Claw-Machine grabber game, air hockey, pinball machines, a racing-car",
+          "fired_token": " arcade",
+          "pre_context": "-square-foot game room.\nThe room features a two-lane bowling alley, a Skee-Ball",
+          "post_context": " game, a Claw-Machine grabber game, air hockey, pinball machines, a racing-car",
+          "example_idx": 274,
+          "position_idx": 174
+        },
+        {
+          "activation": 2.105034589767456,
+          "text": "fection and Immunobiology in our Science division.\nHe will take on the leadership of Wellcome’s existing programmes of scientific support, which includes representing the Science Division on the Executive Leadership Team and the Board of",
+          "fired_token": " existing",
+          "pre_context": "fection and Immunobiology in our Science division.\nHe will take on the leadership of Wellcome’s",
+          "post_context": " programmes of scientific support, which includes representing the Science Division on the Executive Leadership Team and the Board of",
+          "example_idx": 179,
+          "position_idx": 108
+        }
+      ]
+    },
+    {
+      "feature_id": 12155,
+      "description": "code/math | nvidia, series, servers",
+      "keywords": [
+        "nvidia",
+        "series",
+        "servers"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.3352607190608978,
+      "max_act": 3.962266206741333,
+      "density": 0.40837693753051474,
+      "avg_fired_token_len": 7.666666666666667,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 3.962266206741333,
+          "text": " atmosphere.\n\nOther advances in technology have also made a significant impact on space exploration. The development of ion propulsion systems has led to more efficient spacecraft, which can travel faster and farther than any spacecraft in the past",
+          "fired_token": " propulsion",
+          "pre_context": " atmosphere.\n\nOther advances in technology have also made a significant impact on space exploration. The development of ion",
+          "post_context": " systems has led to more efficient spacecraft, which can travel faster and farther than any spacecraft in the past",
+          "example_idx": 87,
+          "position_idx": 287
+        },
+        {
+          "activation": 3.7040038108825684,
+          "text": " this requirement stems from the fact that NVIDIA&apos;s SHIELD family is powered by its own Tegra series mobile superchips, which NVIDIA can ensure will work seamlessly with the Kepler architecture-based GPUs contained in",
+          "fired_token": " series",
+          "pre_context": " this requirement stems from the fact that NVIDIA&apos;s SHIELD family is powered by its own Tegra",
+          "post_context": " mobile superchips, which NVIDIA can ensure will work seamlessly with the Kepler architecture-based GPUs contained in",
+          "example_idx": 261,
+          "position_idx": 404
+        },
+        {
+          "activation": 3.6994335651397705,
+          "text": ". Predictive modeling: use machine learning algorithms such as linear or logistic regression, decision trees, or neural networks to build a predictive model and evaluate its performance.\n\n7. Communication of results: use visualizations",
+          "fired_token": " neural",
+          "pre_context": ". Predictive modeling: use machine learning algorithms such as linear or logistic regression, decision trees, or",
+          "post_context": " networks to build a predictive model and evaluate its performance.\n\n7. Communication of results: use visualizations",
+          "example_idx": 392,
+          "position_idx": 297
+        },
+        {
+          "activation": 3.519447088241577,
+          "text": "chips, which NVIDIA can ensure will work seamlessly with the Kepler architecture-based GPUs contained in the remote servers that host the games. To be sure, it only seems rational that, served to a similar-sized",
+          "fired_token": " servers",
+          "pre_context": "chips, which NVIDIA can ensure will work seamlessly with the Kepler architecture-based GPUs contained in the remote",
+          "post_context": " that host the games. To be sure, it only seems rational that, served to a similar-sized",
+          "example_idx": 261,
+          "position_idx": 427
+        },
+        {
+          "activation": 3.5038325786590576,
+          "text": ".\n\nAnother major work by Paglen is \"Sight Machine,\" an installation that uses computer algorithms and artificial intelligence to generate abstract images based on real-life surveillance footage. The installation is a commentary on the invasion",
+          "fired_token": " artificial",
+          "pre_context": ".\n\nAnother major work by Paglen is \"Sight Machine,\" an installation that uses computer algorithms and",
+          "post_context": " intelligence to generate abstract images based on real-life surveillance footage. The installation is a commentary on the invasion",
+          "example_idx": 299,
+          "position_idx": 240
+        },
+        {
+          "activation": 3.484839916229248,
+          "text": " industry and created a revolution in digital advertising, and also expanded into areas such as artificial intelligence and self-driving cars\n5. Facebook - Changed the way people interact and communicate online, and has become a major",
+          "fired_token": "-driving",
+          "pre_context": " industry and created a revolution in digital advertising, and also expanded into areas such as artificial intelligence and self",
+          "post_context": " cars\n5. Facebook - Changed the way people interact and communicate online, and has become a major",
+          "example_idx": 391,
+          "position_idx": 243
+        },
+        {
+          "activation": 3.4719576835632324,
+          "text": " or \"nanocraft,\" to explore the nearest star system, Alpha Centauri, using laser beams to propel them there.\n\n9. ExoMars: This joint mission between the European Space Agency",
+          "fired_token": " beams",
+          "pre_context": " or \"nanocraft,\" to explore the nearest star system, Alpha Centauri, using laser",
+          "post_context": " to propel them there.\n\n9. ExoMars: This joint mission between the European Space Agency",
+          "example_idx": 325,
+          "position_idx": 325
+        },
+        {
+          "activation": 3.4486589431762695,
+          "text": " the development of new materials with unique properties and capabilities, such as self-healing coatings, transparent solar cells, and flexible electronics.\n\n4. Bioplastics: Bioplastics are a new generation of plastics",
+          "fired_token": " cells",
+          "pre_context": " the development of new materials with unique properties and capabilities, such as self-healing coatings, transparent solar",
+          "post_context": ", and flexible electronics.\n\n4. Bioplastics: Bioplastics are a new generation of plastics",
+          "example_idx": 27,
+          "position_idx": 203
+        },
+        {
+          "activation": 3.4310994148254395,
+          "text": "nanocraft,\" to explore the nearest star system, Alpha Centauri, using laser beams to propel them there.\n\n9. ExoMars: This joint mission between the European Space Agency and Russia",
+          "fired_token": " propel",
+          "pre_context": "nanocraft,\" to explore the nearest star system, Alpha Centauri, using laser beams to",
+          "post_context": " them there.\n\n9. ExoMars: This joint mission between the European Space Agency and Russia",
+          "example_idx": 325,
+          "position_idx": 327
+        },
+        {
+          "activation": 3.422996997833252,
+          "text": ", although much weaker than Earth's, is more complex than previously thought, consisting of both an internally generated magnetic field and an externally induced magnetic field caused by the interaction between the planet's magnetic field and the",
+          "fired_token": " generated",
+          "pre_context": ", although much weaker than Earth's, is more complex than previously thought, consisting of both an internally",
+          "post_context": " magnetic field and an externally induced magnetic field caused by the interaction between the planet's magnetic field and the",
+          "example_idx": 375,
+          "position_idx": 308
+        },
+        {
+          "activation": 3.415053606033325,
+          "text": " short-term rentals and changed the way people travel and book accommodations\n8. SpaceX - Created affordable reusable rockets to reduce the cost of space travel and enable human colonization of other planets\n9. Uber - Dis",
+          "fired_token": " rockets",
+          "pre_context": " short-term rentals and changed the way people travel and book accommodations\n8. SpaceX - Created affordable reusable",
+          "post_context": " to reduce the cost of space travel and enable human colonization of other planets\n9. Uber - Dis",
+          "example_idx": 391,
+          "position_idx": 320
+        },
+        {
+          "activation": 3.4081127643585205,
+          "text": " the fact that NVIDIA&apos;s SHIELD family is powered by its own Tegra series mobile superchips, which NVIDIA can ensure will work seamlessly with the Kepler architecture-based GPUs contained in the remote servers that",
+          "fired_token": "ips",
+          "pre_context": " the fact that NVIDIA&apos;s SHIELD family is powered by its own Tegra series mobile superch",
+          "post_context": ", which NVIDIA can ensure will work seamlessly with the Kepler architecture-based GPUs contained in the remote servers that",
+          "example_idx": 261,
+          "position_idx": 408
+        }
+      ]
+    }
+  ]
+}

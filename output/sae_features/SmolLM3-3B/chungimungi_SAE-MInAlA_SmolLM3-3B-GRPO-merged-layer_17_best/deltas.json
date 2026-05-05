@@ -1,0 +1,12 @@
+{
+  "alive_features_aligned": 3224,
+  "alive_features_baseline": 3776,
+  "mean_density_aligned": 0.0033198082447052,
+  "mean_density_baseline": 0.003254314884543419,
+  "mean_max_act_aligned": 0.2890937626361847,
+  "mean_max_act_baseline": 0.3680837154388428,
+  "delta_alive": -552,
+  "delta_mean_density": 6.549336016178128e-05,
+  "delta_mean_max_act": -0.07898995280265808,
+  "baseline_metadata_path": "/home/vng598/C-ANNs/interp-alignment/output/sae_features/SmolLM3-3B/chungimungi_SAE-HuggingFaceTB_SmolLM3-3B-layer_19_best/replot_metadata.npz"
+}

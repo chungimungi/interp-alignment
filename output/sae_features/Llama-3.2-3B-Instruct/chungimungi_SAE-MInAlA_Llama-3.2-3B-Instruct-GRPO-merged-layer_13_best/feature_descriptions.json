@@ -1,0 +1,672 @@
+{
+  "sae_repo": "chungimungi/SAE-MInAlA_Llama-3.2-3B-Instruct-GRPO-merged-layer_13_best",
+  "base_model": "MInAlA/Llama-3.2-3B-Instruct-GRPO-merged",
+  "layer": 13,
+  "selection": "mean",
+  "min_density": 0.0001,
+  "stopwords_lang": "english",
+  "num_prompts": 400,
+  "context_size": 512,
+  "total_tokens": 202771,
+  "interpretation_methodology": {
+    "why_this_analysis": [
+      "Record which latent directions get large activations under the chosen corpus and chat template.",
+      "Separate dead or ultra-rare features from dense ones using per-feature statistics.",
+      "Provide concrete token contexts for follow-up causal work (ablation, patching, steering), not as final semantics."
+    ],
+    "known_limitations": [
+      "SAEs optimize reconstruction under sparsity, not axis-aligned semantics; strong features often track templates, delimiters, and high-frequency n-grams.",
+      "Magnitude on frequent structural tokens can overshadow rarer semantic concepts in top-k mining.",
+      "Human-readable labels are post-hoc summaries of co-activation with text; they do not prove a feature causally implements a behavior."
+    ],
+    "keyword_summaries": "Content words are ranked after NLTK stopword removal; tags are simple surface heuristics. Use likely_surface_structure to flag obvious formatting-like patterns.",
+    "stopwords_source": "nltk.corpus.stopwords",
+    "stopwords_lang": "english"
+  },
+  "features": [
+    {
+      "feature_id": 7848,
+      "description": "code/math | designed, indoor, space",
+      "keywords": [
+        "designed",
+        "indoor",
+        "space"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.8571202158927917,
+      "max_act": 3.0910468101501465,
+      "density": 0.8789028016826864,
+      "avg_fired_token_len": 5.083333333333333,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 3.0910468101501465,
+          "text": "Bard’s One Ton Air Conditioner is a self contained energy efficient heating and cooling system, which is designed to offer maximum indoor comfort at a minimal cost without using valuable indoor floor space or outside ground space",
+          "fired_token": " is",
+          "pre_context": "Bard’s One Ton Air Conditioner is a self contained energy efficient heating and cooling system, which",
+          "post_context": " designed to offer maximum indoor comfort at a minimal cost without using valuable indoor floor space or outside ground space",
+          "example_idx": 175,
+          "position_idx": 51
+        },
+        {
+          "activation": 2.9948971271514893,
+          "text": "ard’s One Ton Air Conditioner is a self contained energy efficient heating and cooling system, which is designed to offer maximum indoor comfort at a minimal cost without using valuable indoor floor space or outside ground space.",
+          "fired_token": " designed",
+          "pre_context": "ard’s One Ton Air Conditioner is a self contained energy efficient heating and cooling system, which is",
+          "post_context": " to offer maximum indoor comfort at a minimal cost without using valuable indoor floor space or outside ground space.",
+          "example_idx": 175,
+          "position_idx": 52
+        },
+        {
+          "activation": 2.972034215927124,
+          "text": "’s One Ton Air Conditioner is a self contained energy efficient heating and cooling system, which is designed to offer maximum indoor comfort at a minimal cost without using valuable indoor floor space or outside ground space. The",
+          "fired_token": " to",
+          "pre_context": "’s One Ton Air Conditioner is a self contained energy efficient heating and cooling system, which is designed",
+          "post_context": " offer maximum indoor comfort at a minimal cost without using valuable indoor floor space or outside ground space. The",
+          "example_idx": 175,
+          "position_idx": 53
+        },
+        {
+          "activation": 2.9447782039642334,
+          "text": " a self contained energy efficient heating and cooling system, which is designed to offer maximum indoor comfort at a minimal cost without using valuable indoor floor space or outside ground space. The One Ton is the ideal product for",
+          "fired_token": " minimal",
+          "pre_context": " a self contained energy efficient heating and cooling system, which is designed to offer maximum indoor comfort at a",
+          "post_context": " cost without using valuable indoor floor space or outside ground space. The One Ton is the ideal product for",
+          "example_idx": 175,
+          "position_idx": 60
+        },
+        {
+          "activation": 2.930979013442993,
+          "text": " style and size help convey the message clearly.\n\n6. Create a layout: A clear layout can help draw attention to the message you want to convey. Consider using a grid system to help you organize design elements",
+          "fired_token": " draw",
+          "pre_context": " style and size help convey the message clearly.\n\n6. Create a layout: A clear layout can help",
+          "post_context": " attention to the message you want to convey. Consider using a grid system to help you organize design elements",
+          "example_idx": 83,
+          "position_idx": 330
+        },
+        {
+          "activation": 2.8479108810424805,
+          "text": " The game room in the 17,728-square-foot home includes a two-lane bowling alley, a Skee-Ball arcade game, a Claw-Machine grabber game, air hockey, pinball",
+          "fired_token": " a",
+          "pre_context": " The game room in the 17,728-square-foot home includes a two-lane bowling alley,",
+          "post_context": " Skee-Ball arcade game, a Claw-Machine grabber game, air hockey, pinball",
+          "example_idx": 274,
+          "position_idx": 58
+        },
+        {
+          "activation": 2.8429925441741943,
+          "text": "Here is a piece of text: The game room in the 17,728-square-foot home includes a two-lane bowling alley, a Skee-Ball arcade game, a Claw-Machine grabber",
+          "fired_token": " a",
+          "pre_context": "Here is a piece of text: The game room in the 17,728-square-foot home includes",
+          "post_context": " two-lane bowling alley, a Skee-Ball arcade game, a Claw-Machine grabber",
+          "example_idx": 274,
+          "position_idx": 51
+        },
+        {
+          "activation": 2.8058817386627197,
+          "text": " that the font style and size help convey the message clearly.\n\n6. Create a layout: A clear layout can help draw attention to the message you want to convey. Consider using a grid system to help you",
+          "fired_token": " layout",
+          "pre_context": " that the font style and size help convey the message clearly.\n\n6. Create a layout: A clear",
+          "post_context": " can help draw attention to the message you want to convey. Consider using a grid system to help you",
+          "example_idx": 83,
+          "position_idx": 327
+        },
+        {
+          "activation": 2.7389578819274902,
+          "text": " Ton Air Conditioner is a self contained energy efficient heating and cooling system, which is designed to offer maximum indoor comfort at a minimal cost without using valuable indoor floor space or outside ground space. The One Ton",
+          "fired_token": " maximum",
+          "pre_context": " Ton Air Conditioner is a self contained energy efficient heating and cooling system, which is designed to offer",
+          "post_context": " indoor comfort at a minimal cost without using valuable indoor floor space or outside ground space. The One Ton",
+          "example_idx": 175,
+          "position_idx": 55
+        },
+        {
+          "activation": 2.7235913276672363,
+          "text": " edition pool towel proudly bares the name of one of our favorite Los Angeles neighborhoods, Koreatown. Designed by Public-Library.\nFinal sale. Not eligible for returns or exchanges.\nIs the Koreatown pool",
+          "fired_token": " Designed",
+          "pre_context": " edition pool towel proudly bares the name of one of our favorite Los Angeles neighborhoods, Koreatown.",
+          "post_context": " by Public-Library.\nFinal sale. Not eligible for returns or exchanges.\nIs the Koreatown pool",
+          "example_idx": 393,
+          "position_idx": 65
+        },
+        {
+          "activation": 2.702530860900879,
+          "text": ": The game room in the 17,728-square-foot home includes a two-lane bowling alley, a Skee-Ball arcade game, a Claw-Machine grabber game, air hockey, pin",
+          "fired_token": ",",
+          "pre_context": ": The game room in the 17,728-square-foot home includes a two-lane bowling alley",
+          "post_context": " a Skee-Ball arcade game, a Claw-Machine grabber game, air hockey, pin",
+          "example_idx": 274,
+          "position_idx": 57
+        },
+        {
+          "activation": 2.702223777770996,
+          "text": " minimalist shelf to store your towels, then our Options Traditional Towel Shelf is the perfect solution. It has an upper shelf for stacking your towels plus an additional rail underneath for hanging additional towels ready for use.",
+          "fired_token": " has",
+          "pre_context": " minimalist shelf to store your towels, then our Options Traditional Towel Shelf is the perfect solution. It",
+          "post_context": " an upper shelf for stacking your towels plus an additional rail underneath for hanging additional towels ready for use.",
+          "example_idx": 58,
+          "position_idx": 76
+        }
+      ]
+    },
+    {
+      "feature_id": 8973,
+      "description": "begin, text, date",
+      "keywords": [
+        "begin",
+        "text",
+        "date"
+      ],
+      "tags": [],
+      "mean_act": 0.6061972379684448,
+      "max_act": 8.36139965057373,
+      "density": 0.6200146963816325,
+      "avg_fired_token_len": 17.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 8.36139965057373,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 2,
+          "position_idx": 1
+        },
+        {
+          "activation": 8.36139965057373,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 2,
+          "position_idx": 0
+        },
+        {
+          "activation": 8.36139965057373,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 1,
+          "position_idx": 0
+        },
+        {
+          "activation": 8.36139965057373,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 1,
+          "position_idx": 1
+        },
+        {
+          "activation": 8.36139965057373,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 0,
+          "position_idx": 1
+        },
+        {
+          "activation": 8.36139965057373,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 0,
+          "position_idx": 0
+        },
+        {
+          "activation": 8.36139965057373,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 3,
+          "position_idx": 1
+        },
+        {
+          "activation": 8.36139965057373,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 3,
+          "position_idx": 0
+        },
+        {
+          "activation": 8.36139965057373,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 5,
+          "position_idx": 0
+        },
+        {
+          "activation": 8.36139965057373,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 4,
+          "position_idx": 0
+        },
+        {
+          "activation": 8.36139965057373,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 5,
+          "position_idx": 1
+        },
+        {
+          "activation": 8.36139965057373,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 6,
+          "position_idx": 0
+        }
+      ]
+    },
+    {
+      "feature_id": 3078,
+      "description": "begin, text, date",
+      "keywords": [
+        "begin",
+        "text",
+        "date"
+      ],
+      "tags": [],
+      "mean_act": 0.36171746253967285,
+      "max_act": 4.153294086456299,
+      "density": 0.5294100241158746,
+      "avg_fired_token_len": 17.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 4.153294086456299,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 3,
+          "position_idx": 1
+        },
+        {
+          "activation": 4.153294086456299,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 3,
+          "position_idx": 0
+        },
+        {
+          "activation": 4.153294086456299,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 2,
+          "position_idx": 0
+        },
+        {
+          "activation": 4.153294086456299,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 2,
+          "position_idx": 1
+        },
+        {
+          "activation": 4.153294086456299,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 0,
+          "position_idx": 1
+        },
+        {
+          "activation": 4.153294086456299,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 0,
+          "position_idx": 0
+        },
+        {
+          "activation": 4.153294086456299,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 1,
+          "position_idx": 0
+        },
+        {
+          "activation": 4.153294086456299,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 1,
+          "position_idx": 1
+        },
+        {
+          "activation": 4.153294086456299,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 6,
+          "position_idx": 0
+        },
+        {
+          "activation": 4.153294086456299,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 5,
+          "position_idx": 1
+        },
+        {
+          "activation": 4.153294086456299,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 6,
+          "position_idx": 1
+        },
+        {
+          "activation": 4.153294086456299,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 7,
+          "position_idx": 0
+        }
+      ]
+    },
+    {
+      "feature_id": 4764,
+      "description": "code/math | design, elements, message",
+      "keywords": [
+        "design",
+        "elements",
+        "message"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.35905522108078003,
+      "max_act": 3.330566644668579,
+      "density": 0.4310774223138418,
+      "avg_fired_token_len": 6.583333333333333,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 3.330566644668579,
+          "text": " convey. Consider using a grid system to help you organize design elements and keep the focus on the central message. Allow sufficient white space to avoid clutter.\n\n7. Place design elements strategically: Place design elements strategically",
+          "fired_token": " message",
+          "pre_context": " convey. Consider using a grid system to help you organize design elements and keep the focus on the central",
+          "post_context": ". Allow sufficient white space to avoid clutter.\n\n7. Place design elements strategically: Place design elements strategically",
+          "example_idx": 83,
+          "position_idx": 358
+        },
+        {
+          "activation": 3.1903343200683594,
+          "text": " seniors in the community. Volunteers can help with programmatic support, office tasks, or event planning and execution.\n\n10. Hospitals: Volunteer opportunities in hospitals include clerical work, patient companionship, and assisting",
+          "fired_token": " execution",
+          "pre_context": " seniors in the community. Volunteers can help with programmatic support, office tasks, or event planning and",
+          "post_context": ".\n\n10. Hospitals: Volunteer opportunities in hospitals include clerical work, patient companionship, and assisting",
+          "example_idx": 121,
+          "position_idx": 392
+        },
+        {
+          "activation": 3.149040937423706,
+          "text": " message you want to convey. Consider using a grid system to help you organize design elements and keep the focus on the central message. Allow sufficient white space to avoid clutter.\n\n7. Place design elements strategically:",
+          "fired_token": " focus",
+          "pre_context": " message you want to convey. Consider using a grid system to help you organize design elements and keep the",
+          "post_context": " on the central message. Allow sufficient white space to avoid clutter.\n\n7. Place design elements strategically:",
+          "example_idx": 83,
+          "position_idx": 354
+        },
+        {
+          "activation": 3.1197710037231445,
+          "text": ". This sense of liberation continues to influence contemporary art, as artists push boundaries and challenge conventional ways of thinking.\n\n4. Exploring social and political issues: Surrealism also had a strong social and political",
+          "fired_token": " thinking",
+          "pre_context": ". This sense of liberation continues to influence contemporary art, as artists push boundaries and challenge conventional ways of",
+          "post_context": ".\n\n4. Exploring social and political issues: Surrealism also had a strong social and political",
+          "example_idx": 386,
+          "position_idx": 254
+        },
+        {
+          "activation": 3.078076124191284,
+          "text": " raw vegetables and a protein, such as beans or grilled chicken, for a customizable and easy-to-prep meal.\n\n5. Egg muffins: whip up a batch of egg muffins with your choice of",
+          "fired_token": "p",
+          "pre_context": " raw vegetables and a protein, such as beans or grilled chicken, for a customizable and easy-to-pre",
+          "post_context": " meal.\n\n5. Egg muffins: whip up a batch of egg muffins with your choice of",
+          "example_idx": 240,
+          "position_idx": 200
+        },
+        {
+          "activation": 3.054410696029663,
+          "text": " - Celebrating and recognizing individual achievements fosters a spirit of teamwork, leading to improved collaboration and increased overall performance.\n\n4. Enhanced employee retention - An effective reward and recognition program can reduce employee turnover and attr",
+          "fired_token": " overall",
+          "pre_context": " - Celebrating and recognizing individual achievements fosters a spirit of teamwork, leading to improved collaboration and increased",
+          "post_context": " performance.\n\n4. Enhanced employee retention - An effective reward and recognition program can reduce employee turnover and attr",
+          "example_idx": 267,
+          "position_idx": 368
+        },
+        {
+          "activation": 3.0381953716278076,
+          "text": " to convey. Consider using a grid system to help you organize design elements and keep the focus on the central message. Allow sufficient white space to avoid clutter.\n\n7. Place design elements strategically: Place design elements",
+          "fired_token": " central",
+          "pre_context": " to convey. Consider using a grid system to help you organize design elements and keep the focus on the",
+          "post_context": " message. Allow sufficient white space to avoid clutter.\n\n7. Place design elements strategically: Place design elements",
+          "example_idx": 83,
+          "position_idx": 357
+        },
+        {
+          "activation": 2.9768266677856445,
+          "text": " your choice of vegetables and protein for a high-protein breakfast or snack option that can be easily reheated.\n\n6. Soups and stews: make a big batch of soup or stew over the weekend",
+          "fired_token": "ated",
+          "pre_context": " your choice of vegetables and protein for a high-protein breakfast or snack option that can be easily rehe",
+          "post_context": ".\n\n6. Soups and stews: make a big batch of soup or stew over the weekend",
+          "example_idx": 240,
+          "position_idx": 238
+        },
+        {
+          "activation": 2.9701998233795166,
+          "text": "’ll cover how to prepare for a successful live stream and how to make the most of your time on camera.\n\nVideo 8: Monitoring Your Instagram Analytics \nAnalytics are essential to understand the impact of your Instagram",
+          "fired_token": " camera",
+          "pre_context": "’ll cover how to prepare for a successful live stream and how to make the most of your time on",
+          "post_context": ".\n\nVideo 8: Monitoring Your Instagram Analytics \nAnalytics are essential to understand the impact of your Instagram",
+          "example_idx": 134,
+          "position_idx": 479
+        },
+        {
+          "activation": 2.9655439853668213,
+          "text": " Celebrating and recognizing individual achievements fosters a spirit of teamwork, leading to improved collaboration and increased overall performance.\n\n4. Enhanced employee retention - An effective reward and recognition program can reduce employee turnover and attrition",
+          "fired_token": " performance",
+          "pre_context": " Celebrating and recognizing individual achievements fosters a spirit of teamwork, leading to improved collaboration and increased overall",
+          "post_context": ".\n\n4. Enhanced employee retention - An effective reward and recognition program can reduce employee turnover and attrition",
+          "example_idx": 267,
+          "position_idx": 369
+        },
+        {
+          "activation": 2.9421942234039307,
+          "text": " potato and cook on high for an additional 30 minutes until the potato is soft and the soup thickens. \n10. Serve hot with some crusty bread or crackers. \n\nServing Recommendations\n\nSplit",
+          "fired_token": "ens",
+          "pre_context": " potato and cook on high for an additional 30 minutes until the potato is soft and the soup thick",
+          "post_context": ". \n10. Serve hot with some crusty bread or crackers. \n\nServing Recommendations\n\nSplit",
+          "example_idx": 315,
+          "position_idx": 477
+        },
+        {
+          "activation": 2.938701629638672,
+          "text": ", and simple syrup to a glass filled with ice. Stir well and top with soda water. Garnish with a grapefruit slice and/or salt rim.\n\n3. Espresso Martini: Ingredients- vodka,",
+          "fired_token": "ish",
+          "pre_context": ", and simple syrup to a glass filled with ice. Stir well and top with soda water. Garn",
+          "post_context": " with a grapefruit slice and/or salt rim.\n\n3. Espresso Martini: Ingredients- vodka,",
+          "example_idx": 8,
+          "position_idx": 480
+        }
+      ]
+    },
+    {
+      "feature_id": 1166,
+      "description": "code/math | complex, placed, religious",
+      "keywords": [
+        "complex",
+        "placed",
+        "religious"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.3466719090938568,
+      "max_act": 3.13360857963562,
+      "density": 0.433104339377919,
+      "avg_fired_token_len": 5.5,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 3.13360857963562,
+          "text": " removing Indigenous language, culture, and identity. Children were often forcibly taken away from their families and placed in these schools that were run by the government and various religious bodies.\n\nThe discovery has led to an out",
+          "fired_token": " in",
+          "pre_context": " removing Indigenous language, culture, and identity. Children were often forcibly taken away from their families and placed",
+          "post_context": " these schools that were run by the government and various religious bodies.\n\nThe discovery has led to an out",
+          "example_idx": 305,
+          "position_idx": 241
+        },
+        {
+          "activation": 3.0898609161376953,
+          "text": " the manufacturing industry and has transformed the way we think about production. This technology has enabled the creation of complex structures and shapes that would have been impossible to achieve through traditional manufacturing methods. In this report, we",
+          "fired_token": " complex",
+          "pre_context": " the manufacturing industry and has transformed the way we think about production. This technology has enabled the creation of",
+          "post_context": " structures and shapes that would have been impossible to achieve through traditional manufacturing methods. In this report, we",
+          "example_idx": 356,
+          "position_idx": 95
+        },
+        {
+          "activation": 3.0191810131073,
+          "text": " skilled farmers and they practiced terrace agriculture, which involved building stepped platforms on the steep slopes of the mountains to create flat areas for planting crops. It is believed that the Inca people in Machu Picchu",
+          "fired_token": " to",
+          "pre_context": " skilled farmers and they practiced terrace agriculture, which involved building stepped platforms on the steep slopes of the mountains",
+          "post_context": " create flat areas for planting crops. It is believed that the Inca people in Machu Picchu",
+          "example_idx": 232,
+          "position_idx": 392
+        },
+        {
+          "activation": 2.88857364654541,
+          "text": " at removing Indigenous language, culture, and identity. Children were often forcibly taken away from their families and placed in these schools that were run by the government and various religious bodies.\n\nThe discovery has led to an",
+          "fired_token": " placed",
+          "pre_context": " at removing Indigenous language, culture, and identity. Children were often forcibly taken away from their families and",
+          "post_context": " in these schools that were run by the government and various religious bodies.\n\nThe discovery has led to an",
+          "example_idx": 305,
+          "position_idx": 240
+        },
+        {
+          "activation": 2.879969835281372,
+          "text": " aimed at removing Indigenous language, culture, and identity. Children were often forcibly taken away from their families and placed in these schools that were run by the government and various religious bodies.\n\nThe discovery has led to",
+          "fired_token": " and",
+          "pre_context": " aimed at removing Indigenous language, culture, and identity. Children were often forcibly taken away from their families",
+          "post_context": " placed in these schools that were run by the government and various religious bodies.\n\nThe discovery has led to",
+          "example_idx": 305,
+          "position_idx": 239
+        },
+        {
+          "activation": 2.861121416091919,
+          "text": " extraction and processing of natural resources not only deplete our supplies but also disturb habitats and ecosystems, endangering many plant and animal species.\n\nThe effects of consumerism are not limited to the environment either. There",
+          "fired_token": "ing",
+          "pre_context": " extraction and processing of natural resources not only deplete our supplies but also disturb habitats and ecosystems, endanger",
+          "post_context": " many plant and animal species.\n\nThe effects of consumerism are not limited to the environment either. There",
+          "example_idx": 345,
+          "position_idx": 458
+        },
+        {
+          "activation": 2.7822797298431396,
+          "text": "D printers use a variety of materials to create objects layer-by-layer, allowing for the creation of incredibly complex and customizable parts.\n\n3. Nanotechnology: Nanotechnology refers to the manipulation of matter on an atomic",
+          "fired_token": " complex",
+          "pre_context": "D printers use a variety of materials to create objects layer-by-layer, allowing for the creation of incredibly",
+          "post_context": " and customizable parts.\n\n3. Nanotechnology: Nanotechnology refers to the manipulation of matter on an atomic",
+          "example_idx": 27,
+          "position_idx": 153
+        },
+        {
+          "activation": 2.780203342437744,
+          "text": ". These events, ranging from hurricanes and floods to earthquakes and tsunamis, can cause widespread destruction and loss of lives. They also have significant economic, social, and environmental impacts, with poverty levels",
+          "fired_token": " destruction",
+          "pre_context": ". These events, ranging from hurricanes and floods to earthquakes and tsunamis, can cause widespread",
+          "post_context": " and loss of lives. They also have significant economic, social, and environmental impacts, with poverty levels",
+          "example_idx": 190,
+          "position_idx": 140
+        },
+        {
+          "activation": 2.772670030593872,
+          "text": " a place of worship dedicated to the Inca gods. The city was designed with a series of temples, shrines, and other religious structures that were intended to serve as places of spiritual significance. \n\nFinally",
+          "fired_token": ",",
+          "pre_context": " a place of worship dedicated to the Inca gods. The city was designed with a series of temples",
+          "post_context": " shrines, and other religious structures that were intended to serve as places of spiritual significance. \n\nFinally",
+          "example_idx": 232,
+          "position_idx": 177
+        },
+        {
+          "activation": 2.7520387172698975,
+          "text": " a physical outlet for the creativity of urban youth, allowing them to express themselves and compete against each other in a constructive way.\n\nFurthermore, breakdancing was instrumental in the evolution of hip hop music. DJs",
+          "fired_token": " in",
+          "pre_context": " a physical outlet for the creativity of urban youth, allowing them to express themselves and compete against each other",
+          "post_context": " a constructive way.\n\nFurthermore, breakdancing was instrumental in the evolution of hip hop music. DJs",
+          "example_idx": 94,
+          "position_idx": 300
+        },
+        {
+          "activation": 2.749629497528076,
+          "text": " located just outside the city, is a testament to the grandeur of the French monarchy, with its sprawling gardens, ornate fountains, and opulent furnishings.\n\nAs I explore Paris, my senses are",
+          "fired_token": " sprawling",
+          "pre_context": " located just outside the city, is a testament to the grandeur of the French monarchy, with its",
+          "post_context": " gardens, ornate fountains, and opulent furnishings.\n\nAs I explore Paris, my senses are",
+          "example_idx": 231,
+          "position_idx": 466
+        },
+        {
+          "activation": 2.743506669998169,
+          "text": " practiced terrace agriculture, which involved building stepped platforms on the steep slopes of the mountains to create flat areas for planting crops. It is believed that the Inca people in Machu Picchu primarily grew corn,",
+          "fired_token": " for",
+          "pre_context": " practiced terrace agriculture, which involved building stepped platforms on the steep slopes of the mountains to create flat areas",
+          "post_context": " planting crops. It is believed that the Inca people in Machu Picchu primarily grew corn,",
+          "example_idx": 232,
+          "position_idx": 396
+        }
+      ]
+    }
+  ]
+}

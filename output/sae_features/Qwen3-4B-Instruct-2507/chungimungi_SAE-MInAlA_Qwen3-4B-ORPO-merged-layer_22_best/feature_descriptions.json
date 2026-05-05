@@ -1,0 +1,682 @@
+{
+  "sae_repo": "chungimungi/SAE-MInAlA_Qwen3-4B-ORPO-merged-layer_22_best",
+  "base_model": "MInAlA/Qwen3-4B-ORPO-merged",
+  "layer": 22,
+  "selection": "mean",
+  "min_density": 0.0001,
+  "stopwords_lang": "english",
+  "num_prompts": 400,
+  "context_size": 512,
+  "total_tokens": 202221,
+  "interpretation_methodology": {
+    "why_this_analysis": [
+      "Record which latent directions get large activations under the chosen corpus and chat template.",
+      "Separate dead or ultra-rare features from dense ones using per-feature statistics.",
+      "Provide concrete token contexts for follow-up causal work (ablation, patching, steering), not as final semantics."
+    ],
+    "known_limitations": [
+      "SAEs optimize reconstruction under sparsity, not axis-aligned semantics; strong features often track templates, delimiters, and high-frequency n-grams.",
+      "Magnitude on frequent structural tokens can overshadow rarer semantic concepts in top-k mining.",
+      "Human-readable labels are post-hoc summaries of co-activation with text; they do not prove a feature causally implements a behavior."
+    ],
+    "keyword_summaries": "Content words are ranked after NLTK stopword removal; tags are simple surface heuristics. Use likely_surface_structure to flag obvious formatting-like patterns.",
+    "stopwords_source": "nltk.corpus.stopwords",
+    "stopwords_lang": "english"
+  },
+  "features": [
+    {
+      "feature_id": 13178,
+      "description": "code/politeness/math | start, user, write",
+      "keywords": [
+        "start",
+        "user",
+        "write"
+      ],
+      "tags": [
+        "code",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 6.2190470695495605,
+      "max_act": 353.2549743652344,
+      "density": 0.8139312929913314,
+      "avg_fired_token_len": 12.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 353.2549743652344,
+          "text": "user\nWhat many companies do when planning their global marketing strategies is to organize the world’s countries into",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhat many companies do when planning their global marketing strategies is to organize the world’s countries into",
+          "example_idx": 5,
+          "position_idx": 0
+        },
+        {
+          "activation": 353.2549743652344,
+          "text": "user\nWrite a Python program that can identify and remove duplicate images from a given folder or directory.",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite a Python program that can identify and remove duplicate images from a given folder or directory.",
+          "example_idx": 6,
+          "position_idx": 0
+        },
+        {
+          "activation": 353.2549743652344,
+          "text": "user\nWrite an essay that evaluates the positive and negative influence of social media on personal relationships, citing",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite an essay that evaluates the positive and negative influence of social media on personal relationships, citing",
+          "example_idx": 4,
+          "position_idx": 0
+        },
+        {
+          "activation": 353.2549743652344,
+          "text": "user\nPlease provide a specific cooking method for the salmon, as well as any seasonings or ingredients",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nPlease provide a specific cooking method for the salmon, as well as any seasonings or ingredients",
+          "example_idx": 7,
+          "position_idx": 0
+        },
+        {
+          "activation": 353.2549743652344,
+          "text": "user\nWhich famous landmarks should I visit in London, beyond the usual ones?\nassistant",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhich famous landmarks should I visit in London, beyond the usual ones?\nassistant",
+          "example_idx": 1,
+          "position_idx": 0
+        },
+        {
+          "activation": 353.2549743652344,
+          "text": "user\nWrite a comprehensive blog post of at least 1000 words about the top ",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite a comprehensive blog post of at least 1000 words about the top ",
+          "example_idx": 2,
+          "position_idx": 0
+        },
+        {
+          "activation": 353.2549743652344,
+          "text": "user\nDe León, previewing the speech he will give today, said he will highlight his",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nDe León, previewing the speech he will give today, said he will highlight his",
+          "example_idx": 3,
+          "position_idx": 0
+        },
+        {
+          "activation": 353.2549743652344,
+          "text": "user\nThese instructions apply to section-based themes (Responsive 6.0+, Retina 4",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nThese instructions apply to section-based themes (Responsive 6.0+, Retina 4",
+          "example_idx": 0,
+          "position_idx": 0
+        },
+        {
+          "activation": 353.2549743652344,
+          "text": "user\nExpressing your emotions is what keeps a relationship going. Whether it's a mother-daughter",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nExpressing your emotions is what keeps a relationship going. Whether it's a mother-daughter",
+          "example_idx": 10,
+          "position_idx": 0
+        },
+        {
+          "activation": 353.2549743652344,
+          "text": "user\nHow did the Spanish conquest of the Low Countries in the 16th century impact European",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nHow did the Spanish conquest of the Low Countries in the 16th century impact European",
+          "example_idx": 11,
+          "position_idx": 0
+        },
+        {
+          "activation": 353.2549743652344,
+          "text": "user\nWrite step-by-step instructions detailing how to make a creamy and tangy vegan cashew cheese",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite step-by-step instructions detailing how to make a creamy and tangy vegan cashew cheese",
+          "example_idx": 9,
+          "position_idx": 0
+        },
+        {
+          "activation": 353.2549743652344,
+          "text": "user\nWhat are the classic cocktails that every bartender should know how to make and what are their ingredients",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhat are the classic cocktails that every bartender should know how to make and what are their ingredients",
+          "example_idx": 8,
+          "position_idx": 0
+        }
+      ]
+    },
+    {
+      "feature_id": 7304,
+      "description": "code/math | writing, language, use",
+      "keywords": [
+        "writing",
+        "language",
+        "use"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 5.758399963378906,
+      "max_act": 27.811111450195312,
+      "density": 0.7822926402302433,
+      "avg_fired_token_len": 8.916666666666666,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 27.811111450195312,
+          "text": " with well-defined characters and an engaging plot that demonstrates the transformative power of hope. Use imagery and descriptive language to convey the emotions of your characters and tug at the heartstrings of your readers. Show how a",
+          "fired_token": " language",
+          "pre_context": " with well-defined characters and an engaging plot that demonstrates the transformative power of hope. Use imagery and descriptive",
+          "post_context": " to convey the emotions of your characters and tug at the heartstrings of your readers. Show how a",
+          "example_idx": 85,
+          "position_idx": 28
+        },
+        {
+          "activation": 27.22834014892578,
+          "text": " includes measurable goals, implementation timelines, employee feedback mechanisms and program evaluation metrics. Use a professional and persuasive writing style while considering the company's values and culture to create a compelling proposal that addresses the needs of all",
+          "fired_token": " writing",
+          "pre_context": " includes measurable goals, implementation timelines, employee feedback mechanisms and program evaluation metrics. Use a professional and persuasive",
+          "post_context": " style while considering the company's values and culture to create a compelling proposal that addresses the needs of all",
+          "example_idx": 267,
+          "position_idx": 57
+        },
+        {
+          "activation": 27.05645179748535,
+          "text": ", installation and setup process, customer support, and any other relevant factors. Use a clear and concise writing style and support your opinions with factual evidence and personal experience. Make sure to address potential drawbacks and limitations",
+          "fired_token": " writing",
+          "pre_context": ", installation and setup process, customer support, and any other relevant factors. Use a clear and concise",
+          "post_context": " style and support your opinions with factual evidence and personal experience. Make sure to address potential drawbacks and limitations",
+          "example_idx": 165,
+          "position_idx": 45
+        },
+        {
+          "activation": 26.9968318939209,
+          "text": "user\nUsing descriptive language and dialogue, write a creative short story about a group of five lifelong friends who stumble upon a mysterious",
+          "fired_token": " language",
+          "pre_context": "user\nUsing descriptive",
+          "post_context": " and dialogue, write a creative short story about a group of five lifelong friends who stumble upon a mysterious",
+          "example_idx": 266,
+          "position_idx": 5
+        },
+        {
+          "activation": 26.70059585571289,
+          "text": " Your article should include recent discoveries, technological developments, and scientific breakthroughs. Use a formal and objective writing style and interview experts in the field for additional insights. The article should also discuss the potential impact of",
+          "fired_token": " writing",
+          "pre_context": " Your article should include recent discoveries, technological developments, and scientific breakthroughs. Use a formal and objective",
+          "post_context": " style and interview experts in the field for additional insights. The article should also discuss the potential impact of",
+          "example_idx": 87,
+          "position_idx": 35
+        },
+        {
+          "activation": 26.638975143432617,
+          "text": " magic, including details about its inhabitants, landscapes, culture, mythology, and political structure. Use imaginative language and employ sensory details to bring this fantastical realm to life.\nassistant\nIn the",
+          "fired_token": " language",
+          "pre_context": " magic, including details about its inhabitants, landscapes, culture, mythology, and political structure. Use imaginative",
+          "post_context": " and employ sensory details to bring this fantastical realm to life.\nassistant\nIn the",
+          "example_idx": 154,
+          "position_idx": 38
+        },
+        {
+          "activation": 26.472761154174805,
+          "text": " that of those around you. Your essay should engage the reader through vivid storytelling techniques, showcasing your unique writing voice and crafting a structure that maintains a coherence and a compelling narrative. To support your ideas, draw",
+          "fired_token": " writing",
+          "pre_context": " that of those around you. Your essay should engage the reader through vivid storytelling techniques, showcasing your unique",
+          "post_context": " voice and crafting a structure that maintains a coherence and a compelling narrative. To support your ideas, draw",
+          "example_idx": 311,
+          "position_idx": 54
+        },
+        {
+          "activation": 26.264245986938477,
+          "text": "\nassistant\nProduct design is an essential element to both innovation and market success. It is the process of creating a functional, valuable, and aesthetically pleasing product that meets the needs and desires of",
+          "fired_token": " process",
+          "pre_context": "\nassistant\nProduct design is an essential element to both innovation and market success. It is the",
+          "post_context": " of creating a functional, valuable, and aesthetically pleasing product that meets the needs and desires of",
+          "example_idx": 74,
+          "position_idx": 36
+        },
+        {
+          "activation": 26.200714111328125,
+          "text": " analysis. However, with the help of AI, underwriting has become faster and more efficient. AI algorithms can analyze large volumes of data in real-time, identify patterns, and predict outcomes with a high level",
+          "fired_token": " algorithms",
+          "pre_context": " analysis. However, with the help of AI, underwriting has become faster and more efficient. AI",
+          "post_context": " can analyze large volumes of data in real-time, identify patterns, and predict outcomes with a high level",
+          "example_idx": 230,
+          "position_idx": 182
+        },
+        {
+          "activation": 26.163732528686523,
+          "text": " have impacted your life and that of those around you. Your essay should engage the reader through vivid storytelling techniques, showcasing your unique writing voice and crafting a structure that maintains a coherence and a compelling narrative. To",
+          "fired_token": " techniques",
+          "pre_context": " have impacted your life and that of those around you. Your essay should engage the reader through vivid storytelling",
+          "post_context": ", showcasing your unique writing voice and crafting a structure that maintains a coherence and a compelling narrative. To",
+          "example_idx": 311,
+          "position_idx": 49
+        },
+        {
+          "activation": 26.011093139648438,
+          "text": " addiction on various aspects of their life, including their relationships, academics, and self-esteem. Use descriptive language and vivid imagery to make the reader connect with the character on an emotional level.\nassistant",
+          "fired_token": " language",
+          "pre_context": " addiction on various aspects of their life, including their relationships, academics, and self-esteem. Use descriptive",
+          "post_context": " and vivid imagery to make the reader connect with the character on an emotional level.\nassistant",
+          "example_idx": 46,
+          "position_idx": 98
+        },
+        {
+          "activation": 25.527210235595703,
+          "text": " Product design plays a vital role in innovation by providing the blueprint for the product development process. The product designer must have a deep understanding of the market trends, customer needs, and technology advancements, so they can",
+          "fired_token": " designer",
+          "pre_context": " Product design plays a vital role in innovation by providing the blueprint for the product development process. The product",
+          "post_context": " must have a deep understanding of the market trends, customer needs, and technology advancements, so they can",
+          "example_idx": 74,
+          "position_idx": 134
+        }
+      ]
+    },
+    {
+      "feature_id": 6681,
+      "description": "code/politeness/math | start, user, write",
+      "keywords": [
+        "start",
+        "user",
+        "write"
+      ],
+      "tags": [
+        "code",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 5.125611305236816,
+      "max_act": 418.8544006347656,
+      "density": 0.6290741317667305,
+      "avg_fired_token_len": 12.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 418.8544006347656,
+          "text": "user\nWrite an essay that evaluates the positive and negative influence of social media on personal relationships, citing",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite an essay that evaluates the positive and negative influence of social media on personal relationships, citing",
+          "example_idx": 4,
+          "position_idx": 0
+        },
+        {
+          "activation": 418.8544006347656,
+          "text": "user\nWhat many companies do when planning their global marketing strategies is to organize the world’s countries into",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhat many companies do when planning their global marketing strategies is to organize the world’s countries into",
+          "example_idx": 5,
+          "position_idx": 0
+        },
+        {
+          "activation": 418.8544006347656,
+          "text": "user\nPlease provide a specific cooking method for the salmon, as well as any seasonings or ingredients",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nPlease provide a specific cooking method for the salmon, as well as any seasonings or ingredients",
+          "example_idx": 7,
+          "position_idx": 0
+        },
+        {
+          "activation": 418.8544006347656,
+          "text": "user\nWrite a Python program that can identify and remove duplicate images from a given folder or directory.",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite a Python program that can identify and remove duplicate images from a given folder or directory.",
+          "example_idx": 6,
+          "position_idx": 0
+        },
+        {
+          "activation": 418.8544006347656,
+          "text": "user\nThese instructions apply to section-based themes (Responsive 6.0+, Retina 4",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nThese instructions apply to section-based themes (Responsive 6.0+, Retina 4",
+          "example_idx": 0,
+          "position_idx": 0
+        },
+        {
+          "activation": 418.8544006347656,
+          "text": "user\nDe León, previewing the speech he will give today, said he will highlight his",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nDe León, previewing the speech he will give today, said he will highlight his",
+          "example_idx": 3,
+          "position_idx": 0
+        },
+        {
+          "activation": 418.8544006347656,
+          "text": "user\nWhich famous landmarks should I visit in London, beyond the usual ones?\nassistant",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhich famous landmarks should I visit in London, beyond the usual ones?\nassistant",
+          "example_idx": 1,
+          "position_idx": 0
+        },
+        {
+          "activation": 418.8544006347656,
+          "text": "user\nWrite a comprehensive blog post of at least 1000 words about the top ",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite a comprehensive blog post of at least 1000 words about the top ",
+          "example_idx": 2,
+          "position_idx": 0
+        },
+        {
+          "activation": 418.8544006347656,
+          "text": "user\nWrite step-by-step instructions detailing how to make a creamy and tangy vegan cashew cheese",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite step-by-step instructions detailing how to make a creamy and tangy vegan cashew cheese",
+          "example_idx": 9,
+          "position_idx": 0
+        },
+        {
+          "activation": 418.8544006347656,
+          "text": "user\nExpressing your emotions is what keeps a relationship going. Whether it's a mother-daughter",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nExpressing your emotions is what keeps a relationship going. Whether it's a mother-daughter",
+          "example_idx": 10,
+          "position_idx": 0
+        },
+        {
+          "activation": 418.8544006347656,
+          "text": "user\nHow did the Spanish conquest of the Low Countries in the 16th century impact European",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nHow did the Spanish conquest of the Low Countries in the 16th century impact European",
+          "example_idx": 11,
+          "position_idx": 0
+        },
+        {
+          "activation": 418.8544006347656,
+          "text": "user\nWhat are the classic cocktails that every bartender should know how to make and what are their ingredients",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhat are the classic cocktails that every bartender should know how to make and what are their ingredients",
+          "example_idx": 8,
+          "position_idx": 0
+        }
+      ]
+    },
+    {
+      "feature_id": 8927,
+      "description": "code/politeness/math | start, user, write",
+      "keywords": [
+        "start",
+        "user",
+        "write"
+      ],
+      "tags": [
+        "code",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 4.337390899658203,
+      "max_act": 344.6286315917969,
+      "density": 0.6019800119671054,
+      "avg_fired_token_len": 12.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 344.6286315917969,
+          "text": "user\nWrite an essay that evaluates the positive and negative influence of social media on personal relationships, citing",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite an essay that evaluates the positive and negative influence of social media on personal relationships, citing",
+          "example_idx": 4,
+          "position_idx": 0
+        },
+        {
+          "activation": 344.6286315917969,
+          "text": "user\nWhat many companies do when planning their global marketing strategies is to organize the world’s countries into",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhat many companies do when planning their global marketing strategies is to organize the world’s countries into",
+          "example_idx": 5,
+          "position_idx": 0
+        },
+        {
+          "activation": 344.6286315917969,
+          "text": "user\nPlease provide a specific cooking method for the salmon, as well as any seasonings or ingredients",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nPlease provide a specific cooking method for the salmon, as well as any seasonings or ingredients",
+          "example_idx": 7,
+          "position_idx": 0
+        },
+        {
+          "activation": 344.6286315917969,
+          "text": "user\nWrite a Python program that can identify and remove duplicate images from a given folder or directory.",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite a Python program that can identify and remove duplicate images from a given folder or directory.",
+          "example_idx": 6,
+          "position_idx": 0
+        },
+        {
+          "activation": 344.6286315917969,
+          "text": "user\nWhich famous landmarks should I visit in London, beyond the usual ones?\nassistant",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhich famous landmarks should I visit in London, beyond the usual ones?\nassistant",
+          "example_idx": 1,
+          "position_idx": 0
+        },
+        {
+          "activation": 344.6286315917969,
+          "text": "user\nDe León, previewing the speech he will give today, said he will highlight his",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nDe León, previewing the speech he will give today, said he will highlight his",
+          "example_idx": 3,
+          "position_idx": 0
+        },
+        {
+          "activation": 344.6286315917969,
+          "text": "user\nWrite a comprehensive blog post of at least 1000 words about the top ",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite a comprehensive blog post of at least 1000 words about the top ",
+          "example_idx": 2,
+          "position_idx": 0
+        },
+        {
+          "activation": 344.6286315917969,
+          "text": "user\nThese instructions apply to section-based themes (Responsive 6.0+, Retina 4",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nThese instructions apply to section-based themes (Responsive 6.0+, Retina 4",
+          "example_idx": 0,
+          "position_idx": 0
+        },
+        {
+          "activation": 344.6286315917969,
+          "text": "user\nWhat are the classic cocktails that every bartender should know how to make and what are their ingredients",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhat are the classic cocktails that every bartender should know how to make and what are their ingredients",
+          "example_idx": 8,
+          "position_idx": 0
+        },
+        {
+          "activation": 344.6286315917969,
+          "text": "user\nHow did the Spanish conquest of the Low Countries in the 16th century impact European",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nHow did the Spanish conquest of the Low Countries in the 16th century impact European",
+          "example_idx": 11,
+          "position_idx": 0
+        },
+        {
+          "activation": 344.6286315917969,
+          "text": "user\nExpressing your emotions is what keeps a relationship going. Whether it's a mother-daughter",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nExpressing your emotions is what keeps a relationship going. Whether it's a mother-daughter",
+          "example_idx": 10,
+          "position_idx": 0
+        },
+        {
+          "activation": 344.6286315917969,
+          "text": "user\nWrite step-by-step instructions detailing how to make a creamy and tangy vegan cashew cheese",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite step-by-step instructions detailing how to make a creamy and tangy vegan cashew cheese",
+          "example_idx": 9,
+          "position_idx": 0
+        }
+      ]
+    },
+    {
+      "feature_id": 10586,
+      "description": "code/politeness/math | start, user, write",
+      "keywords": [
+        "start",
+        "user",
+        "write"
+      ],
+      "tags": [
+        "code",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 4.165419578552246,
+      "max_act": 452.5154113769531,
+      "density": 0.5698369605530583,
+      "avg_fired_token_len": 12.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 452.5154113769531,
+          "text": "user\nWhat many companies do when planning their global marketing strategies is to organize the world’s countries into",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhat many companies do when planning their global marketing strategies is to organize the world’s countries into",
+          "example_idx": 5,
+          "position_idx": 0
+        },
+        {
+          "activation": 452.5154113769531,
+          "text": "user\nWrite a Python program that can identify and remove duplicate images from a given folder or directory.",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite a Python program that can identify and remove duplicate images from a given folder or directory.",
+          "example_idx": 6,
+          "position_idx": 0
+        },
+        {
+          "activation": 452.5154113769531,
+          "text": "user\nWrite an essay that evaluates the positive and negative influence of social media on personal relationships, citing",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite an essay that evaluates the positive and negative influence of social media on personal relationships, citing",
+          "example_idx": 4,
+          "position_idx": 0
+        },
+        {
+          "activation": 452.5154113769531,
+          "text": "user\nPlease provide a specific cooking method for the salmon, as well as any seasonings or ingredients",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nPlease provide a specific cooking method for the salmon, as well as any seasonings or ingredients",
+          "example_idx": 7,
+          "position_idx": 0
+        },
+        {
+          "activation": 452.5154113769531,
+          "text": "user\nThese instructions apply to section-based themes (Responsive 6.0+, Retina 4",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nThese instructions apply to section-based themes (Responsive 6.0+, Retina 4",
+          "example_idx": 0,
+          "position_idx": 0
+        },
+        {
+          "activation": 452.5154113769531,
+          "text": "user\nDe León, previewing the speech he will give today, said he will highlight his",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nDe León, previewing the speech he will give today, said he will highlight his",
+          "example_idx": 3,
+          "position_idx": 0
+        },
+        {
+          "activation": 452.5154113769531,
+          "text": "user\nWrite a comprehensive blog post of at least 1000 words about the top ",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite a comprehensive blog post of at least 1000 words about the top ",
+          "example_idx": 2,
+          "position_idx": 0
+        },
+        {
+          "activation": 452.5154113769531,
+          "text": "user\nWhich famous landmarks should I visit in London, beyond the usual ones?\nassistant",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhich famous landmarks should I visit in London, beyond the usual ones?\nassistant",
+          "example_idx": 1,
+          "position_idx": 0
+        },
+        {
+          "activation": 452.5154113769531,
+          "text": "user\nWhat are the classic cocktails that every bartender should know how to make and what are their ingredients",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhat are the classic cocktails that every bartender should know how to make and what are their ingredients",
+          "example_idx": 8,
+          "position_idx": 0
+        },
+        {
+          "activation": 452.5154113769531,
+          "text": "user\nHow did the Spanish conquest of the Low Countries in the 16th century impact European",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nHow did the Spanish conquest of the Low Countries in the 16th century impact European",
+          "example_idx": 11,
+          "position_idx": 0
+        },
+        {
+          "activation": 452.5154113769531,
+          "text": "user\nExpressing your emotions is what keeps a relationship going. Whether it's a mother-daughter",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nExpressing your emotions is what keeps a relationship going. Whether it's a mother-daughter",
+          "example_idx": 10,
+          "position_idx": 0
+        },
+        {
+          "activation": 452.5154113769531,
+          "text": "user\nWrite step-by-step instructions detailing how to make a creamy and tangy vegan cashew cheese",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite step-by-step instructions detailing how to make a creamy and tangy vegan cashew cheese",
+          "example_idx": 9,
+          "position_idx": 0
+        }
+      ]
+    }
+  ]
+}

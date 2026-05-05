@@ -1,0 +1,679 @@
+{
+  "sae_repo": "chungimungi/SAE-MInAlA_SmolLM3-3B-SimPO-merged-layer_18_best",
+  "base_model": "MInAlA/SmolLM3-3B-SimPO-merged",
+  "layer": 18,
+  "selection": "mean",
+  "min_density": 0.0001,
+  "stopwords_lang": "english",
+  "num_prompts": 400,
+  "context_size": 512,
+  "total_tokens": 204800,
+  "interpretation_methodology": {
+    "why_this_analysis": [
+      "Record which latent directions get large activations under the chosen corpus and chat template.",
+      "Separate dead or ultra-rare features from dense ones using per-feature statistics.",
+      "Provide concrete token contexts for follow-up causal work (ablation, patching, steering), not as final semantics."
+    ],
+    "known_limitations": [
+      "SAEs optimize reconstruction under sparsity, not axis-aligned semantics; strong features often track templates, delimiters, and high-frequency n-grams.",
+      "Magnitude on frequent structural tokens can overshadow rarer semantic concepts in top-k mining.",
+      "Human-readable labels are post-hoc summaries of co-activation with text; they do not prove a feature causally implements a behavior."
+    ],
+    "keyword_summaries": "Content words are ranked after NLTK stopword removal; tags are simple surface heuristics. Use likely_surface_structure to flag obvious formatting-like patterns.",
+    "stopwords_source": "nltk.corpus.stopwords",
+    "stopwords_lang": "english"
+  },
+  "features": [
+    {
+      "feature_id": 5205,
+      "description": "code/refusal/safety/math | assistant, provide, general",
+      "keywords": [
+        "assistant",
+        "provide",
+        "general"
+      ],
+      "tags": [
+        "code",
+        "refusal/safety",
+        "math"
+      ],
+      "mean_act": 0.5891576409339905,
+      "max_act": 3.2914040088653564,
+      "density": 0.6074658203125,
+      "avg_fired_token_len": 3.5833333333333335,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 3.2914040088653564,
+          "text": "\nassistant\nI do not have the capability to design and build apps like a human developer. However, I can provide a general outline or guide that can be helpful in the development process. Here",
+          "fired_token": ".",
+          "pre_context": "\nassistant\nI do not have the capability to design and build apps like a human developer",
+          "post_context": " However, I can provide a general outline or guide that can be helpful in the development process. Here",
+          "example_idx": 388,
+          "position_idx": 346
+        },
+        {
+          "activation": 3.2157952785491943,
+          "text": " interests to enhance the learning experience.\nassistant\nI am unable to write actual coded design. However, I can provide you with a basic structure for your language learning podcast app in vue that you",
+          "fired_token": ".",
+          "pre_context": " interests to enhance the learning experience.\nassistant\nI am unable to write actual coded design",
+          "post_context": " However, I can provide you with a basic structure for your language learning podcast app in vue that you",
+          "example_idx": 168,
+          "position_idx": 369
+        },
+        {
+          "activation": 3.1383421421051025,
+          "text": " to enhance the learning experience.\nassistant\nI am unable to write actual coded design. However, I can provide you with a basic structure for your language learning podcast app in vue that you can",
+          "fired_token": " However",
+          "pre_context": " to enhance the learning experience.\nassistant\nI am unable to write actual coded design.",
+          "post_context": ", I can provide you with a basic structure for your language learning podcast app in vue that you can",
+          "example_idx": 168,
+          "position_idx": 370
+        },
+        {
+          "activation": 3.106264591217041,
+          "text": "\nassistant\nI do not have the capability to design and build apps like a human developer. However, I can provide a general outline or guide that can be helpful in the development process. Here are",
+          "fired_token": " However",
+          "pre_context": "\nassistant\nI do not have the capability to design and build apps like a human developer.",
+          "post_context": ", I can provide a general outline or guide that can be helpful in the development process. Here are",
+          "example_idx": 388,
+          "position_idx": 347
+        },
+        {
+          "activation": 3.0832722187042236,
+          "text": " priorities for improving infrastructure in the region?\nassistant\nI don't have actual preferences, but some common priorities for improving infrastructure in a region might include:\n\n1. Upgrading roadways, bridges",
+          "fired_token": " but",
+          "pre_context": " priorities for improving infrastructure in the region?\nassistant\nI don't have actual preferences,",
+          "post_context": " some common priorities for improving infrastructure in a region might include:\n\n1. Upgrading roadways, bridges",
+          "example_idx": 369,
+          "position_idx": 267
+        },
+        {
+          "activation": 3.0271854400634766,
+          "text": " of neuroimaging biomarkers developed by the author's research?\nassistant\nI do not have access to the specific research findings of any particular author. However, here are some common examples of",
+          "fired_token": " not",
+          "pre_context": " of neuroimaging biomarkers developed by the author's research?\nassistant\nI do",
+          "post_context": " have access to the specific research findings of any particular author. However, here are some common examples of",
+          "example_idx": 33,
+          "position_idx": 355
+        },
+        {
+          "activation": 3.020766258239746,
+          "text": " specific examples of neuroimaging biomarkers developed by the author's research?\nassistant\nI do not have access to the specific research findings of any particular author. However, here are some common",
+          "fired_token": "I",
+          "pre_context": " specific examples of neuroimaging biomarkers developed by the author's research?\nassistant\n",
+          "post_context": " do not have access to the specific research findings of any particular author. However, here are some common",
+          "example_idx": 33,
+          "position_idx": 353
+        },
+        {
+          "activation": 3.0195508003234863,
+          "text": "user\nHow has the new training facility impacted the team's physical performance?\nassistant\nI do not have information on specific sports teams and their training facilities. However, in general, a new",
+          "fired_token": "I",
+          "pre_context": "user\nHow has the new training facility impacted the team's physical performance?\nassistant\n",
+          "post_context": " do not have information on specific sports teams and their training facilities. However, in general, a new",
+          "example_idx": 185,
+          "position_idx": 261
+        },
+        {
+          "activation": 3.01885986328125,
+          "text": " statistical testing.\nassistant\nI don't have the capability of creating a jupyter notebook. However, I can provide a general outline of how one could approach a data analysis project in jupyter",
+          "fired_token": ".",
+          "pre_context": " statistical testing.\nassistant\nI don't have the capability of creating a jupyter notebook",
+          "post_context": " However, I can provide a general outline of how one could approach a data analysis project in jupyter",
+          "example_idx": 392,
+          "position_idx": 284
+        },
+        {
+          "activation": 3.0173323154449463,
+          "text": "doun had beyond his birthplace and education at AUB?\nassistant\nI do not have access to personal information beyond what has been provided. However, there may be other notable accomplishments or",
+          "fired_token": " not",
+          "pre_context": "doun had beyond his birthplace and education at AUB?\nassistant\nI do",
+          "post_context": " have access to personal information beyond what has been provided. However, there may be other notable accomplishments or",
+          "example_idx": 219,
+          "position_idx": 309
+        },
+        {
+          "activation": 2.9968652725219727,
+          "text": " factory or field installed accessories for the One Ton Air Conditioner?\nassistant\nI don't have the current updated information if there are specific factory or field installed accessories for the one ton air conditioner",
+          "fired_token": "'t",
+          "pre_context": " factory or field installed accessories for the One Ton Air Conditioner?\nassistant\nI don",
+          "post_context": " have the current updated information if there are specific factory or field installed accessories for the one ton air conditioner",
+          "example_idx": 175,
+          "position_idx": 337
+        },
+        {
+          "activation": 2.971745491027832,
+          "text": " testing.\nassistant\nI don't have the capability of creating a jupyter notebook. However, I can provide a general outline of how one could approach a data analysis project in jupyter notebook",
+          "fired_token": " However",
+          "pre_context": " testing.\nassistant\nI don't have the capability of creating a jupyter notebook.",
+          "post_context": ", I can provide a general outline of how one could approach a data analysis project in jupyter notebook",
+          "example_idx": 392,
+          "position_idx": 285
+        }
+      ]
+    },
+    {
+      "feature_id": 7843,
+      "description": "code/math | interventions, budget, roles",
+      "keywords": [
+        "interventions",
+        "budget",
+        "roles"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.5831969976425171,
+      "max_act": 2.817662239074707,
+      "density": 0.611064453125,
+      "avg_fired_token_len": 8.833333333333334,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.817662239074707,
+          "text": " in the governance of the vast Habsburg empire. It was divided into several departments, each responsible for specific aspects of government and administration. The key officials and their roles were as follows:\n\n1. The",
+          "fired_token": " for",
+          "pre_context": " in the governance of the vast Habsburg empire. It was divided into several departments, each responsible",
+          "post_context": " specific aspects of government and administration. The key officials and their roles were as follows:\n\n1. The",
+          "example_idx": 72,
+          "position_idx": 306
+        },
+        {
+          "activation": 2.767582893371582,
+          "text": "assistant\nClimate change has had a profound impact on the agriculture industry in recent years. Here are some of the impacts:\n\n1. Changes in weather patterns: Climate change has resulted in erratic precipitation, extreme",
+          "fired_token": " some",
+          "pre_context": "assistant\nClimate change has had a profound impact on the agriculture industry in recent years. Here are",
+          "post_context": " of the impacts:\n\n1. Changes in weather patterns: Climate change has resulted in erratic precipitation, extreme",
+          "example_idx": 330,
+          "position_idx": 279
+        },
+        {
+          "activation": 2.7570064067840576,
+          "text": ".\n\nuser\nConduct a thorough analysis of a company's supply chain management system, including all processes, procedures, and practices currently in place. Based on your findings, develop a comprehensive report outlining any",
+          "fired_token": " processes",
+          "pre_context": ".\n\nuser\nConduct a thorough analysis of a company's supply chain management system, including all",
+          "post_context": ", procedures, and practices currently in place. Based on your findings, develop a comprehensive report outlining any",
+          "example_idx": 269,
+          "position_idx": 259
+        },
+        {
+          "activation": 2.7174031734466553,
+          "text": " program that will promote physical, mental, and emotional health in the workplace. The proposal should include specific interventions, timelines, budget estimates, and metrics for measuring the success of the program. Additionally, it should",
+          "fired_token": " interventions",
+          "pre_context": " program that will promote physical, mental, and emotional health in the workplace. The proposal should include specific",
+          "post_context": ", timelines, budget estimates, and metrics for measuring the success of the program. Additionally, it should",
+          "example_idx": 142,
+          "position_idx": 282
+        },
+        {
+          "activation": 2.6936068534851074,
+          "text": " a new language with a focus on building vocabulary, practicing grammar, and mastering pronunciation. Incorporate interactive activities such as quizzes, games, and audio exercises to engage learners and reinforce concepts. Emphasize practical",
+          "fired_token": " activities",
+          "pre_context": " a new language with a focus on building vocabulary, practicing grammar, and mastering pronunciation. Incorporate interactive",
+          "post_context": " such as quizzes, games, and audio exercises to engage learners and reinforce concepts. Emphasize practical",
+          "example_idx": 47,
+          "position_idx": 273
+        },
+        {
+          "activation": 2.6921098232269287,
+          "text": ", physical, and emotional benefits of spending time in nature. Use scientific research and personal anecdotes to support your claims, and include suggestions for ways that readers can incorporate more nature time into their lives. The style",
+          "fired_token": " your",
+          "pre_context": ", physical, and emotional benefits of spending time in nature. Use scientific research and personal anecdotes to support",
+          "post_context": " claims, and include suggestions for ways that readers can incorporate more nature time into their lives. The style",
+          "example_idx": 395,
+          "position_idx": 279
+        },
+        {
+          "activation": 2.6529741287231445,
+          "text": " physical, mental, and emotional health in the workplace. The proposal should include specific interventions, timelines, budget estimates, and metrics for measuring the success of the program. Additionally, it should address any potential barriers",
+          "fired_token": " budget",
+          "pre_context": " physical, mental, and emotional health in the workplace. The proposal should include specific interventions, timelines,",
+          "post_context": " estimates, and metrics for measuring the success of the program. Additionally, it should address any potential barriers",
+          "example_idx": 142,
+          "position_idx": 286
+        },
+        {
+          "activation": 2.6416616439819336,
+          "text": " agreement for two companies working together on a new project which includes details on the scope of the partnership, roles and responsibilities of each party, ownership of intellectual property, confidentiality provisions, dispute resolution mechanisms, termination conditions",
+          "fired_token": " roles",
+          "pre_context": " agreement for two companies working together on a new project which includes details on the scope of the partnership,",
+          "post_context": " and responsibilities of each party, ownership of intellectual property, confidentiality provisions, dispute resolution mechanisms, termination conditions",
+          "example_idx": 279,
+          "position_idx": 267
+        },
+        {
+          "activation": 2.6386964321136475,
+          "text": "user\nHow does the smart touch control of the mini fan operate and what are the different modes available for flexible adjustment?: Great indoor for home use or outdoor camping.\nHow often have you felt that your",
+          "fired_token": " available",
+          "pre_context": "user\nHow does the smart touch control of the mini fan operate and what are the different modes",
+          "post_context": " for flexible adjustment?: Great indoor for home use or outdoor camping.\nHow often have you felt that your",
+          "example_idx": 381,
+          "position_idx": 260
+        },
+        {
+          "activation": 2.6325037479400635,
+          "text": " two companies working together on a new project which includes details on the scope of the partnership, roles and responsibilities of each party, ownership of intellectual property, confidentiality provisions, dispute resolution mechanisms, termination conditions, financial",
+          "fired_token": " responsibilities",
+          "pre_context": " two companies working together on a new project which includes details on the scope of the partnership, roles and",
+          "post_context": " of each party, ownership of intellectual property, confidentiality provisions, dispute resolution mechanisms, termination conditions, financial",
+          "example_idx": 279,
+          "position_idx": 269
+        },
+        {
+          "activation": 2.630703926086426,
+          "text": " will promote physical, mental, and emotional health in the workplace. The proposal should include specific interventions, timelines, budget estimates, and metrics for measuring the success of the program. Additionally, it should address any",
+          "fired_token": " timelines",
+          "pre_context": " will promote physical, mental, and emotional health in the workplace. The proposal should include specific interventions,",
+          "post_context": ", budget estimates, and metrics for measuring the success of the program. Additionally, it should address any",
+          "example_idx": 142,
+          "position_idx": 284
+        },
+        {
+          "activation": 2.62843918800354,
+          "text": " how the sliding filament theory applies to this process in the human body. Provide an overview of the molecular events that occur during each phase of muscle contraction and relaxation, and discuss the various factors that can affect muscle",
+          "fired_token": " events",
+          "pre_context": " how the sliding filament theory applies to this process in the human body. Provide an overview of the molecular",
+          "post_context": " that occur during each phase of muscle contraction and relaxation, and discuss the various factors that can affect muscle",
+          "example_idx": 133,
+          "position_idx": 282
+        }
+      ]
+    },
+    {
+      "feature_id": 11498,
+      "description": "punctuation/code/math | solution, section, based",
+      "keywords": [
+        "solution",
+        "section",
+        "based"
+      ],
+      "tags": [
+        "punctuation",
+        "code",
+        "math"
+      ],
+      "mean_act": 0.5666899085044861,
+      "max_act": 1.7982755899429321,
+      "density": 0.47488281250000003,
+      "avg_fired_token_len": 1.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 1.7982755899429321,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 6,
+          "position_idx": 208
+        },
+        {
+          "activation": 1.7982755899429321,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 7,
+          "position_idx": 208
+        },
+        {
+          "activation": 1.7982755899429321,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 4,
+          "position_idx": 208
+        },
+        {
+          "activation": 1.7982755899429321,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 5,
+          "position_idx": 208
+        },
+        {
+          "activation": 1.7982755899429321,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 0,
+          "position_idx": 208
+        },
+        {
+          "activation": 1.7982755899429321,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 1,
+          "position_idx": 208
+        },
+        {
+          "activation": 1.7982755899429321,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 3,
+          "position_idx": 208
+        },
+        {
+          "activation": 1.7982755899429321,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 2,
+          "position_idx": 208
+        },
+        {
+          "activation": 1.7982755899429321,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 10,
+          "position_idx": 208
+        },
+        {
+          "activation": 1.7982755899429321,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 11,
+          "position_idx": 208
+        },
+        {
+          "activation": 1.7982755899429321,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 9,
+          "position_idx": 208
+        },
+        {
+          "activation": 1.7982755899429321,
+          "text": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "fired_token": ",",
+          "pre_context": ". In the Solution section, based on various attempts, explorations, and reflections from the Thought section",
+          "post_context": " systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and",
+          "example_idx": 8,
+          "position_idx": 208
+        }
+      ]
+    },
+    {
+      "feature_id": 593,
+      "description": "punctuation/code/politeness/math | section, solution, systematically",
+      "keywords": [
+        "section",
+        "solution",
+        "systematically"
+      ],
+      "tags": [
+        "punctuation",
+        "code",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 0.41329115629196167,
+      "max_act": 1.487301230430603,
+      "density": 0.463134765625,
+      "avg_fired_token_len": 1.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 1.487301230430603,
+          "text": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWrite a Python program that",
+          "fired_token": ",",
+          "pre_context": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate",
+          "post_context": " and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWrite a Python program that",
+          "example_idx": 6,
+          "position_idx": 227
+        },
+        {
+          "activation": 1.487301230430603,
+          "text": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nPlease provide a specific cooking",
+          "fired_token": ",",
+          "pre_context": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate",
+          "post_context": " and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nPlease provide a specific cooking",
+          "example_idx": 7,
+          "position_idx": 227
+        },
+        {
+          "activation": 1.487301230430603,
+          "text": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWrite an essay that evaluates",
+          "fired_token": ",",
+          "pre_context": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate",
+          "post_context": " and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWrite an essay that evaluates",
+          "example_idx": 4,
+          "position_idx": 227
+        },
+        {
+          "activation": 1.487301230430603,
+          "text": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWhat many companies do when",
+          "fired_token": ",",
+          "pre_context": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate",
+          "post_context": " and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWhat many companies do when",
+          "example_idx": 5,
+          "position_idx": 227
+        },
+        {
+          "activation": 1.487301230430603,
+          "text": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nThese instructions apply to section",
+          "fired_token": ",",
+          "pre_context": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate",
+          "post_context": " and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nThese instructions apply to section",
+          "example_idx": 0,
+          "position_idx": 227
+        },
+        {
+          "activation": 1.487301230430603,
+          "text": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWhich famous landmarks should I",
+          "fired_token": ",",
+          "pre_context": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate",
+          "post_context": " and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWhich famous landmarks should I",
+          "example_idx": 1,
+          "position_idx": 227
+        },
+        {
+          "activation": 1.487301230430603,
+          "text": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nDe León, preview",
+          "fired_token": ",",
+          "pre_context": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate",
+          "post_context": " and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nDe León, preview",
+          "example_idx": 3,
+          "position_idx": 227
+        },
+        {
+          "activation": 1.487301230430603,
+          "text": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWrite a comprehensive blog post",
+          "fired_token": ",",
+          "pre_context": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate",
+          "post_context": " and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWrite a comprehensive blog post",
+          "example_idx": 2,
+          "position_idx": 227
+        },
+        {
+          "activation": 1.487301230430603,
+          "text": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nExpressing your emotions is",
+          "fired_token": ",",
+          "pre_context": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate",
+          "post_context": " and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nExpressing your emotions is",
+          "example_idx": 10,
+          "position_idx": 227
+        },
+        {
+          "activation": 1.487301230430603,
+          "text": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nHow did the Spanish conquest",
+          "fired_token": ",",
+          "pre_context": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate",
+          "post_context": " and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nHow did the Spanish conquest",
+          "example_idx": 11,
+          "position_idx": 227
+        },
+        {
+          "activation": 1.487301230430603,
+          "text": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWrite step-by-step instructions",
+          "fired_token": ",",
+          "pre_context": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate",
+          "post_context": " and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWrite step-by-step instructions",
+          "example_idx": 9,
+          "position_idx": 227
+        },
+        {
+          "activation": 1.487301230430603,
+          "text": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWhat are the classic cocktails",
+          "fired_token": ",",
+          "pre_context": " section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate",
+          "post_context": " and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWhat are the classic cocktails",
+          "example_idx": 8,
+          "position_idx": 227
+        }
+      ]
+    },
+    {
+      "feature_id": 2513,
+      "description": "start, date, metadata",
+      "keywords": [
+        "start",
+        "date",
+        "metadata"
+      ],
+      "tags": [],
+      "mean_act": 0.3742271959781647,
+      "max_act": 12.686918258666992,
+      "density": 0.502333984375,
+      "avg_fired_token_len": 12.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 12.686918258666992,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 6,
+          "position_idx": 0
+        },
+        {
+          "activation": 12.686918258666992,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 7,
+          "position_idx": 0
+        },
+        {
+          "activation": 12.686918258666992,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 4,
+          "position_idx": 0
+        },
+        {
+          "activation": 12.686918258666992,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 5,
+          "position_idx": 0
+        },
+        {
+          "activation": 12.686918258666992,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 1,
+          "position_idx": 0
+        },
+        {
+          "activation": 12.686918258666992,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 2,
+          "position_idx": 0
+        },
+        {
+          "activation": 12.686918258666992,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 3,
+          "position_idx": 0
+        },
+        {
+          "activation": 12.686918258666992,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 0,
+          "position_idx": 0
+        },
+        {
+          "activation": 12.686918258666992,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 8,
+          "position_idx": 0
+        },
+        {
+          "activation": 12.686918258666992,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 10,
+          "position_idx": 0
+        },
+        {
+          "activation": 12.686918258666992,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 11,
+          "position_idx": 0
+        },
+        {
+          "activation": 12.686918258666992,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 9,
+          "position_idx": 0
+        }
+      ]
+    }
+  ]
+}

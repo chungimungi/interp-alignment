@@ -1,0 +1,682 @@
+{
+  "sae_repo": "chungimungi/SAE-MInAlA_Llama-3.2-3B-Instruct-PPO-merged-layer_11_best",
+  "base_model": "MInAlA/Llama-3.2-3B-Instruct-PPO-merged",
+  "layer": 11,
+  "selection": "mean",
+  "min_density": 0.0001,
+  "stopwords_lang": "english",
+  "num_prompts": 400,
+  "context_size": 512,
+  "total_tokens": 202771,
+  "interpretation_methodology": {
+    "why_this_analysis": [
+      "Record which latent directions get large activations under the chosen corpus and chat template.",
+      "Separate dead or ultra-rare features from dense ones using per-feature statistics.",
+      "Provide concrete token contexts for follow-up causal work (ablation, patching, steering), not as final semantics."
+    ],
+    "known_limitations": [
+      "SAEs optimize reconstruction under sparsity, not axis-aligned semantics; strong features often track templates, delimiters, and high-frequency n-grams.",
+      "Magnitude on frequent structural tokens can overshadow rarer semantic concepts in top-k mining.",
+      "Human-readable labels are post-hoc summaries of co-activation with text; they do not prove a feature causally implements a behavior."
+    ],
+    "keyword_summaries": "Content words are ranked after NLTK stopword removal; tags are simple surface heuristics. Use likely_surface_structure to flag obvious formatting-like patterns.",
+    "stopwords_source": "nltk.corpus.stopwords",
+    "stopwords_lang": "english"
+  },
+  "features": [
+    {
+      "feature_id": 7706,
+      "description": "code/refusal/safety/politeness/math | assistant, user, nature",
+      "keywords": [
+        "assistant",
+        "user",
+        "nature"
+      ],
+      "tags": [
+        "code",
+        "refusal/safety",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 1.1411155462265015,
+      "max_act": 5.06942081451416,
+      "density": 0.8147170946535748,
+      "avg_fired_token_len": 3.75,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 5.06942081451416,
+          "text": "500-word blog post in an informative and engaging style, explaining the benefits of practicing random acts of kindness. Share real-life examples to illustrate the positive impact of small acts of kindness on individuals and communities. Include",
+          "fired_token": ".",
+          "pre_context": "500-word blog post in an informative and engaging style, explaining the benefits of practicing random acts of kindness",
+          "post_context": " Share real-life examples to illustrate the positive impact of small acts of kindness on individuals and communities. Include",
+          "example_idx": 28,
+          "position_idx": 54
+        },
+        {
+          "activation": 4.836888313293457,
+          "text": "0 word blog post that delves into the mental, physical, and emotional benefits of spending time in nature. Use scientific research and personal anecdotes to support your claims, and include suggestions for ways that readers can",
+          "fired_token": " nature",
+          "pre_context": "0 word blog post that delves into the mental, physical, and emotional benefits of spending time in",
+          "post_context": ". Use scientific research and personal anecdotes to support your claims, and include suggestions for ways that readers can",
+          "example_idx": 395,
+          "position_idx": 57
+        },
+        {
+          "activation": 4.705845355987549,
+          "text": " 500-word opinion piece using persuasive language and evidence to argue the negative effects of consumerism on the environment. Your piece should include specific examples of environmental harm caused by consumer behavior and propose solutions to combat this",
+          "fired_token": " environment",
+          "pre_context": " 500-word opinion piece using persuasive language and evidence to argue the negative effects of consumerism on the",
+          "post_context": ". Your piece should include specific examples of environmental harm caused by consumer behavior and propose solutions to combat this",
+          "example_idx": 345,
+          "position_idx": 53
+        },
+        {
+          "activation": 4.6242194175720215,
+          "text": "user\n\nCan you tell me more about loving-kindness meditation and how it can help me reduce stress?assistant\n\nLoving-kindness meditation, also known as metta meditation, is",
+          "fired_token": " stress",
+          "pre_context": "user\n\nCan you tell me more about loving-kindness meditation and how it can help me reduce",
+          "post_context": "?assistant\n\nLoving-kindness meditation, also known as metta meditation, is",
+          "example_idx": 321,
+          "position_idx": 390
+        },
+        {
+          "activation": 4.547883033752441,
+          "text": " story in third-person narrative about a middle-aged man named Tom who discovers he has the power to fly. Describe Tom's emotions, thoughts, and behaviors as he grapples with this newfound ability and the",
+          "fired_token": ".",
+          "pre_context": " story in third-person narrative about a middle-aged man named Tom who discovers he has the power to fly",
+          "post_context": " Describe Tom's emotions, thoughts, and behaviors as he grapples with this newfound ability and the",
+          "example_idx": 167,
+          "position_idx": 60
+        },
+        {
+          "activation": 4.530937671661377,
+          "text": "user\n\nThese advancements are impressive! Can you tell me more about graphene and its specific uses in batteries and sensors?assistant\n\nSure, graphene's unique properties make it an excellent",
+          "fired_token": " uses",
+          "pre_context": "user\n\nThese advancements are impressive! Can you tell me more about graphene and its specific",
+          "post_context": " in batteries and sensors?assistant\n\nSure, graphene's unique properties make it an excellent",
+          "example_idx": 27,
+          "position_idx": 472
+        },
+        {
+          "activation": 4.506505489349365,
+          "text": "2026\n\nuser\n\nCreate a YouTube tutorial on how to bake a gluten-free cake.assistant\n\nI am unable to create a youtube tutorial as it requires visual aids as well",
+          "fired_token": ".",
+          "pre_context": "2026\n\nuser\n\nCreate a YouTube tutorial on how to bake a gluten-free cake",
+          "post_context": "assistant\n\nI am unable to create a youtube tutorial as it requires visual aids as well",
+          "example_idx": 22,
+          "position_idx": 43
+        },
+        {
+          "activation": 4.492095470428467,
+          "text": " word blog post that delves into the mental, physical, and emotional benefits of spending time in nature. Use scientific research and personal anecdotes to support your claims, and include suggestions for ways that readers can incorporate",
+          "fired_token": ".",
+          "pre_context": " word blog post that delves into the mental, physical, and emotional benefits of spending time in nature",
+          "post_context": " Use scientific research and personal anecdotes to support your claims, and include suggestions for ways that readers can incorporate",
+          "example_idx": 395,
+          "position_idx": 58
+        },
+        {
+          "activation": 4.458137035369873,
+          "text": "assistant\n\nYes, here are some tips and tricks for baking a perfect chocolate cake:\n\n1. Use good quality ingredients: Always use the best quality cocoa powder, chocolate and other ingredients such as flour",
+          "fired_token": ".",
+          "pre_context": "assistant\n\nYes, here are some tips and tricks for baking a perfect chocolate cake:\n\n1",
+          "post_context": " Use good quality ingredients: Always use the best quality cocoa powder, chocolate and other ingredients such as flour",
+          "example_idx": 45,
+          "position_idx": 66
+        },
+        {
+          "activation": 4.451360702514648,
+          "text": "user\n\nCan you please provide me with tips on how to deal with a toddler's tantrums from the \"100 tips for parents\" book in Spanish?assistant\n\n¡Por sup",
+          "fired_token": "ums",
+          "pre_context": "user\n\nCan you please provide me with tips on how to deal with a toddler's tantr",
+          "post_context": " from the \"100 tips for parents\" book in Spanish?assistant\n\n¡Por sup",
+          "example_idx": 282,
+          "position_idx": 168
+        },
+        {
+          "activation": 4.449036598205566,
+          "text": " to Prague before and loved it! Out of these options, which one do you think has the best food scene for budget travelers?assistant\n\nAll of these destinations have their own unique and delicious",
+          "fired_token": " food",
+          "pre_context": " to Prague before and loved it! Out of these options, which one do you think has the best",
+          "post_context": " scene for budget travelers?assistant\n\nAll of these destinations have their own unique and delicious",
+          "example_idx": 64,
+          "position_idx": 144
+        },
+        {
+          "activation": 4.413219928741455,
+          "text": "\n\nuser\n\nWhat ingredients and spices should be used to make a flavorful homemade spaghetti sauce? Should the sauce be chunky or smooth? Should it be cooked on low heat for a longer time",
+          "fired_token": "?",
+          "pre_context": "\n\nuser\n\nWhat ingredients and spices should be used to make a flavorful homemade spaghetti sauce",
+          "post_context": " Should the sauce be chunky or smooth? Should it be cooked on low heat for a longer time",
+          "example_idx": 161,
+          "position_idx": 45
+        }
+      ]
+    },
+    {
+      "feature_id": 2660,
+      "description": "code/politeness/math | game, designed, air",
+      "keywords": [
+        "game",
+        "designed",
+        "air"
+      ],
+      "tags": [
+        "code",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 0.8405342102050781,
+      "max_act": 2.682894706726074,
+      "density": 0.9158015692579314,
+      "avg_fired_token_len": 3.5833333333333335,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.682894706726074,
+          "text": " list of essential things to pack when going on a beach vacation, including items such as sunscreen, towels, bathing suits, hats, flip flops, and any other necessary beach gear. Please make sure to",
+          "fired_token": ",",
+          "pre_context": " list of essential things to pack when going on a beach vacation, including items such as sunscreen, towels",
+          "post_context": " bathing suits, hats, flip flops, and any other necessary beach gear. Please make sure to",
+          "example_idx": 346,
+          "position_idx": 55
+        },
+        {
+          "activation": 2.6639513969421387,
+          "text": "DORE: The first regular international flight from Indore to Sharjah will be started by Air India in April, Lok Sabha Speaker Sumitra Mahajan said on Wednesday.\n“A demand to start international flight from",
+          "fired_token": " in",
+          "pre_context": "DORE: The first regular international flight from Indore to Sharjah will be started by Air India",
+          "post_context": " April, Lok Sabha Speaker Sumitra Mahajan said on Wednesday.\n“A demand to start international flight from",
+          "example_idx": 264,
+          "position_idx": 59
+        },
+        {
+          "activation": 2.634119987487793,
+          "text": ": The game room in the 17,728-square-foot home includes a two-lane bowling alley, a Skee-Ball arcade game, a Claw-Machine grabber game, air hockey, pin",
+          "fired_token": ",",
+          "pre_context": ": The game room in the 17,728-square-foot home includes a two-lane bowling alley",
+          "post_context": " a Skee-Ball arcade game, a Claw-Machine grabber game, air hockey, pin",
+          "example_idx": 274,
+          "position_idx": 57
+        },
+        {
+          "activation": 2.6073598861694336,
+          "text": "user\n\nGiven the text: Created in collaboration with The Line Hotel, this limited edition pool towel proudly bares the name of one of our favorite Los Angeles neighborhoods, Koreatown. Designed by",
+          "fired_token": " pool",
+          "pre_context": "user\n\nGiven the text: Created in collaboration with The Line Hotel, this limited edition",
+          "post_context": " towel proudly bares the name of one of our favorite Los Angeles neighborhoods, Koreatown. Designed by",
+          "example_idx": 393,
+          "position_idx": 46
+        },
+        {
+          "activation": 2.5987606048583984,
+          "text": "Here is a piece of text: The game room in the 17,728-square-foot home includes a two-lane bowling alley, a Skee-Ball arcade game, a Claw-Machine grabber",
+          "fired_token": " a",
+          "pre_context": "Here is a piece of text: The game room in the 17,728-square-foot home includes",
+          "post_context": " two-lane bowling alley, a Skee-Ball arcade game, a Claw-Machine grabber",
+          "example_idx": 274,
+          "position_idx": 51
+        },
+        {
+          "activation": 2.5773565769195557,
+          "text": " a piece of text: DUBAI, Aug 26 (Reuters) - Saudi Arabia’s stock market outperformed by a large margin on Sunday, led by petrochemical stocks, as Middle Eastern",
+          "fired_token": " market",
+          "pre_context": " a piece of text: DUBAI, Aug 26 (Reuters) - Saudi Arabia’s stock",
+          "post_context": " outperformed by a large margin on Sunday, led by petrochemical stocks, as Middle Eastern",
+          "example_idx": 109,
+          "position_idx": 53
+        },
+        {
+          "activation": 2.5688140392303467,
+          "text": " I was 14, the muscles necessary for me to chew and swallow became very weak. After months of high-calorie shakes and sometimes even straight Häagen-Dazs, my parents drove me to S",
+          "fired_token": " of",
+          "pre_context": " I was 14, the muscles necessary for me to chew and swallow became very weak. After months",
+          "post_context": " high-calorie shakes and sometimes even straight Häagen-Dazs, my parents drove me to S",
+          "example_idx": 340,
+          "position_idx": 59
+        },
+        {
+          "activation": 2.5560028553009033,
+          "text": "ard’s One Ton Air Conditioner is a self contained energy efficient heating and cooling system, which is designed to offer maximum indoor comfort at a minimal cost without using valuable indoor floor space or outside ground space.",
+          "fired_token": " designed",
+          "pre_context": "ard’s One Ton Air Conditioner is a self contained energy efficient heating and cooling system, which is",
+          "post_context": " to offer maximum indoor comfort at a minimal cost without using valuable indoor floor space or outside ground space.",
+          "example_idx": 175,
+          "position_idx": 52
+        },
+        {
+          "activation": 2.5451645851135254,
+          "text": " things to pack when going on a beach vacation, including items such as sunscreen, towels, bathing suits, hats, flip flops, and any other necessary beach gear. Please make sure to differentiate between different",
+          "fired_token": ",",
+          "pre_context": " things to pack when going on a beach vacation, including items such as sunscreen, towels, bathing suits",
+          "post_context": " hats, flip flops, and any other necessary beach gear. Please make sure to differentiate between different",
+          "example_idx": 346,
+          "position_idx": 58
+        },
+        {
+          "activation": 2.5442681312561035,
+          "text": " The game room in the 17,728-square-foot home includes a two-lane bowling alley, a Skee-Ball arcade game, a Claw-Machine grabber game, air hockey, pinball",
+          "fired_token": " a",
+          "pre_context": " The game room in the 17,728-square-foot home includes a two-lane bowling alley,",
+          "post_context": " Skee-Ball arcade game, a Claw-Machine grabber game, air hockey, pinball",
+          "example_idx": 274,
+          "position_idx": 58
+        },
+        {
+          "activation": 2.542428493499756,
+          "text": " Digiwrimo, Poetry. Bookmark the permalink.\nSo lovely. I thought the choice of music set that tone for the unfolding of thought to create the visual poem for Anna. A true gift.",
+          "fired_token": " music",
+          "pre_context": " Digiwrimo, Poetry. Bookmark the permalink.\nSo lovely. I thought the choice of",
+          "post_context": " set that tone for the unfolding of thought to create the visual poem for Anna. A true gift.",
+          "example_idx": 32,
+          "position_idx": 76
+        },
+        {
+          "activation": 2.522127628326416,
+          "text": "Bard’s One Ton Air Conditioner is a self contained energy efficient heating and cooling system, which is designed to offer maximum indoor comfort at a minimal cost without using valuable indoor floor space or outside ground space",
+          "fired_token": " is",
+          "pre_context": "Bard’s One Ton Air Conditioner is a self contained energy efficient heating and cooling system, which",
+          "post_context": " designed to offer maximum indoor comfort at a minimal cost without using valuable indoor floor space or outside ground space",
+          "example_idx": 175,
+          "position_idx": 51
+        }
+      ]
+    },
+    {
+      "feature_id": 12512,
+      "description": "code/math | resources, assistant, speed",
+      "keywords": [
+        "resources",
+        "assistant",
+        "speed"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.2781045436859131,
+      "max_act": 3.5117135047912598,
+      "density": 0.4128105103787031,
+      "avg_fired_token_len": 7.5,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 3.5117135047912598,
+          "text": " of incorporating lifelong learning into your career growth strategy, highlighting the benefits of continuous learning, showcasing tips and resources for learning, and providing examples of successful professionals who have achieved career advancement through ongoing education. The post",
+          "fired_token": " resources",
+          "pre_context": " of incorporating lifelong learning into your career growth strategy, highlighting the benefits of continuous learning, showcasing tips and",
+          "post_context": " for learning, and providing examples of successful professionals who have achieved career advancement through ongoing education. The post",
+          "example_idx": 327,
+          "position_idx": 59
+        },
+        {
+          "activation": 3.240086317062378,
+          "text": " choosing a topic, designing visually appealing content, incorporating persuasive language, selecting an appropriate format, and effective distribution tactics.assistant\n\nStep 1: Identify Your Target Audience \n\nThe first step in",
+          "fired_token": " distribution",
+          "pre_context": " choosing a topic, designing visually appealing content, incorporating persuasive language, selecting an appropriate format, and effective",
+          "post_context": " tactics.assistant\n\nStep 1: Identify Your Target Audience \n\nThe first step in",
+          "example_idx": 192,
+          "position_idx": 67
+        },
+        {
+          "activation": 3.160576820373535,
+          "text": " for fashion brand websites. Provide examples of specific design elements or features that can be optimized to improve website speed and ultimately enhance overall brand performance.assistant\n\nWebsite speed has become a critical ranking factor",
+          "fired_token": " speed",
+          "pre_context": " for fashion brand websites. Provide examples of specific design elements or features that can be optimized to improve website",
+          "post_context": " and ultimately enhance overall brand performance.assistant\n\nWebsite speed has become a critical ranking factor",
+          "example_idx": 95,
+          "position_idx": 66
+        },
+        {
+          "activation": 3.1021313667297363,
+          "text": " aid that has been provided to small businesses in Paris? How much is being offered and how do businesses apply for it?assistant\n\nYes, I can give you some more information about the financial",
+          "fired_token": " apply",
+          "pre_context": " aid that has been provided to small businesses in Paris? How much is being offered and how do businesses",
+          "post_context": " for it?assistant\n\nYes, I can give you some more information about the financial",
+          "example_idx": 235,
+          "position_idx": 273
+        },
+        {
+          "activation": 3.03798246383667,
+          "text": " including their features, benefits, and drawbacks, and suggest which type of grill is best suited for different camping scenarios. Your comparison should be written in a clear and concise style and include sources to support your analysis",
+          "fired_token": " camping",
+          "pre_context": " including their features, benefits, and drawbacks, and suggest which type of grill is best suited for different",
+          "post_context": " scenarios. Your comparison should be written in a clear and concise style and include sources to support your analysis",
+          "example_idx": 204,
+          "position_idx": 66
+        },
+        {
+          "activation": 2.994966506958008,
+          "text": " body throughout the exercise.assistant\n\nWelcome to this guided visualization exercise for managing anxiety in crowded spaces. Find a comfortable seated position, or lie down on your back. Begin by taking a nice",
+          "fired_token": " crowded",
+          "pre_context": " body throughout the exercise.assistant\n\nWelcome to this guided visualization exercise for managing anxiety in",
+          "post_context": " spaces. Find a comfortable seated position, or lie down on your back. Begin by taking a nice",
+          "example_idx": 323,
+          "position_idx": 117
+        },
+        {
+          "activation": 2.9583394527435303,
+          "text": " visuals to illustrate the impact of meat consumption on greenhouse gas emissions and deforestation. Include actionable tips and resources to help people transition to a plant-based diet. Use hashtags such as #MeatlessMonday and",
+          "fired_token": " resources",
+          "pre_context": " visuals to illustrate the impact of meat consumption on greenhouse gas emissions and deforestation. Include actionable tips and",
+          "post_context": " to help people transition to a plant-based diet. Use hashtags such as #MeatlessMonday and",
+          "example_idx": 242,
+          "position_idx": 78
+        },
+        {
+          "activation": 2.95127010345459,
+          "text": " a middle-aged man named Tom who sets out for a solo hike in the Appalachian Mountains, but gets lost due to a sudden storm. Incorporate themes of survival, resourcefulness, and inner strength in the",
+          "fired_token": " lost",
+          "pre_context": " a middle-aged man named Tom who sets out for a solo hike in the Appalachian Mountains, but gets",
+          "post_context": " due to a sudden storm. Incorporate themes of survival, resourcefulness, and inner strength in the",
+          "example_idx": 51,
+          "position_idx": 68
+        },
+        {
+          "activation": 2.910978317260742,
+          "text": " on how to keep a composting system in the kitchen? I don't have a lot of space, and I'm not sure how to get it started.assistant\n\nCertainly! Starting a",
+          "fired_token": ",",
+          "pre_context": " on how to keep a composting system in the kitchen? I don't have a lot of space",
+          "post_context": " and I'm not sure how to get it started.assistant\n\nCertainly! Starting a",
+          "example_idx": 146,
+          "position_idx": 490
+        },
+        {
+          "activation": 2.8942549228668213,
+          "text": " on his personal and professional life. Include specific details about the physical sensations of flying, the challenges and dangers Tom faces, and the reactions of those around him. Use vivid descriptions of setting and character to create",
+          "fired_token": " dangers",
+          "pre_context": " on his personal and professional life. Include specific details about the physical sensations of flying, the challenges and",
+          "post_context": " Tom faces, and the reactions of those around him. Use vivid descriptions of setting and character to create",
+          "example_idx": 167,
+          "position_idx": 104
+        },
+        {
+          "activation": 2.889389753341675,
+          "text": " in the Appalachian Mountains, but gets lost due to a sudden storm. Incorporate themes of survival, resourcefulness, and inner strength in the story. Use vivid descriptions and sensory details to create an atmospheric setting",
+          "fired_token": " resource",
+          "pre_context": " in the Appalachian Mountains, but gets lost due to a sudden storm. Incorporate themes of survival,",
+          "post_context": "fulness, and inner strength in the story. Use vivid descriptions and sensory details to create an atmospheric setting",
+          "example_idx": 51,
+          "position_idx": 81
+        },
+        {
+          "activation": 2.8604745864868164,
+          "text": "\n\nuser\n\nWrite a character-driven short story that essentially deals with the theme of social media addiction and delve into the psychological effects that it could have on young minds. Pay close attention to the",
+          "fired_token": " media",
+          "pre_context": "\n\nuser\n\nWrite a character-driven short story that essentially deals with the theme of social",
+          "post_context": " addiction and delve into the psychological effects that it could have on young minds. Pay close attention to the",
+          "example_idx": 46,
+          "position_idx": 45
+        }
+      ]
+    },
+    {
+      "feature_id": 8720,
+      "description": "code/politeness/math | serve, enjoy, user",
+      "keywords": [
+        "serve",
+        "enjoy",
+        "user"
+      ],
+      "tags": [
+        "code",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 0.23700687289237976,
+      "max_act": 2.150341272354126,
+      "density": 0.40766677680733443,
+      "avg_fired_token_len": 5.25,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.150341272354126,
+          "text": " the cake comes out clean.\n\n10. Let the cake cool completely before serving or frosting.\n\nenjoy your delicious gluten-free cake! you can top it with your favorite frosting or fresh berries.user",
+          "fired_token": " your",
+          "pre_context": " the cake comes out clean.\n\n10. Let the cake cool completely before serving or frosting.\n\nenjoy",
+          "post_context": " delicious gluten-free cake! you can top it with your favorite frosting or fresh berries.user",
+          "example_idx": 22,
+          "position_idx": 343
+        },
+        {
+          "activation": 2.148020029067993,
+          "text": " (entrance gate) with its intricately carved sculptures and colorful paintings.\n\nOverall, the temple is a perfect example of the Dravidian style of architecture, which is characterized by its towering spires,",
+          "fired_token": " a",
+          "pre_context": " (entrance gate) with its intricately carved sculptures and colorful paintings.\n\nOverall, the temple is",
+          "post_context": " perfect example of the Dravidian style of architecture, which is characterized by its towering spires,",
+          "example_idx": 307,
+          "position_idx": 396
+        },
+        {
+          "activation": 2.14278507232666,
+          "text": ", and drizzle honey over everything for a touch of sweetness. \n\n5. Serve immediately and enjoy your delicious and healthy mixed fruit smoothie bowl!user\n\nThis smoothie bowl recipe sounds",
+          "fired_token": " your",
+          "pre_context": ", and drizzle honey over everything for a touch of sweetness. \n\n5. Serve immediately and enjoy",
+          "post_context": " delicious and healthy mixed fruit smoothie bowl!user\n\nThis smoothie bowl recipe sounds",
+          "example_idx": 277,
+          "position_idx": 384
+        },
+        {
+          "activation": 2.1185860633850098,
+          "text": " intricate carvings, and use of local materials such as granite and soapstone. It's definitely a sight to see for any architecture enthusiast!user\n\nIt's fascinating that the shadow of",
+          "fired_token": " a",
+          "pre_context": " intricate carvings, and use of local materials such as granite and soapstone. It's definitely",
+          "post_context": " sight to see for any architecture enthusiast!user\n\nIt's fascinating that the shadow of",
+          "example_idx": 307,
+          "position_idx": 437
+        },
+        {
+          "activation": 2.1063473224639893,
+          "text": " around 5% of global methane emissions, contributing to climate change. (National Geographic)\n\nThese statistics highlight the significant impact of plastic pollution on carbon emissions and emphasize the urgency to address",
+          "fired_token": " highlight",
+          "pre_context": " around 5% of global methane emissions, contributing to climate change. (National Geographic)\n\nThese statistics",
+          "post_context": " the significant impact of plastic pollution on carbon emissions and emphasize the urgency to address",
+          "example_idx": 281,
+          "position_idx": 496
+        },
+        {
+          "activation": 2.073056221008301,
+          "text": " for an additional 30 minutes until the potato is soft and the soup thickens. \n10. Serve hot with some crusty bread or crackers. \n\nServing Recommendations\n\nSplit pea soup is a delicious",
+          "fired_token": " Serve",
+          "pre_context": " for an additional 30 minutes until the potato is soft and the soup thickens. \n10.",
+          "post_context": " hot with some crusty bread or crackers. \n\nServing Recommendations\n\nSplit pea soup is a delicious",
+          "example_idx": 315,
+          "position_idx": 482
+        },
+        {
+          "activation": 2.063915729522705,
+          "text": ".\n9. Remove the skillet from the heat and garnish with chopped parsley (optional).\n10. Serve the scallops hot with the butter sauce on top. They pair well with rice, pasta, or",
+          "fired_token": " Serve",
+          "pre_context": ".\n9. Remove the skillet from the heat and garnish with chopped parsley (optional).\n10.",
+          "post_context": " the scallops hot with the butter sauce on top. They pair well with rice, pasta, or",
+          "example_idx": 334,
+          "position_idx": 364
+        },
+        {
+          "activation": 2.0413219928741455,
+          "text": "melet in half and cook for another minute or until the eggs are cooked through. \n8. Serve hot. \n\nOption 2: Greek yogurt parfait \n\nIngredients:\n- 1 cup Greek yogurt \n",
+          "fired_token": " Serve",
+          "pre_context": "melet in half and cook for another minute or until the eggs are cooked through. \n8.",
+          "post_context": " hot. \n\nOption 2: Greek yogurt parfait \n\nIngredients:\n- 1 cup Greek yogurt \n",
+          "example_idx": 39,
+          "position_idx": 301
+        },
+        {
+          "activation": 2.037555456161499,
+          "text": " 30 minutes to let the frosting firm up and keep the sprinkles in place.\n\n10. Enjoy your cute and fun cake decoration!user\n\nCan you suggest where I can find some cute",
+          "fired_token": " your",
+          "pre_context": " 30 minutes to let the frosting firm up and keep the sprinkles in place.\n\n10. Enjoy",
+          "post_context": " cute and fun cake decoration!user\n\nCan you suggest where I can find some cute",
+          "example_idx": 326,
+          "position_idx": 341
+        },
+        {
+          "activation": 2.036494016647339,
+          "text": " Leave some chunks for texture if desired.\n9. Stir in cilantro and lime juice.\n10. Serve hot with additional cilantro or toppings of choice.\n\nVariations/substitutions:\n- For a spice kick",
+          "fired_token": " Serve",
+          "pre_context": " Leave some chunks for texture if desired.\n9. Stir in cilantro and lime juice.\n10.",
+          "post_context": " hot with additional cilantro or toppings of choice.\n\nVariations/substitutions:\n- For a spice kick",
+          "example_idx": 149,
+          "position_idx": 339
+        },
+        {
+          "activation": 2.0103964805603027,
+          "text": " fritters hot with a dollop of sour cream and some extra chopped dill on top.\n\nEnjoy your delicious zucchini fritters with dill, and feel free to freeze some grated zucchini",
+          "fired_token": "Enjoy",
+          "pre_context": " fritters hot with a dollop of sour cream and some extra chopped dill on top.\n\n",
+          "post_context": " your delicious zucchini fritters with dill, and feel free to freeze some grated zucchini",
+          "example_idx": 180,
+          "position_idx": 491
+        },
+        {
+          "activation": 2.009624719619751,
+          "text": " dry completely before applying moisturizer or makeup.\n\nThat's it! This simple and natural toner can help refresh and revitalize your skin, leaving it feeling soft, smooth and refreshed.user",
+          "fired_token": " help",
+          "pre_context": " dry completely before applying moisturizer or makeup.\n\nThat's it! This simple and natural toner can",
+          "post_context": " refresh and revitalize your skin, leaving it feeling soft, smooth and refreshed.user",
+          "example_idx": 265,
+          "position_idx": 259
+        }
+      ]
+    },
+    {
+      "feature_id": 11164,
+      "description": "code/math | oil, skin, help",
+      "keywords": [
+        "oil",
+        "skin",
+        "help"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.22910574078559875,
+      "max_act": 3.1626923084259033,
+      "density": 0.35335427649910495,
+      "avg_fired_token_len": 6.5,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 3.1626923084259033,
+          "text": " building security, providing a safe and secure environment for occupants. Access controls, surveillance systems, and intrusion detection systems can help prevent unauthorized access and monitor activity in and around the building.\n\n4. Productivity:",
+          "fired_token": " detection",
+          "pre_context": " building security, providing a safe and secure environment for occupants. Access controls, surveillance systems, and intrusion",
+          "post_context": " systems can help prevent unauthorized access and monitor activity in and around the building.\n\n4. Productivity:",
+          "example_idx": 38,
+          "position_idx": 193
+        },
+        {
+          "activation": 2.8314342498779297,
+          "text": " that can help reduce acne. Mix it with a carrier oil and apply it to your skin as a spot treatment.\n\n3. Coconut oil: Coconut oil can be used as a moisturizer for dry skin,",
+          "fired_token": " spot",
+          "pre_context": " that can help reduce acne. Mix it with a carrier oil and apply it to your skin as a",
+          "post_context": " treatment.\n\n3. Coconut oil: Coconut oil can be used as a moisturizer for dry skin,",
+          "example_idx": 348,
+          "position_idx": 129
+        },
+        {
+          "activation": 2.803523302078247,
+          "text": " Worcestershire sauce, hot sauce, celery salt, black pepper, ice, celery stalk or pickle for garnish.\n8. Cosmopolitan: Ingredients- vodka, triple sec, lime juice, cran",
+          "fired_token": " for",
+          "pre_context": " Worcestershire sauce, hot sauce, celery salt, black pepper, ice, celery stalk or pickle",
+          "post_context": " garnish.\n8. Cosmopolitan: Ingredients- vodka, triple sec, lime juice, cran",
+          "example_idx": 8,
+          "position_idx": 247
+        },
+        {
+          "activation": 2.7658214569091797,
+          "text": ".\n\nMaterials:\n- Measuring tape\n- Circular saw\n- Level\n- Hammer\n- Pry bar\n- Caulk gun\n- Utility knife\n- Window\n- Window sill foam\n- Scre",
+          "fired_token": " bar",
+          "pre_context": ".\n\nMaterials:\n- Measuring tape\n- Circular saw\n- Level\n- Hammer\n- Pry",
+          "post_context": "\n- Caulk gun\n- Utility knife\n- Window\n- Window sill foam\n- Scre",
+          "example_idx": 66,
+          "position_idx": 164
+        },
+        {
+          "activation": 2.738725185394287,
+          "text": " AI-powered systems can speed up the process by performing tasks such as verifying claim information, detecting fraudulent claims, and processing payments. This has led to faster claim processing times, reduced turnaround times, and better customer",
+          "fired_token": ",",
+          "pre_context": " AI-powered systems can speed up the process by performing tasks such as verifying claim information, detecting fraudulent claims",
+          "post_context": " and processing payments. This has led to faster claim processing times, reduced turnaround times, and better customer",
+          "example_idx": 230,
+          "position_idx": 319
+        },
+        {
+          "activation": 2.732236862182617,
+          "text": " can help reduce acne. Mix it with a carrier oil and apply it to your skin as a spot treatment.\n\n3. Coconut oil: Coconut oil can be used as a moisturizer for dry skin, and",
+          "fired_token": " treatment",
+          "pre_context": " can help reduce acne. Mix it with a carrier oil and apply it to your skin as a spot",
+          "post_context": ".\n\n3. Coconut oil: Coconut oil can be used as a moisturizer for dry skin, and",
+          "example_idx": 348,
+          "position_idx": 130
+        },
+        {
+          "activation": 2.715367078781128,
+          "text": " cheese with nutritional yeast or a vegan parmesan substitute.\n- Spicy: Add in red pepper flakes or a spicy chili pepper for some heat.\n- Lemon flavor: Add in a tablespoon of fresh lemon",
+          "fired_token": " flakes",
+          "pre_context": " cheese with nutritional yeast or a vegan parmesan substitute.\n- Spicy: Add in red pepper",
+          "post_context": " or a spicy chili pepper for some heat.\n- Lemon flavor: Add in a tablespoon of fresh lemon",
+          "example_idx": 79,
+          "position_idx": 489
+        },
+        {
+          "activation": 2.7092814445495605,
+          "text": " it to your skin after washing your face.\n\n2. Tea tree oil: Tea tree oil has antibacterial properties that can help reduce acne. Mix it with a carrier oil and apply it to your skin as",
+          "fired_token": "acterial",
+          "pre_context": " it to your skin after washing your face.\n\n2. Tea tree oil: Tea tree oil has antib",
+          "post_context": " properties that can help reduce acne. Mix it with a carrier oil and apply it to your skin as",
+          "example_idx": 348,
+          "position_idx": 107
+        },
+        {
+          "activation": 2.6977994441986084,
+          "text": " and add a hat and scarf for a cozy look. You can use buttons or rocks for the eyes, and a carrot for its nose. Get creative and use whatever materials you have available.\n\nStep 7",
+          "fired_token": ",",
+          "pre_context": " and add a hat and scarf for a cozy look. You can use buttons or rocks for the eyes",
+          "post_context": " and a carrot for its nose. Get creative and use whatever materials you have available.\n\nStep 7",
+          "example_idx": 14,
+          "position_idx": 404
+        },
+        {
+          "activation": 2.677499294281006,
+          "text": " However, AI-powered systems can speed up the process by performing tasks such as verifying claim information, detecting fraudulent claims, and processing payments. This has led to faster claim processing times, reduced turnaround times, and",
+          "fired_token": " fraudulent",
+          "pre_context": " However, AI-powered systems can speed up the process by performing tasks such as verifying claim information, detecting",
+          "post_context": " claims, and processing payments. This has led to faster claim processing times, reduced turnaround times, and",
+          "example_idx": 230,
+          "position_idx": 317
+        },
+        {
+          "activation": 2.663118362426758,
+          "text": " and take proactive measures to mitigate them. For instance, a financial institution can track transaction patterns to detect fraud and take preventive measures to protect their customers' financial assets.\n\n5. Enhancing Customer Experience: Data",
+          "fired_token": " fraud",
+          "pre_context": " and take proactive measures to mitigate them. For instance, a financial institution can track transaction patterns to detect",
+          "post_context": " and take preventive measures to protect their customers' financial assets.\n\n5. Enhancing Customer Experience: Data",
+          "example_idx": 203,
+          "position_idx": 433
+        },
+        {
+          "activation": 2.628962755203247,
+          "text": " to your skin after washing your face.\n\n2. Tea tree oil: Tea tree oil has antibacterial properties that can help reduce acne. Mix it with a carrier oil and apply it to your skin as a",
+          "fired_token": " properties",
+          "pre_context": " to your skin after washing your face.\n\n2. Tea tree oil: Tea tree oil has antibacterial",
+          "post_context": " that can help reduce acne. Mix it with a carrier oil and apply it to your skin as a",
+          "example_idx": 348,
+          "position_idx": 108
+        }
+      ]
+    }
+  ]
+}

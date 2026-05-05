@@ -1,0 +1,675 @@
+{
+  "sae_repo": "chungimungi/SAE-MInAlA_SmolLM3-3B-ORPO-merged-layer_18_best",
+  "base_model": "MInAlA/SmolLM3-3B-ORPO-merged",
+  "layer": 18,
+  "selection": "mean",
+  "min_density": 0.0001,
+  "stopwords_lang": "english",
+  "num_prompts": 400,
+  "context_size": 512,
+  "total_tokens": 204800,
+  "interpretation_methodology": {
+    "why_this_analysis": [
+      "Record which latent directions get large activations under the chosen corpus and chat template.",
+      "Separate dead or ultra-rare features from dense ones using per-feature statistics.",
+      "Provide concrete token contexts for follow-up causal work (ablation, patching, steering), not as final semantics."
+    ],
+    "known_limitations": [
+      "SAEs optimize reconstruction under sparsity, not axis-aligned semantics; strong features often track templates, delimiters, and high-frequency n-grams.",
+      "Magnitude on frequent structural tokens can overshadow rarer semantic concepts in top-k mining.",
+      "Human-readable labels are post-hoc summaries of co-activation with text; they do not prove a feature causally implements a behavior."
+    ],
+    "keyword_summaries": "Content words are ranked after NLTK stopword removal; tags are simple surface heuristics. Use likely_surface_structure to flag obvious formatting-like patterns.",
+    "stopwords_source": "nltk.corpus.stopwords",
+    "stopwords_lang": "english"
+  },
+  "features": [
+    {
+      "feature_id": 3119,
+      "description": "code/math | solution, section, based",
+      "keywords": [
+        "solution",
+        "section",
+        "based"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.631472110748291,
+      "max_act": 2.2897143363952637,
+      "density": 0.47365234375,
+      "avg_fired_token_len": 9.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.2897143363952637,
+          "text": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "fired_token": " solution",
+          "pre_context": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final",
+          "post_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "example_idx": 6,
+          "position_idx": 213
+        },
+        {
+          "activation": 2.2897143363952637,
+          "text": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "fired_token": " solution",
+          "pre_context": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final",
+          "post_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "example_idx": 7,
+          "position_idx": 213
+        },
+        {
+          "activation": 2.2897143363952637,
+          "text": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "fired_token": " solution",
+          "pre_context": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final",
+          "post_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "example_idx": 4,
+          "position_idx": 213
+        },
+        {
+          "activation": 2.2897143363952637,
+          "text": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "fired_token": " solution",
+          "pre_context": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final",
+          "post_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "example_idx": 5,
+          "position_idx": 213
+        },
+        {
+          "activation": 2.2897143363952637,
+          "text": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "fired_token": " solution",
+          "pre_context": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final",
+          "post_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "example_idx": 0,
+          "position_idx": 213
+        },
+        {
+          "activation": 2.2897143363952637,
+          "text": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "fired_token": " solution",
+          "pre_context": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final",
+          "post_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "example_idx": 1,
+          "position_idx": 213
+        },
+        {
+          "activation": 2.2897143363952637,
+          "text": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "fired_token": " solution",
+          "pre_context": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final",
+          "post_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "example_idx": 3,
+          "position_idx": 213
+        },
+        {
+          "activation": 2.2897143363952637,
+          "text": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "fired_token": " solution",
+          "pre_context": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final",
+          "post_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "example_idx": 2,
+          "position_idx": 213
+        },
+        {
+          "activation": 2.2897143363952637,
+          "text": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "fired_token": " solution",
+          "pre_context": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final",
+          "post_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "example_idx": 10,
+          "position_idx": 213
+        },
+        {
+          "activation": 2.2897143363952637,
+          "text": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "fired_token": " solution",
+          "pre_context": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final",
+          "post_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "example_idx": 11,
+          "position_idx": 213
+        },
+        {
+          "activation": 2.2897143363952637,
+          "text": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "fired_token": " solution",
+          "pre_context": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final",
+          "post_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "example_idx": 9,
+          "position_idx": 213
+        },
+        {
+          "activation": 2.2897143363952637,
+          "text": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "fired_token": " solution",
+          "pre_context": ", based on various attempts, explorations, and reflections from the Thought section, systematically present the final",
+          "post_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "example_idx": 8,
+          "position_idx": 213
+        }
+      ]
+    },
+    {
+      "feature_id": 12686,
+      "description": "code/politeness/math | user, necessary, steps",
+      "keywords": [
+        "user",
+        "necessary",
+        "steps"
+      ],
+      "tags": [
+        "code",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 0.5047836899757385,
+      "max_act": 2.5553486347198486,
+      "density": 0.5629345703125,
+      "avg_fired_token_len": 1.5833333333333333,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.5553486347198486,
+          "text": " and detail necessary steps needed to reach the conclusion.\n\nuser\nHere is a cute cake decoration idea. I found this picture on Pinterest. NO LINK Sprinkles and a stencil. Can you provide a",
+          "fired_token": ".",
+          "pre_context": " and detail necessary steps needed to reach the conclusion.\n\nuser\nHere is a cute cake decoration idea",
+          "post_context": " I found this picture on Pinterest. NO LINK Sprinkles and a stencil. Can you provide a",
+          "example_idx": 326,
+          "position_idx": 250
+        },
+        {
+          "activation": 2.520375967025757,
+          "text": " restaurant. The app must have a sleek design and incorporate a user-friendly interface for effortless navigation. Furthermore, it should be optimized for both iOS and Android operating systems.\nassistant\nThe mobile application",
+          "fired_token": ",",
+          "pre_context": " restaurant. The app must have a sleek design and incorporate a user-friendly interface for effortless navigation. Furthermore",
+          "post_context": " it should be optimized for both iOS and Android operating systems.\nassistant\nThe mobile application",
+          "example_idx": 43,
+          "position_idx": 300
+        },
+        {
+          "activation": 2.5092885494232178,
+          "text": " necessary steps needed to reach the conclusion.\n\nuser\nWrite a fantasy story about a young hero, who possesses magical abilities, setting out on an epic journey full of perilous challenges and unexpected encounters, to",
+          "fired_token": " who",
+          "pre_context": " necessary steps needed to reach the conclusion.\n\nuser\nWrite a fantasy story about a young hero,",
+          "post_context": " possesses magical abilities, setting out on an epic journey full of perilous challenges and unexpected encounters, to",
+          "example_idx": 225,
+          "position_idx": 252
+        },
+        {
+          "activation": 2.5043680667877197,
+          "text": " inflation.\n\nThese are some of the major factors contributing to the inflation in India.\nuser\nIt seems like inflation is",
+          "fired_token": "\n",
+          "pre_context": " inflation.\n\nThese are some of the major factors contributing to the inflation in India.\nuser",
+          "post_context": "It seems like inflation is",
+          "example_idx": 304,
+          "position_idx": 506
+        },
+        {
+          "activation": 2.504343271255493,
+          "text": " types of facilities can help teams gain a competitive edge and optimize their physical performance.\nuser\nWow, that's really interesting! I wonder if any teams have started using virtual reality",
+          "fired_token": "\n",
+          "pre_context": " types of facilities can help teams gain a competitive edge and optimize their physical performance.\nuser",
+          "post_context": "Wow, that's really interesting! I wonder if any teams have started using virtual reality",
+          "example_idx": 185,
+          "position_idx": 494
+        },
+        {
+          "activation": 2.492126226425171,
+          "text": " coaches and athletes, boost team morale, and increase the competitiveness of the team.\nuser\nThat makes sense. I heard that some teams have even added things like cryotherapy and altitude chambers to",
+          "fired_token": "\n",
+          "pre_context": " coaches and athletes, boost team morale, and increase the competitiveness of the team.\nuser",
+          "post_context": "That makes sense. I heard that some teams have even added things like cryotherapy and altitude chambers to",
+          "example_idx": 185,
+          "position_idx": 356
+        },
+        {
+          "activation": 2.452951669692993,
+          "text": " way to connect and have some laughs together, while celebrating your love and joy!\nuser\nThat sounds like a great idea! Can you suggest some virtual escape rooms or murder mystery games that we",
+          "fired_token": "\n",
+          "pre_context": " way to connect and have some laughs together, while celebrating your love and joy!\nuser",
+          "post_context": "That sounds like a great idea! Can you suggest some virtual escape rooms or murder mystery games that we",
+          "example_idx": 255,
+          "position_idx": 443
+        },
+        {
+          "activation": 2.4515318870544434,
+          "text": ", and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nDevelop a JavaScript app that plays a game of Blackjack against the computer. The app should have a simple and intuitive user interface that",
+          "fired_token": " that",
+          "pre_context": ", and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nDevelop a JavaScript app",
+          "post_context": " plays a game of Blackjack against the computer. The app should have a simple and intuitive user interface that",
+          "example_idx": 106,
+          "position_idx": 247
+        },
+        {
+          "activation": 2.447131633758545,
+          "text": " \n7. Airbnb \n8. SpaceX \n9. Uber \n10. Alibaba\nuser\nThanks for the list, but can you also provide some examples of what makes each of these companies so",
+          "fired_token": "\n",
+          "pre_context": " \n7. Airbnb \n8. SpaceX \n9. Uber \n10. Alibaba\nuser",
+          "post_context": "Thanks for the list, but can you also provide some examples of what makes each of these companies so",
+          "example_idx": 391,
+          "position_idx": 306
+        },
+        {
+          "activation": 2.4441800117492676,
+          "text": " memories galore,\nBabe, I know we'll be together forevermore!\nuser\nCan you suggest a fun activity we can do together as a couple to celebrate our love and joy?",
+          "fired_token": "\n",
+          "pre_context": " memories galore,\nBabe, I know we'll be together forevermore!\nuser",
+          "post_context": "Can you suggest a fun activity we can do together as a couple to celebrate our love and joy?",
+          "example_idx": 255,
+          "position_idx": 334
+        },
+        {
+          "activation": 2.44130802154541,
+          "text": " positive effects on the mind-body connection and help improve overall physical and mental health.\nuser\nThat's great to know! Do you have any specific exercises that you would recommend for improving coordination?",
+          "fired_token": "\n",
+          "pre_context": " positive effects on the mind-body connection and help improve overall physical and mental health.\nuser",
+          "post_context": "That's great to know! Do you have any specific exercises that you would recommend for improving coordination?",
+          "example_idx": 343,
+          "position_idx": 375
+        },
+        {
+          "activation": 2.440044641494751,
+          "text": " an apple crisp, pie or sauce, and see how it transforms the dish!\nuser\nThat's great! Can you also recommend some apple varieties",
+          "fired_token": "\n",
+          "pre_context": " an apple crisp, pie or sauce, and see how it transforms the dish!\nuser",
+          "post_context": "That's great! Can you also recommend some apple varieties",
+          "example_idx": 364,
+          "position_idx": 500
+        }
+      ]
+    },
+    {
+      "feature_id": 7439,
+      "description": "code | steps, section, verifying",
+      "keywords": [
+        "steps",
+        "section",
+        "verifying"
+      ],
+      "tags": [
+        "code"
+      ],
+      "mean_act": 0.4712260961532593,
+      "max_act": 2.1934900283813477,
+      "density": 0.4759619140625,
+      "avg_fired_token_len": 4.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.1934900283813477,
+          "text": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "fired_token": " the",
+          "pre_context": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In",
+          "post_context": " Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "example_idx": 6,
+          "position_idx": 190
+        },
+        {
+          "activation": 2.1934900283813477,
+          "text": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "fired_token": " the",
+          "pre_context": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In",
+          "post_context": " Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "example_idx": 7,
+          "position_idx": 190
+        },
+        {
+          "activation": 2.1934900283813477,
+          "text": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "fired_token": " the",
+          "pre_context": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In",
+          "post_context": " Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "example_idx": 4,
+          "position_idx": 190
+        },
+        {
+          "activation": 2.1934900283813477,
+          "text": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "fired_token": " the",
+          "pre_context": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In",
+          "post_context": " Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "example_idx": 5,
+          "position_idx": 190
+        },
+        {
+          "activation": 2.1934900283813477,
+          "text": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "fired_token": " the",
+          "pre_context": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In",
+          "post_context": " Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "example_idx": 0,
+          "position_idx": 190
+        },
+        {
+          "activation": 2.1934900283813477,
+          "text": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "fired_token": " the",
+          "pre_context": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In",
+          "post_context": " Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "example_idx": 1,
+          "position_idx": 190
+        },
+        {
+          "activation": 2.1934900283813477,
+          "text": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "fired_token": " the",
+          "pre_context": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In",
+          "post_context": " Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "example_idx": 3,
+          "position_idx": 190
+        },
+        {
+          "activation": 2.1934900283813477,
+          "text": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "fired_token": " the",
+          "pre_context": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In",
+          "post_context": " Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "example_idx": 2,
+          "position_idx": 190
+        },
+        {
+          "activation": 2.1934900283813477,
+          "text": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "fired_token": " the",
+          "pre_context": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In",
+          "post_context": " Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "example_idx": 10,
+          "position_idx": 190
+        },
+        {
+          "activation": 2.1934900283813477,
+          "text": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "fired_token": " the",
+          "pre_context": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In",
+          "post_context": " Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "example_idx": 11,
+          "position_idx": 190
+        },
+        {
+          "activation": 2.1934900283813477,
+          "text": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "fired_token": " the",
+          "pre_context": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In",
+          "post_context": " Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "example_idx": 9,
+          "position_idx": 190
+        },
+        {
+          "activation": 2.1934900283813477,
+          "text": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "fired_token": " the",
+          "pre_context": ", verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In",
+          "post_context": " Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present",
+          "example_idx": 8,
+          "position_idx": 190
+        }
+      ]
+    },
+    {
+      "feature_id": 13386,
+      "description": "start, date, metadata",
+      "keywords": [
+        "start",
+        "date",
+        "metadata"
+      ],
+      "tags": [],
+      "mean_act": 0.41543129086494446,
+      "max_act": 2.2395946979522705,
+      "density": 0.71115234375,
+      "avg_fired_token_len": 12.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.2395946979522705,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 4,
+          "position_idx": 0
+        },
+        {
+          "activation": 2.2395946979522705,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 5,
+          "position_idx": 0
+        },
+        {
+          "activation": 2.2395946979522705,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 7,
+          "position_idx": 0
+        },
+        {
+          "activation": 2.2395946979522705,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 6,
+          "position_idx": 0
+        },
+        {
+          "activation": 2.2395946979522705,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 2,
+          "position_idx": 0
+        },
+        {
+          "activation": 2.2395946979522705,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 3,
+          "position_idx": 0
+        },
+        {
+          "activation": 2.2395946979522705,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 1,
+          "position_idx": 0
+        },
+        {
+          "activation": 2.2395946979522705,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 0,
+          "position_idx": 0
+        },
+        {
+          "activation": 2.2395946979522705,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 8,
+          "position_idx": 0
+        },
+        {
+          "activation": 2.2395946979522705,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 9,
+          "position_idx": 0
+        },
+        {
+          "activation": 2.2395946979522705,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 11,
+          "position_idx": 0
+        },
+        {
+          "activation": 2.2395946979522705,
+          "text": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "system\n## Metadata\n\nKnowledge Cutoff Date: June 2025\nToday Date: 05",
+          "example_idx": 10,
+          "position_idx": 0
+        }
+      ]
+    },
+    {
+      "feature_id": 3369,
+      "description": "code/math | solution, section, revisiting",
+      "keywords": [
+        "solution",
+        "section",
+        "revisiting"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.4086199104785919,
+      "max_act": 2.421529531478882,
+      "density": 0.37912109375,
+      "avg_fired_token_len": 5.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.421529531478882,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 6,
+          "position_idx": 204
+        },
+        {
+          "activation": 2.421529531478882,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 7,
+          "position_idx": 204
+        },
+        {
+          "activation": 2.421529531478882,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 4,
+          "position_idx": 204
+        },
+        {
+          "activation": 2.421529531478882,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 5,
+          "position_idx": 204
+        },
+        {
+          "activation": 2.421529531478882,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 0,
+          "position_idx": 204
+        },
+        {
+          "activation": 2.421529531478882,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 1,
+          "position_idx": 204
+        },
+        {
+          "activation": 2.421529531478882,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 3,
+          "position_idx": 204
+        },
+        {
+          "activation": 2.421529531478882,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 2,
+          "position_idx": 204
+        },
+        {
+          "activation": 2.421529531478882,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 10,
+          "position_idx": 204
+        },
+        {
+          "activation": 2.421529531478882,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 11,
+          "position_idx": 204
+        },
+        {
+          "activation": 2.421529531478882,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 9,
+          "position_idx": 204
+        },
+        {
+          "activation": 2.421529531478882,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 8,
+          "position_idx": 204
+        }
+      ]
+    }
+  ]
+}

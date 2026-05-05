@@ -1,0 +1,679 @@
+{
+  "sae_repo": "chungimungi/SAE-MInAlA_SmolLM3-3B-GRPO-merged-layer_17_best",
+  "base_model": "MInAlA/SmolLM3-3B-GRPO-merged",
+  "layer": 17,
+  "selection": "mean",
+  "min_density": 0.0001,
+  "stopwords_lang": "english",
+  "num_prompts": 400,
+  "context_size": 512,
+  "total_tokens": 204800,
+  "interpretation_methodology": {
+    "why_this_analysis": [
+      "Record which latent directions get large activations under the chosen corpus and chat template.",
+      "Separate dead or ultra-rare features from dense ones using per-feature statistics.",
+      "Provide concrete token contexts for follow-up causal work (ablation, patching, steering), not as final semantics."
+    ],
+    "known_limitations": [
+      "SAEs optimize reconstruction under sparsity, not axis-aligned semantics; strong features often track templates, delimiters, and high-frequency n-grams.",
+      "Magnitude on frequent structural tokens can overshadow rarer semantic concepts in top-k mining.",
+      "Human-readable labels are post-hoc summaries of co-activation with text; they do not prove a feature causally implements a behavior."
+    ],
+    "keyword_summaries": "Content words are ranked after NLTK stopword removal; tags are simple surface heuristics. Use likely_surface_structure to flag obvious formatting-like patterns.",
+    "stopwords_source": "nltk.corpus.stopwords",
+    "stopwords_lang": "english"
+  },
+  "features": [
+    {
+      "feature_id": 5664,
+      "description": "code/math | section, thought, reasoning",
+      "keywords": [
+        "section",
+        "thought",
+        "reasoning"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.7087683081626892,
+      "max_act": 2.3768181800842285,
+      "density": 0.53427734375,
+      "avg_fired_token_len": 5.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.3768181800842285,
+          "text": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations such as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "fired_token": " such",
+          "pre_context": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations",
+          "post_context": " as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "example_idx": 6,
+          "position_idx": 155
+        },
+        {
+          "activation": 2.3768181800842285,
+          "text": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations such as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "fired_token": " such",
+          "pre_context": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations",
+          "post_context": " as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "example_idx": 7,
+          "position_idx": 155
+        },
+        {
+          "activation": 2.3768181800842285,
+          "text": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations such as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "fired_token": " such",
+          "pre_context": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations",
+          "post_context": " as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "example_idx": 4,
+          "position_idx": 155
+        },
+        {
+          "activation": 2.3768181800842285,
+          "text": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations such as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "fired_token": " such",
+          "pre_context": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations",
+          "post_context": " as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "example_idx": 5,
+          "position_idx": 155
+        },
+        {
+          "activation": 2.3768181800842285,
+          "text": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations such as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "fired_token": " such",
+          "pre_context": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations",
+          "post_context": " as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "example_idx": 0,
+          "position_idx": 155
+        },
+        {
+          "activation": 2.3768181800842285,
+          "text": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations such as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "fired_token": " such",
+          "pre_context": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations",
+          "post_context": " as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "example_idx": 1,
+          "position_idx": 155
+        },
+        {
+          "activation": 2.3768181800842285,
+          "text": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations such as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "fired_token": " such",
+          "pre_context": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations",
+          "post_context": " as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "example_idx": 3,
+          "position_idx": 155
+        },
+        {
+          "activation": 2.3768181800842285,
+          "text": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations such as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "fired_token": " such",
+          "pre_context": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations",
+          "post_context": " as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "example_idx": 2,
+          "position_idx": 155
+        },
+        {
+          "activation": 2.3768181800842285,
+          "text": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations such as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "fired_token": " such",
+          "pre_context": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations",
+          "post_context": " as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "example_idx": 10,
+          "position_idx": 155
+        },
+        {
+          "activation": 2.3768181800842285,
+          "text": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations such as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "fired_token": " such",
+          "pre_context": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations",
+          "post_context": " as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "example_idx": 11,
+          "position_idx": 155
+        },
+        {
+          "activation": 2.3768181800842285,
+          "text": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations such as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "fired_token": " such",
+          "pre_context": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations",
+          "post_context": " as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "example_idx": 9,
+          "position_idx": 155
+        },
+        {
+          "activation": 2.3768181800842285,
+          "text": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations such as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "fired_token": " such",
+          "pre_context": " section. In the Thought section, detail your reasoning process in steps. Each step should include detailed considerations",
+          "post_context": " as analysing questions, summarizing relevant findings, brainstorming new ideas, verifying the accuracy of the",
+          "example_idx": 8,
+          "position_idx": 155
+        }
+      ]
+    },
+    {
+      "feature_id": 8210,
+      "description": "code/math | learning, strategy, benefits",
+      "keywords": [
+        "learning",
+        "strategy",
+        "benefits"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.598042905330658,
+      "max_act": 2.5528128147125244,
+      "density": 0.792265625,
+      "avg_fired_token_len": 6.0,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.5528128147125244,
+          "text": ".\n\nuser\nCraft a LinkedIn post that discusses the importance of incorporating lifelong learning into your career growth strategy, highlighting the benefits of continuous learning, showcasing tips and resources for learning, and providing examples of successful",
+          "fired_token": " strategy",
+          "pre_context": ".\n\nuser\nCraft a LinkedIn post that discusses the importance of incorporating lifelong learning into your career growth",
+          "post_context": ", highlighting the benefits of continuous learning, showcasing tips and resources for learning, and providing examples of successful",
+          "example_idx": 327,
+          "position_idx": 259
+        },
+        {
+          "activation": 2.527432441711426,
+          "text": " necessary steps needed to reach the conclusion.\n\nuser\nWhat many companies do when planning their global marketing strategies is to organize the world’s countries into three categories.\nEmerging Markets – Markets regarded as having the",
+          "fired_token": " strategies",
+          "pre_context": " necessary steps needed to reach the conclusion.\n\nuser\nWhat many companies do when planning their global marketing",
+          "post_context": " is to organize the world’s countries into three categories.\nEmerging Markets – Markets regarded as having the",
+          "example_idx": 5,
+          "position_idx": 252
+        },
+        {
+          "activation": 2.5252411365509033,
+          "text": " necessary steps needed to reach the conclusion.\n\nuser\nCreate a 10-minute presentation that highlights the significance of engaging in self-reflection as a means of achieving personal growth. Organize your content to clearly",
+          "fired_token": " significance",
+          "pre_context": " necessary steps needed to reach the conclusion.\n\nuser\nCreate a 10-minute presentation that highlights the",
+          "post_context": " of engaging in self-reflection as a means of achieving personal growth. Organize your content to clearly",
+          "example_idx": 55,
+          "position_idx": 252
+        },
+        {
+          "activation": 2.5230376720428467,
+          "text": "user\nCraft a LinkedIn post that discusses the importance of incorporating lifelong learning into your career growth strategy, highlighting the benefits of continuous learning, showcasing tips and resources for learning, and providing examples of successful professionals",
+          "fired_token": ",",
+          "pre_context": "user\nCraft a LinkedIn post that discusses the importance of incorporating lifelong learning into your career growth strategy",
+          "post_context": " highlighting the benefits of continuous learning, showcasing tips and resources for learning, and providing examples of successful professionals",
+          "example_idx": 327,
+          "position_idx": 260
+        },
+        {
+          "activation": 2.506286382675171,
+          "text": " business strategy, including a detailed analysis and evaluation of the proposed approach. The paper should articulate the potential benefits, risks, and challenges of the strategy, and offer recommendations for how best to implement it. Additionally",
+          "fired_token": " benefits",
+          "pre_context": " business strategy, including a detailed analysis and evaluation of the proposed approach. The paper should articulate the potential",
+          "post_context": ", risks, and challenges of the strategy, and offer recommendations for how best to implement it. Additionally",
+          "example_idx": 153,
+          "position_idx": 273
+        },
+        {
+          "activation": 2.4785690307617188,
+          "text": "-step instructions on how to create a visually appealing and effective LinkedIn business page, including tips for optimizing content, engaging with potential customers, and utilizing LinkedIn's networking and recruitment features to attract and retain top talent.",
+          "fired_token": ",",
+          "pre_context": "-step instructions on how to create a visually appealing and effective LinkedIn business page, including tips for optimizing content",
+          "post_context": " engaging with potential customers, and utilizing LinkedIn's networking and recruitment features to attract and retain top talent.",
+          "example_idx": 238,
+          "position_idx": 266
+        },
+        {
+          "activation": 2.4661316871643066,
+          "text": " comprehensive guide that outlines best practices and strategies for multichannel marketing to achieve optimal omnichannel success. Ensure that the guide provides detailed examples, case studies, and practical tips that cover various aspects such as",
+          "fired_token": ".",
+          "pre_context": " comprehensive guide that outlines best practices and strategies for multichannel marketing to achieve optimal omnichannel success",
+          "post_context": " Ensure that the guide provides detailed examples, case studies, and practical tips that cover various aspects such as",
+          "example_idx": 337,
+          "position_idx": 265
+        },
+        {
+          "activation": 2.451955795288086,
+          "text": "\"Utilize various communication tools such as email, instant messaging, and video conferencing to effectively work together and exchange ideas with both clients and colleagues in order to accomplish project goals and fulfill customer needs.\"",
+          "fired_token": " together",
+          "pre_context": "\"Utilize various communication tools such as email, instant messaging, and video conferencing to effectively work",
+          "post_context": " and exchange ideas with both clients and colleagues in order to accomplish project goals and fulfill customer needs.\"",
+          "example_idx": 234,
+          "position_idx": 263
+        },
+        {
+          "activation": 2.449756383895874,
+          "text": "-by-step instructions on how to create a visually appealing and effective LinkedIn business page, including tips for optimizing content, engaging with potential customers, and utilizing LinkedIn's networking and recruitment features to attract and retain top talent",
+          "fired_token": " content",
+          "pre_context": "-by-step instructions on how to create a visually appealing and effective LinkedIn business page, including tips for optimizing",
+          "post_context": ", engaging with potential customers, and utilizing LinkedIn's networking and recruitment features to attract and retain top talent",
+          "example_idx": 238,
+          "position_idx": 265
+        },
+        {
+          "activation": 2.447206735610962,
+          "text": " to reach the conclusion.\n\nuser\nProvide a comprehensive lesson plan that covers techniques for practicing mindful eating and how it can prevent obesity in individuals. Include practical exercises, interactive activities, and visual aids to demonstrate",
+          "fired_token": " and",
+          "pre_context": " to reach the conclusion.\n\nuser\nProvide a comprehensive lesson plan that covers techniques for practicing mindful eating",
+          "post_context": " how it can prevent obesity in individuals. Include practical exercises, interactive activities, and visual aids to demonstrate",
+          "example_idx": 104,
+          "position_idx": 255
+        },
+        {
+          "activation": 2.444944143295288,
+          "text": " beginner level online course on how to learn a new language with a focus on building vocabulary, practicing grammar, and mastering pronunciation. Incorporate interactive activities such as quizzes, games, and audio exercises to engage learners",
+          "fired_token": ",",
+          "pre_context": " beginner level online course on how to learn a new language with a focus on building vocabulary, practicing grammar",
+          "post_context": " and mastering pronunciation. Incorporate interactive activities such as quizzes, games, and audio exercises to engage learners",
+          "example_idx": 47,
+          "position_idx": 265
+        },
+        {
+          "activation": 2.4409098625183105,
+          "text": " to reach the conclusion.\n\nuser\nCraft a LinkedIn post that discusses the importance of incorporating lifelong learning into your career growth strategy, highlighting the benefits of continuous learning, showcasing tips and resources for learning, and",
+          "fired_token": " into",
+          "pre_context": " to reach the conclusion.\n\nuser\nCraft a LinkedIn post that discusses the importance of incorporating lifelong learning",
+          "post_context": " your career growth strategy, highlighting the benefits of continuous learning, showcasing tips and resources for learning, and",
+          "example_idx": 327,
+          "position_idx": 255
+        }
+      ]
+    },
+    {
+      "feature_id": 424,
+      "description": "punctuation/math | date, june, today",
+      "keywords": [
+        "date",
+        "june",
+        "today"
+      ],
+      "tags": [
+        "punctuation",
+        "math"
+      ],
+      "mean_act": 0.4632631540298462,
+      "max_act": 1.3546394109725952,
+      "density": 0.4718798828125,
+      "avg_fired_token_len": 1.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 1.3546394109725952,
+          "text": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode: /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "fired_token": ":",
+          "pre_context": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode",
+          "post_context": " /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "example_idx": 6,
+          "position_idx": 29
+        },
+        {
+          "activation": 1.3546394109725952,
+          "text": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode: /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "fired_token": ":",
+          "pre_context": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode",
+          "post_context": " /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "example_idx": 7,
+          "position_idx": 29
+        },
+        {
+          "activation": 1.3546394109725952,
+          "text": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode: /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "fired_token": ":",
+          "pre_context": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode",
+          "post_context": " /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "example_idx": 4,
+          "position_idx": 29
+        },
+        {
+          "activation": 1.3546394109725952,
+          "text": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode: /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "fired_token": ":",
+          "pre_context": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode",
+          "post_context": " /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "example_idx": 5,
+          "position_idx": 29
+        },
+        {
+          "activation": 1.3546394109725952,
+          "text": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode: /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "fired_token": ":",
+          "pre_context": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode",
+          "post_context": " /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "example_idx": 0,
+          "position_idx": 29
+        },
+        {
+          "activation": 1.3546394109725952,
+          "text": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode: /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "fired_token": ":",
+          "pre_context": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode",
+          "post_context": " /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "example_idx": 1,
+          "position_idx": 29
+        },
+        {
+          "activation": 1.3546394109725952,
+          "text": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode: /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "fired_token": ":",
+          "pre_context": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode",
+          "post_context": " /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "example_idx": 3,
+          "position_idx": 29
+        },
+        {
+          "activation": 1.3546394109725952,
+          "text": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode: /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "fired_token": ":",
+          "pre_context": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode",
+          "post_context": " /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "example_idx": 2,
+          "position_idx": 29
+        },
+        {
+          "activation": 1.3546394109725952,
+          "text": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode: /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "fired_token": ":",
+          "pre_context": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode",
+          "post_context": " /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "example_idx": 10,
+          "position_idx": 29
+        },
+        {
+          "activation": 1.3546394109725952,
+          "text": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode: /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "fired_token": ":",
+          "pre_context": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode",
+          "post_context": " /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "example_idx": 11,
+          "position_idx": 29
+        },
+        {
+          "activation": 1.3546394109725952,
+          "text": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode: /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "fired_token": ":",
+          "pre_context": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode",
+          "post_context": " /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "example_idx": 9,
+          "position_idx": 29
+        },
+        {
+          "activation": 1.3546394109725952,
+          "text": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode: /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "fired_token": ":",
+          "pre_context": " Date: June 2025\nToday Date: 05 May 2026\nReasoning Mode",
+          "post_context": " /think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by",
+          "example_idx": 8,
+          "position_idx": 29
+        }
+      ]
+    },
+    {
+      "feature_id": 969,
+      "description": "code/politeness/math | needed, deem, correct",
+      "keywords": [
+        "needed",
+        "deem",
+        "correct"
+      ],
+      "tags": [
+        "code",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 0.4446597397327423,
+      "max_act": 1.5987358093261719,
+      "density": 0.46916015625,
+      "avg_fired_token_len": 7.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 1.5987358093261719,
+          "text": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWrite a Python program that can identify and remove duplicate images from",
+          "fired_token": " needed",
+          "pre_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "post_context": " to reach the conclusion.\n\nuser\nWrite a Python program that can identify and remove duplicate images from",
+          "example_idx": 6,
+          "position_idx": 234
+        },
+        {
+          "activation": 1.5987358093261719,
+          "text": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nPlease provide a specific cooking method for the salmon, as well",
+          "fired_token": " needed",
+          "pre_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "post_context": " to reach the conclusion.\n\nuser\nPlease provide a specific cooking method for the salmon, as well",
+          "example_idx": 7,
+          "position_idx": 234
+        },
+        {
+          "activation": 1.5987358093261719,
+          "text": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWrite an essay that evaluates the positive and negative influence of social",
+          "fired_token": " needed",
+          "pre_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "post_context": " to reach the conclusion.\n\nuser\nWrite an essay that evaluates the positive and negative influence of social",
+          "example_idx": 4,
+          "position_idx": 234
+        },
+        {
+          "activation": 1.5987358093261719,
+          "text": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWhat many companies do when planning their global marketing strategies is to",
+          "fired_token": " needed",
+          "pre_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "post_context": " to reach the conclusion.\n\nuser\nWhat many companies do when planning their global marketing strategies is to",
+          "example_idx": 5,
+          "position_idx": 234
+        },
+        {
+          "activation": 1.5987358093261719,
+          "text": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nThese instructions apply to section-based themes (Responsive 6.",
+          "fired_token": " needed",
+          "pre_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "post_context": " to reach the conclusion.\n\nuser\nThese instructions apply to section-based themes (Responsive 6.",
+          "example_idx": 0,
+          "position_idx": 234
+        },
+        {
+          "activation": 1.5987358093261719,
+          "text": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWhich famous landmarks should I visit in London, beyond the usual",
+          "fired_token": " needed",
+          "pre_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "post_context": " to reach the conclusion.\n\nuser\nWhich famous landmarks should I visit in London, beyond the usual",
+          "example_idx": 1,
+          "position_idx": 234
+        },
+        {
+          "activation": 1.5987358093261719,
+          "text": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nDe León, previewing the speech he will give today",
+          "fired_token": " needed",
+          "pre_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "post_context": " to reach the conclusion.\n\nuser\nDe León, previewing the speech he will give today",
+          "example_idx": 3,
+          "position_idx": 234
+        },
+        {
+          "activation": 1.5987358093261719,
+          "text": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWrite a comprehensive blog post of at least 1000 words",
+          "fired_token": " needed",
+          "pre_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "post_context": " to reach the conclusion.\n\nuser\nWrite a comprehensive blog post of at least 1000 words",
+          "example_idx": 2,
+          "position_idx": 234
+        },
+        {
+          "activation": 1.5987358093261719,
+          "text": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nExpressing your emotions is what keeps a relationship going. Whether",
+          "fired_token": " needed",
+          "pre_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "post_context": " to reach the conclusion.\n\nuser\nExpressing your emotions is what keeps a relationship going. Whether",
+          "example_idx": 10,
+          "position_idx": 234
+        },
+        {
+          "activation": 1.5987358093261719,
+          "text": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nHow did the Spanish conquest of the Low Countries in the ",
+          "fired_token": " needed",
+          "pre_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "post_context": " to reach the conclusion.\n\nuser\nHow did the Spanish conquest of the Low Countries in the ",
+          "example_idx": 11,
+          "position_idx": 234
+        },
+        {
+          "activation": 1.5987358093261719,
+          "text": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWrite step-by-step instructions detailing how to make a creamy and",
+          "fired_token": " needed",
+          "pre_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "post_context": " to reach the conclusion.\n\nuser\nWrite step-by-step instructions detailing how to make a creamy and",
+          "example_idx": 9,
+          "position_idx": 234
+        },
+        {
+          "activation": 1.5987358093261719,
+          "text": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWhat are the classic cocktails that every bartender should know how to",
+          "fired_token": " needed",
+          "pre_context": " that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps",
+          "post_context": " to reach the conclusion.\n\nuser\nWhat are the classic cocktails that every bartender should know how to",
+          "example_idx": 8,
+          "position_idx": 234
+        }
+      ]
+    },
+    {
+      "feature_id": 5285,
+      "description": "code/math | reach, conclusion, user",
+      "keywords": [
+        "reach",
+        "conclusion",
+        "user"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.18688131868839264,
+      "max_act": 1.4033607244491577,
+      "density": 0.438173828125,
+      "avg_fired_token_len": 5.166666666666667,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 1.4033607244491577,
+          "text": " concise and detail necessary steps needed to reach the conclusion.\n\nuser\nDe León, previewing the speech he will give today, said he will highlight his Senate Bill 535, which directs a quarter",
+          "fired_token": " the",
+          "pre_context": " concise and detail necessary steps needed to reach the conclusion.\n\nuser\nDe León, previewing",
+          "post_context": " speech he will give today, said he will highlight his Senate Bill 535, which directs a quarter",
+          "example_idx": 3,
+          "position_idx": 249
+        },
+        {
+          "activation": 1.3294944763183594,
+          "text": " concise and detail necessary steps needed to reach the conclusion.\n\nuser\nGiven the text: Created in collaboration with The Line Hotel, this limited edition pool towel proudly bares the name of one of our favorite",
+          "fired_token": " collaboration",
+          "pre_context": " concise and detail necessary steps needed to reach the conclusion.\n\nuser\nGiven the text: Created in",
+          "post_context": " with The Line Hotel, this limited edition pool towel proudly bares the name of one of our favorite",
+          "example_idx": 393,
+          "position_idx": 249
+        },
+        {
+          "activation": 1.3160804510116577,
+          "text": " necessary steps needed to reach the conclusion.\n\nuser\nDe León, previewing the speech he will give today, said he will highlight his Senate Bill 535, which directs a quarter of the proceeds",
+          "fired_token": " will",
+          "pre_context": " necessary steps needed to reach the conclusion.\n\nuser\nDe León, previewing the speech he",
+          "post_context": " give today, said he will highlight his Senate Bill 535, which directs a quarter of the proceeds",
+          "example_idx": 3,
+          "position_idx": 252
+        },
+        {
+          "activation": 1.3075107336044312,
+          "text": " to reach the conclusion.\n\nuser\nIt was a bright Sunday 17th March when we met at Sawbridgeworth station for Trevor’s walk. The sun shone and the wind, though brisk",
+          "fired_token": " at",
+          "pre_context": " to reach the conclusion.\n\nuser\nIt was a bright Sunday 17th March when we met",
+          "post_context": " Sawbridgeworth station for Trevor’s walk. The sun shone and the wind, though brisk",
+          "example_idx": 284,
+          "position_idx": 255
+        },
+        {
+          "activation": 1.3061884641647339,
+          "text": " and detail necessary steps needed to reach the conclusion.\n\nuser\nGiven the text: Created in collaboration with The Line Hotel, this limited edition pool towel proudly bares the name of one of our favorite Los",
+          "fired_token": " with",
+          "pre_context": " and detail necessary steps needed to reach the conclusion.\n\nuser\nGiven the text: Created in collaboration",
+          "post_context": " The Line Hotel, this limited edition pool towel proudly bares the name of one of our favorite Los",
+          "example_idx": 393,
+          "position_idx": 250
+        },
+        {
+          "activation": 1.2902288436889648,
+          "text": " conclusion.\n\nuser\nThis is a great thing that I had forgotten about also. There used to be cookbooks just for this that gave you times and mileage..\nThe only thing that I would add is",
+          "fired_token": " be",
+          "pre_context": " conclusion.\n\nuser\nThis is a great thing that I had forgotten about also. There used to",
+          "post_context": " cookbooks just for this that gave you times and mileage..\nThe only thing that I would add is",
+          "example_idx": 151,
+          "position_idx": 258
+        },
+        {
+          "activation": 1.265212059020996,
+          "text": " steps needed to reach the conclusion.\n\nuser\nDe León, previewing the speech he will give today, said he will highlight his Senate Bill 535, which directs a quarter of the proceeds from",
+          "fired_token": " give",
+          "pre_context": " steps needed to reach the conclusion.\n\nuser\nDe León, previewing the speech he will",
+          "post_context": " today, said he will highlight his Senate Bill 535, which directs a quarter of the proceeds from",
+          "example_idx": 3,
+          "position_idx": 253
+        },
+        {
+          "activation": 1.2575212717056274,
+          "text": " detail necessary steps needed to reach the conclusion.\n\nuser\nGiven the text: It’s always been true that you need your marketing to reach the right people. But today’s digital marketing gives you an ability",
+          "fired_token": " true",
+          "pre_context": " detail necessary steps needed to reach the conclusion.\n\nuser\nGiven the text: It’s always been",
+          "post_context": " that you need your marketing to reach the right people. But today’s digital marketing gives you an ability",
+          "example_idx": 222,
+          "position_idx": 251
+        },
+        {
+          "activation": 1.2544591426849365,
+          "text": " accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nPackaged in a transparent plastic bag with a screw 22mm in it. 20pcs for one inner box.",
+          "fired_token": " a",
+          "pre_context": " accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nPackaged in",
+          "post_context": " transparent plastic bag with a screw 22mm in it. 20pcs for one inner box.",
+          "example_idx": 37,
+          "position_idx": 246
+        },
+        {
+          "activation": 1.2502002716064453,
+          "text": " concise and detail necessary steps needed to reach the conclusion.\n\nuser\nAs I’ve said again and again – Science is everywhere! It’s in the air we breathe, the body we move around in,",
+          "fired_token": " again",
+          "pre_context": " concise and detail necessary steps needed to reach the conclusion.\n\nuser\nAs I’ve said again and",
+          "post_context": " – Science is everywhere! It’s in the air we breathe, the body we move around in,",
+          "example_idx": 110,
+          "position_idx": 249
+        },
+        {
+          "activation": 1.2456961870193481,
+          "text": " necessary steps needed to reach the conclusion.\n\nuser\nGiven the text: It’s always been true that you need your marketing to reach the right people. But today’s digital marketing gives you an ability to",
+          "fired_token": " that",
+          "pre_context": " necessary steps needed to reach the conclusion.\n\nuser\nGiven the text: It’s always been true",
+          "post_context": " you need your marketing to reach the right people. But today’s digital marketing gives you an ability to",
+          "example_idx": 222,
+          "position_idx": 252
+        },
+        {
+          "activation": 1.2260284423828125,
+          "text": " conclusion.\n\nuser\nDe León, previewing the speech he will give today, said he will highlight his Senate Bill 535, which directs a quarter of the proceeds from the Greenhouse Gas Reduction",
+          "fired_token": " will",
+          "pre_context": " conclusion.\n\nuser\nDe León, previewing the speech he will give today, said he",
+          "post_context": " highlight his Senate Bill 535, which directs a quarter of the proceeds from the Greenhouse Gas Reduction",
+          "example_idx": 3,
+          "position_idx": 258
+        }
+      ]
+    }
+  ]
+}

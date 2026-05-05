@@ -1,0 +1,680 @@
+{
+  "sae_repo": "chungimungi/SAE-HuggingFaceTB_SmolLM3-3B-layer_19_best",
+  "base_model": "HuggingFaceTB/SmolLM3-3B",
+  "layer": 19,
+  "selection": "mean",
+  "min_density": 0.0001,
+  "stopwords_lang": "english",
+  "num_prompts": 400,
+  "context_size": 512,
+  "total_tokens": 204800,
+  "interpretation_methodology": {
+    "why_this_analysis": [
+      "Record which latent directions get large activations under the chosen corpus and chat template.",
+      "Separate dead or ultra-rare features from dense ones using per-feature statistics.",
+      "Provide concrete token contexts for follow-up causal work (ablation, patching, steering), not as final semantics."
+    ],
+    "known_limitations": [
+      "SAEs optimize reconstruction under sparsity, not axis-aligned semantics; strong features often track templates, delimiters, and high-frequency n-grams.",
+      "Magnitude on frequent structural tokens can overshadow rarer semantic concepts in top-k mining.",
+      "Human-readable labels are post-hoc summaries of co-activation with text; they do not prove a feature causally implements a behavior."
+    ],
+    "keyword_summaries": "Content words are ranked after NLTK stopword removal; tags are simple surface heuristics. Use likely_surface_structure to flag obvious formatting-like patterns.",
+    "stopwords_source": "nltk.corpus.stopwords",
+    "stopwords_lang": "english"
+  },
+  "features": [
+    {
+      "feature_id": 13483,
+      "description": "code/math | deem, section, solution",
+      "keywords": [
+        "deem",
+        "section",
+        "solution"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.5697298645973206,
+      "max_act": 1.6967703104019165,
+      "density": 0.4804052734375,
+      "avg_fired_token_len": 5.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 1.6967703104019165,
+          "text": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "fired_token": " deem",
+          "pre_context": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you",
+          "post_context": " correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "example_idx": 6,
+          "position_idx": 216
+        },
+        {
+          "activation": 1.6967703104019165,
+          "text": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "fired_token": " deem",
+          "pre_context": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you",
+          "post_context": " correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "example_idx": 7,
+          "position_idx": 216
+        },
+        {
+          "activation": 1.6967703104019165,
+          "text": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "fired_token": " deem",
+          "pre_context": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you",
+          "post_context": " correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "example_idx": 4,
+          "position_idx": 216
+        },
+        {
+          "activation": 1.6967703104019165,
+          "text": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "fired_token": " deem",
+          "pre_context": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you",
+          "post_context": " correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "example_idx": 5,
+          "position_idx": 216
+        },
+        {
+          "activation": 1.6967703104019165,
+          "text": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "fired_token": " deem",
+          "pre_context": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you",
+          "post_context": " correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "example_idx": 0,
+          "position_idx": 216
+        },
+        {
+          "activation": 1.6967703104019165,
+          "text": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "fired_token": " deem",
+          "pre_context": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you",
+          "post_context": " correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "example_idx": 1,
+          "position_idx": 216
+        },
+        {
+          "activation": 1.6967703104019165,
+          "text": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "fired_token": " deem",
+          "pre_context": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you",
+          "post_context": " correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "example_idx": 3,
+          "position_idx": 216
+        },
+        {
+          "activation": 1.6967703104019165,
+          "text": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "fired_token": " deem",
+          "pre_context": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you",
+          "post_context": " correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "example_idx": 2,
+          "position_idx": 216
+        },
+        {
+          "activation": 1.6967703104019165,
+          "text": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "fired_token": " deem",
+          "pre_context": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you",
+          "post_context": " correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "example_idx": 10,
+          "position_idx": 216
+        },
+        {
+          "activation": 1.6967703104019165,
+          "text": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "fired_token": " deem",
+          "pre_context": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you",
+          "post_context": " correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "example_idx": 11,
+          "position_idx": 216
+        },
+        {
+          "activation": 1.6967703104019165,
+          "text": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "fired_token": " deem",
+          "pre_context": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you",
+          "post_context": " correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "example_idx": 9,
+          "position_idx": 216
+        },
+        {
+          "activation": 1.6967703104019165,
+          "text": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "fired_token": " deem",
+          "pre_context": " various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you",
+          "post_context": " correct. The Solution section should be logical, accurate, and concise and detail necessary steps needed to reach",
+          "example_idx": 8,
+          "position_idx": 216
+        }
+      ]
+    },
+    {
+      "feature_id": 9086,
+      "description": "code/math | solution, section, revisiting",
+      "keywords": [
+        "solution",
+        "section",
+        "revisiting"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.5213825702667236,
+      "max_act": 1.9361112117767334,
+      "density": 0.45504394531250003,
+      "avg_fired_token_len": 5.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 1.9361112117767334,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 6,
+          "position_idx": 204
+        },
+        {
+          "activation": 1.9361112117767334,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 7,
+          "position_idx": 204
+        },
+        {
+          "activation": 1.9361112117767334,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 4,
+          "position_idx": 204
+        },
+        {
+          "activation": 1.9361112117767334,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 5,
+          "position_idx": 204
+        },
+        {
+          "activation": 1.9361112117767334,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 0,
+          "position_idx": 204
+        },
+        {
+          "activation": 1.9361112117767334,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 1,
+          "position_idx": 204
+        },
+        {
+          "activation": 1.9361112117767334,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 3,
+          "position_idx": 204
+        },
+        {
+          "activation": 1.9361112117767334,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 2,
+          "position_idx": 204
+        },
+        {
+          "activation": 1.9361112117767334,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 10,
+          "position_idx": 204
+        },
+        {
+          "activation": 1.9361112117767334,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 11,
+          "position_idx": 204
+        },
+        {
+          "activation": 1.9361112117767334,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 9,
+          "position_idx": 204
+        },
+        {
+          "activation": 1.9361112117767334,
+          "text": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "fired_token": " from",
+          "pre_context": " revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections",
+          "post_context": " the Thought section, systematically present the final solution that you deem correct. The Solution section should be logical",
+          "example_idx": 8,
+          "position_idx": 204
+        }
+      ]
+    },
+    {
+      "feature_id": 10154,
+      "description": "code/math | user, reach, conclusion",
+      "keywords": [
+        "user",
+        "reach",
+        "conclusion"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.5002480149269104,
+      "max_act": 2.639519214630127,
+      "density": 0.596650390625,
+      "avg_fired_token_len": 6.0,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.639519214630127,
+          "text": " accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWhat are the different CoPs issued by the Canadian Sport Parachute Association, and how can skydivers progress to",
+          "fired_token": " different",
+          "pre_context": " accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWhat are the",
+          "post_context": " CoPs issued by the Canadian Sport Parachute Association, and how can skydivers progress to",
+          "example_idx": 18,
+          "position_idx": 246
+        },
+        {
+          "activation": 2.6075620651245117,
+          "text": " needed to reach the conclusion.\n\nuser\nWrite a well-structured and substantiated article on the various cultural practices around the world that exist to manage water resources. Ensure that your article sheds light on the",
+          "fired_token": " various",
+          "pre_context": " needed to reach the conclusion.\n\nuser\nWrite a well-structured and substantiated article on the",
+          "post_context": " cultural practices around the world that exist to manage water resources. Ensure that your article sheds light on the",
+          "example_idx": 247,
+          "position_idx": 254
+        },
+        {
+          "activation": 2.5983872413635254,
+          "text": " and concise and detail necessary steps needed to reach the conclusion.\n\nuser\n\"Utilize various communication tools such as email, instant messaging, and video conferencing to effectively work together and exchange ideas with both",
+          "fired_token": " tools",
+          "pre_context": " and concise and detail necessary steps needed to reach the conclusion.\n\nuser\n\"Utilize various communication",
+          "post_context": " such as email, instant messaging, and video conferencing to effectively work together and exchange ideas with both",
+          "example_idx": 234,
+          "position_idx": 248
+        },
+        {
+          "activation": 2.597951889038086,
+          "text": ", and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWhat are some of the most exciting projects currently underway in the field of space exploration, such as SpaceX's missions to Mars?",
+          "fired_token": " the",
+          "pre_context": ", and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWhat are some of",
+          "post_context": " most exciting projects currently underway in the field of space exploration, such as SpaceX's missions to Mars?",
+          "example_idx": 325,
+          "position_idx": 247
+        },
+        {
+          "activation": 2.5950026512145996,
+          "text": " needed to reach the conclusion.\n\nuser\nWhat many companies do when planning their global marketing strategies is to organize the world’s countries into three categories.\nEmerging Markets – Markets regarded as having the most potential",
+          "fired_token": " to",
+          "pre_context": " needed to reach the conclusion.\n\nuser\nWhat many companies do when planning their global marketing strategies is",
+          "post_context": " organize the world’s countries into three categories.\nEmerging Markets – Markets regarded as having the most potential",
+          "example_idx": 5,
+          "position_idx": 254
+        },
+        {
+          "activation": 2.5934104919433594,
+          "text": ", and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWrite an essay explaining the fundamental differences between wired and wireless networks, with particular emphasis on their speed and reliability. In your response",
+          "fired_token": " the",
+          "pre_context": ", and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nWrite an essay explaining",
+          "post_context": " fundamental differences between wired and wireless networks, with particular emphasis on their speed and reliability. In your response",
+          "example_idx": 163,
+          "position_idx": 247
+        },
+        {
+          "activation": 2.5930380821228027,
+          "text": " reach the conclusion.\n\nuser\nWrite a well-structured and substantiated article on the various cultural practices around the world that exist to manage water resources. Ensure that your article sheds light on the different methods",
+          "fired_token": " practices",
+          "pre_context": " reach the conclusion.\n\nuser\nWrite a well-structured and substantiated article on the various cultural",
+          "post_context": " around the world that exist to manage water resources. Ensure that your article sheds light on the different methods",
+          "example_idx": 247,
+          "position_idx": 256
+        },
+        {
+          "activation": 2.575495719909668,
+          "text": " needed to reach the conclusion.\n\nuser\nWrite an informative article of at least 500 words discussing the advantages of migrating to cloud computing for small to medium-sized businesses. Your article should highlight the various benefits",
+          "fired_token": " the",
+          "pre_context": " needed to reach the conclusion.\n\nuser\nWrite an informative article of at least 500 words discussing",
+          "post_context": " advantages of migrating to cloud computing for small to medium-sized businesses. Your article should highlight the various benefits",
+          "example_idx": 233,
+          "position_idx": 254
+        },
+        {
+          "activation": 2.567953586578369,
+          "text": ".\n\nuser\nDevelop a mobile application, utilizing the Google Maps Application Programming Interface, which exhibits a list of restaurants that are in close proximity to the user's current location along with the respective ratings of each",
+          "fired_token": " list",
+          "pre_context": ".\n\nuser\nDevelop a mobile application, utilizing the Google Maps Application Programming Interface, which exhibits a",
+          "post_context": " of restaurants that are in close proximity to the user's current location along with the respective ratings of each",
+          "example_idx": 43,
+          "position_idx": 259
+        },
+        {
+          "activation": 2.5553641319274902,
+          "text": ", and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nCan you summarize the different types of thalassemia and how they affect the body?: Thalassemia is",
+          "fired_token": " different",
+          "pre_context": ", and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nCan you summarize the",
+          "post_context": " types of thalassemia and how they affect the body?: Thalassemia is",
+          "example_idx": 69,
+          "position_idx": 247
+        },
+        {
+          "activation": 2.5543951988220215,
+          "text": " detail necessary steps needed to reach the conclusion.\n\nuser\nCreate a 10-minute presentation that highlights the significance of engaging in self-reflection as a means of achieving personal growth. Organize your content to",
+          "fired_token": " the",
+          "pre_context": " detail necessary steps needed to reach the conclusion.\n\nuser\nCreate a 10-minute presentation that highlights",
+          "post_context": " significance of engaging in self-reflection as a means of achieving personal growth. Organize your content to",
+          "example_idx": 55,
+          "position_idx": 251
+        },
+        {
+          "activation": 2.550009250640869,
+          "text": " concise and detail necessary steps needed to reach the conclusion.\n\nuser\nProvide a comprehensive analysis that examines the similarities and differences between Eastern and Western medicine practices. Include an examination of the philosophical and cultural underp",
+          "fired_token": " the",
+          "pre_context": " concise and detail necessary steps needed to reach the conclusion.\n\nuser\nProvide a comprehensive analysis that examines",
+          "post_context": " similarities and differences between Eastern and Western medicine practices. Include an examination of the philosophical and cultural underp",
+          "example_idx": 250,
+          "position_idx": 249
+        }
+      ]
+    },
+    {
+      "feature_id": 11377,
+      "description": "code/title-case | steps, section, ideas",
+      "keywords": [
+        "steps",
+        "section",
+        "ideas"
+      ],
+      "tags": [
+        "code",
+        "title-case"
+      ],
+      "mean_act": 0.49469760060310364,
+      "max_act": 1.7098743915557861,
+      "density": 0.474375,
+      "avg_fired_token_len": 3.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 1.7098743915557861,
+          "text": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "fired_token": " In",
+          "pre_context": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps.",
+          "post_context": " the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "example_idx": 6,
+          "position_idx": 189
+        },
+        {
+          "activation": 1.7098743915557861,
+          "text": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "fired_token": " In",
+          "pre_context": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps.",
+          "post_context": " the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "example_idx": 7,
+          "position_idx": 189
+        },
+        {
+          "activation": 1.7098743915557861,
+          "text": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "fired_token": " In",
+          "pre_context": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps.",
+          "post_context": " the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "example_idx": 4,
+          "position_idx": 189
+        },
+        {
+          "activation": 1.7098743915557861,
+          "text": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "fired_token": " In",
+          "pre_context": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps.",
+          "post_context": " the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "example_idx": 5,
+          "position_idx": 189
+        },
+        {
+          "activation": 1.7098743915557861,
+          "text": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "fired_token": " In",
+          "pre_context": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps.",
+          "post_context": " the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "example_idx": 0,
+          "position_idx": 189
+        },
+        {
+          "activation": 1.7098743915557861,
+          "text": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "fired_token": " In",
+          "pre_context": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps.",
+          "post_context": " the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "example_idx": 1,
+          "position_idx": 189
+        },
+        {
+          "activation": 1.7098743915557861,
+          "text": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "fired_token": " In",
+          "pre_context": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps.",
+          "post_context": " the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "example_idx": 3,
+          "position_idx": 189
+        },
+        {
+          "activation": 1.7098743915557861,
+          "text": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "fired_token": " In",
+          "pre_context": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps.",
+          "post_context": " the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "example_idx": 2,
+          "position_idx": 189
+        },
+        {
+          "activation": 1.7098743915557861,
+          "text": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "fired_token": " In",
+          "pre_context": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps.",
+          "post_context": " the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "example_idx": 10,
+          "position_idx": 189
+        },
+        {
+          "activation": 1.7098743915557861,
+          "text": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "fired_token": " In",
+          "pre_context": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps.",
+          "post_context": " the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "example_idx": 11,
+          "position_idx": 189
+        },
+        {
+          "activation": 1.7098743915557861,
+          "text": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "fired_token": " In",
+          "pre_context": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps.",
+          "post_context": " the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "example_idx": 9,
+          "position_idx": 189
+        },
+        {
+          "activation": 1.7098743915557861,
+          "text": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps. In the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "fired_token": " In",
+          "pre_context": " ideas, verifying the accuracy of the current steps, refining any errors, and revisiting previous steps.",
+          "post_context": " the Solution section, based on various attempts, explorations, and reflections from the Thought section, systematically",
+          "example_idx": 8,
+          "position_idx": 189
+        }
+      ]
+    },
+    {
+      "feature_id": 12456,
+      "description": "code/refusal/safety/math/title-case | necessary, logical, accurate",
+      "keywords": [
+        "necessary",
+        "logical",
+        "accurate"
+      ],
+      "tags": [
+        "code",
+        "refusal/safety",
+        "math",
+        "title-case"
+      ],
+      "mean_act": 0.38635870814323425,
+      "max_act": 2.3938307762145996,
+      "density": 0.486298828125,
+      "avg_fired_token_len": 4.5,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.3938307762145996,
+          "text": " writing style of memoirs of william miller to that of a modern-day autobiography. Here's my attempt:\n\ni was born in the small town of pittsfield, massachusetts, and spent",
+          "fired_token": " my",
+          "pre_context": " writing style of memoirs of william miller to that of a modern-day autobiography. Here's",
+          "post_context": " attempt:\n\ni was born in the small town of pittsfield, massachusetts, and spent",
+          "example_idx": 174,
+          "position_idx": 321
+        },
+        {
+          "activation": 2.3847110271453857,
+          "text": " author, and why does it make him worry about the future of advertising in this medium? Generate according to: Recently, I spent a few days on the West Coast visiting some VCs, tech companies that",
+          "fired_token": " to",
+          "pre_context": " author, and why does it make him worry about the future of advertising in this medium? Generate according",
+          "post_context": ": Recently, I spent a few days on the West Coast visiting some VCs, tech companies that",
+          "example_idx": 243,
+          "position_idx": 274
+        },
+        {
+          "activation": 2.3434247970581055,
+          "text": "\nassistant\nI do not have the capability to design and build apps like a human developer. However, I can provide a general outline or guide that can be helpful in the development process. Here",
+          "fired_token": ".",
+          "pre_context": "\nassistant\nI do not have the capability to design and build apps like a human developer",
+          "post_context": " However, I can provide a general outline or guide that can be helpful in the development process. Here",
+          "example_idx": 388,
+          "position_idx": 346
+        },
+        {
+          "activation": 2.2831056118011475,
+          "text": " and colleagues in order to accomplish project goals and fulfill customer needs.\"\nassistant\nI don't have any colleagues, but I'd be happy to provide suggestions for how to accomplish effective communication in a",
+          "fired_token": "'t",
+          "pre_context": " and colleagues in order to accomplish project goals and fulfill customer needs.\"\nassistant\nI don",
+          "post_context": " have any colleagues, but I'd be happy to provide suggestions for how to accomplish effective communication in a",
+          "example_idx": 234,
+          "position_idx": 290
+        },
+        {
+          "activation": 2.2436580657958984,
+          "text": " general consensus on the texture and richness of the carrot pecan bread described in the material? Generate according to: After making so many rich and gooey things this week, I thought I’d switch gears and",
+          "fired_token": " to",
+          "pre_context": " general consensus on the texture and richness of the carrot pecan bread described in the material? Generate according",
+          "post_context": ": After making so many rich and gooey things this week, I thought I’d switch gears and",
+          "example_idx": 358,
+          "position_idx": 266
+        },
+        {
+          "activation": 2.233121156692505,
+          "text": " be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nPlease provide a step-by-step guide complete with measurements and cooking times for making dehydrated anchovy and",
+          "fired_token": "Please",
+          "pre_context": " be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\n",
+          "post_context": " provide a step-by-step guide complete with measurements and cooking times for making dehydrated anchovy and",
+          "example_idx": 148,
+          "position_idx": 243
+        },
+        {
+          "activation": 2.233121156692505,
+          "text": " be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nPlease write a comprehensive white paper that describes a new business strategy, including a detailed analysis and evaluation of the",
+          "fired_token": "Please",
+          "pre_context": " be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\n",
+          "post_context": " write a comprehensive white paper that describes a new business strategy, including a detailed analysis and evaluation of the",
+          "example_idx": 153,
+          "position_idx": 243
+        },
+        {
+          "activation": 2.233121156692505,
+          "text": " be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nPlease build a scalable and resilient Node.js microservice using the Serverless framework that can be deployed to AWS",
+          "fired_token": "Please",
+          "pre_context": " be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\n",
+          "post_context": " build a scalable and resilient Node.js microservice using the Serverless framework that can be deployed to AWS",
+          "example_idx": 215,
+          "position_idx": 243
+        },
+        {
+          "activation": 2.233121156692505,
+          "text": " be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nPlease create a job posting that includes required qualifications, job responsibilities and necessary skills to hire a marketing or sales",
+          "fired_token": "Please",
+          "pre_context": " be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\n",
+          "post_context": " create a job posting that includes required qualifications, job responsibilities and necessary skills to hire a marketing or sales",
+          "example_idx": 113,
+          "position_idx": 243
+        },
+        {
+          "activation": 2.233121156692505,
+          "text": " be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nPlease create a language learning podcast app in Vue that provides a wide range of content including podcasts, interviews,",
+          "fired_token": "Please",
+          "pre_context": " be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\n",
+          "post_context": " create a language learning podcast app in Vue that provides a wide range of content including podcasts, interviews,",
+          "example_idx": 168,
+          "position_idx": 243
+        },
+        {
+          "activation": 2.233121156692505,
+          "text": " be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nPlease provide a step-by-step guide on how to make a traditional beef stroganoff, including ingredients",
+          "fired_token": "Please",
+          "pre_context": " be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\n",
+          "post_context": " provide a step-by-step guide on how to make a traditional beef stroganoff, including ingredients",
+          "example_idx": 164,
+          "position_idx": 243
+        },
+        {
+          "activation": 2.233121156692505,
+          "text": " be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\nPlease provide the required type of rolls and specify if any dietary restrictions or specific ingredients need to be included.",
+          "fired_token": "Please",
+          "pre_context": " be logical, accurate, and concise and detail necessary steps needed to reach the conclusion.\n\nuser\n",
+          "post_context": " provide the required type of rolls and specify if any dietary restrictions or specific ingredients need to be included.",
+          "example_idx": 187,
+          "position_idx": 243
+        }
+      ]
+    }
+  ]
+}

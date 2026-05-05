@@ -1,0 +1,672 @@
+{
+  "sae_repo": "chungimungi/SAE-MInAlA_Llama-3.2-3B-ORPO-merged-layer_25_best",
+  "base_model": "MInAlA/Llama-3.2-3B-ORPO-merged",
+  "layer": 25,
+  "selection": "mean",
+  "min_density": 0.0001,
+  "stopwords_lang": "english",
+  "num_prompts": 400,
+  "context_size": 512,
+  "total_tokens": 202771,
+  "interpretation_methodology": {
+    "why_this_analysis": [
+      "Record which latent directions get large activations under the chosen corpus and chat template.",
+      "Separate dead or ultra-rare features from dense ones using per-feature statistics.",
+      "Provide concrete token contexts for follow-up causal work (ablation, patching, steering), not as final semantics."
+    ],
+    "known_limitations": [
+      "SAEs optimize reconstruction under sparsity, not axis-aligned semantics; strong features often track templates, delimiters, and high-frequency n-grams.",
+      "Magnitude on frequent structural tokens can overshadow rarer semantic concepts in top-k mining.",
+      "Human-readable labels are post-hoc summaries of co-activation with text; they do not prove a feature causally implements a behavior."
+    ],
+    "keyword_summaries": "Content words are ranked after NLTK stopword removal; tags are simple surface heuristics. Use likely_surface_structure to flag obvious formatting-like patterns.",
+    "stopwords_source": "nltk.corpus.stopwords",
+    "stopwords_lang": "english"
+  },
+  "features": [
+    {
+      "feature_id": 14080,
+      "description": "code/math | strengthen, preserving, adopted",
+      "keywords": [
+        "strengthen",
+        "preserving",
+        "adopted"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 3.7577896118164062,
+      "max_act": 14.444525718688965,
+      "density": 0.8176415759650049,
+      "avg_fired_token_len": 4.916666666666667,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 14.444525718688965,
+          "text": " compared to the Surrealists for her use of disguise and role-playing. Like the Surrealists, she uses her work to challenge conventions of identity, gender, and beauty.\n\n2. Annette Mess",
+          "fired_token": ",",
+          "pre_context": " compared to the Surrealists for her use of disguise and role-playing. Like the Surrealists",
+          "post_context": " she uses her work to challenge conventions of identity, gender, and beauty.\n\n2. Annette Mess",
+          "example_idx": 386,
+          "position_idx": 449
+        },
+        {
+          "activation": 14.406059265136719,
+          "text": "Genius Grant,\" for his innovative and thought-provoking work.\n\nIn addition to his art practice, Paglen is also a writer and researcher who has written extensively on topics related to technology and society.",
+          "fired_token": ",",
+          "pre_context": "Genius Grant,\" for his innovative and thought-provoking work.\n\nIn addition to his art practice",
+          "post_context": " Paglen is also a writer and researcher who has written extensively on topics related to technology and society.",
+          "example_idx": 299,
+          "position_idx": 342
+        },
+        {
+          "activation": 14.354377746582031,
+          "text": " information on these sites and their cultural significance.\n\n4. Publications: There are several publications that provide information on Mayotte's cultural heritage and traditions, including books, academic articles, and magazines.\n\n5. Local",
+          "fired_token": " on",
+          "pre_context": " information on these sites and their cultural significance.\n\n4. Publications: There are several publications that provide information",
+          "post_context": " Mayotte's cultural heritage and traditions, including books, academic articles, and magazines.\n\n5. Local",
+          "example_idx": 126,
+          "position_idx": 189
+        },
+        {
+          "activation": 14.003843307495117,
+          "text": " if it means making mistakes along the way. \n\nOverall, the \"How I Built This\" episode about Spanx and Sara Blakely is a captivating and inspiring story of risk-taking, resilience, and",
+          "fired_token": " about",
+          "pre_context": " if it means making mistakes along the way. \n\nOverall, the \"How I Built This\" episode",
+          "post_context": " Spanx and Sara Blakely is a captivating and inspiring story of risk-taking, resilience, and",
+          "example_idx": 385,
+          "position_idx": 397
+        },
+        {
+          "activation": 13.96389102935791,
+          "text": "Overall, the development of the Dawei deep-sea port and industrial zone project has the potential to strengthen Burma's economic relationships with not only Thailand but also other countries in the region, increasing regional trade and",
+          "fired_token": " strengthen",
+          "pre_context": "Overall, the development of the Dawei deep-sea port and industrial zone project has the potential to",
+          "post_context": " Burma's economic relationships with not only Thailand but also other countries in the region, increasing regional trade and",
+          "example_idx": 370,
+          "position_idx": 294
+        },
+        {
+          "activation": 13.950026512145996,
+          "text": ", suggesting that Mercury's history may have included periods of water-rich conditions. Overall, the data gathered by MESSENGER significantly expanded our knowledge and understanding of Mercury's geological history and the processes that have",
+          "fired_token": " by",
+          "pre_context": ", suggesting that Mercury's history may have included periods of water-rich conditions. Overall, the data gathered",
+          "post_context": " MESSENGER significantly expanded our knowledge and understanding of Mercury's geological history and the processes that have",
+          "example_idx": 375,
+          "position_idx": 157
+        },
+        {
+          "activation": 13.88776683807373,
+          "text": " used to create a series of stunning prints that highlight the hidden infrastructure of government surveillance.\n\nAnother major work by Paglen is \"Sight Machine,\" an installation that uses computer algorithms and artificial intelligence to generate abstract",
+          "fired_token": " by",
+          "pre_context": " used to create a series of stunning prints that highlight the hidden infrastructure of government surveillance.\n\nAnother major work",
+          "post_context": " Paglen is \"Sight Machine,\" an installation that uses computer algorithms and artificial intelligence to generate abstract",
+          "example_idx": 299,
+          "position_idx": 224
+        },
+        {
+          "activation": 13.738469123840332,
+          "text": ", and magazines.\n\n5. Local organisations: There may be local organisations in Mayotte that focus on preserving and promoting the island's cultural heritage and traditions. These organisations may be able to provide more in-depth",
+          "fired_token": " preserving",
+          "pre_context": ", and magazines.\n\n5. Local organisations: There may be local organisations in Mayotte that focus on",
+          "post_context": " and promoting the island's cultural heritage and traditions. These organisations may be able to provide more in-depth",
+          "example_idx": 126,
+          "position_idx": 223
+        },
+        {
+          "activation": 13.735499382019043,
+          "text": " geothermal projects or technology, and user-generated content, such as testimonials from homeowners or businesses that have adopted geothermal energy. Use hashtags, such as #geothermalenergy #renewableenergy #s",
+          "fired_token": " adopted",
+          "pre_context": " geothermal projects or technology, and user-generated content, such as testimonials from homeowners or businesses that have",
+          "post_context": " geothermal energy. Use hashtags, such as #geothermalenergy #renewableenergy #s",
+          "example_idx": 365,
+          "position_idx": 372
+        },
+        {
+          "activation": 13.653393745422363,
+          "text": "oking pieces that explore themes of privacy, government surveillance, and the relationship between humans and machines.\n\nOne of Paglen's most notable works is \"The Other Night Sky,\" a project that involved photographing and",
+          "fired_token": " of",
+          "pre_context": "oking pieces that explore themes of privacy, government surveillance, and the relationship between humans and machines.\n\nOne",
+          "post_context": " Paglen's most notable works is \"The Other Night Sky,\" a project that involved photographing and",
+          "example_idx": 299,
+          "position_idx": 169
+        },
+        {
+          "activation": 13.639135360717773,
+          "text": " dish. Each type of apple has its own unique flavor profile and texture. Some apples are sweet, while others are tart or even savory. By mixing different varieties of apples, you can create a truly nuanced",
+          "fired_token": " while",
+          "pre_context": " dish. Each type of apple has its own unique flavor profile and texture. Some apples are sweet,",
+          "post_context": " others are tart or even savory. By mixing different varieties of apples, you can create a truly nuanced",
+          "example_idx": 364,
+          "position_idx": 89
+        },
+        {
+          "activation": 13.477629661560059,
+          "text": " Chano Pozo on several recordings that became influential in the development of Latin jazz.\n\nOther notable practitioners of Latin jazz include pianist and bandleader Eddie Palmieri, flutist and saxophonist",
+          "fired_token": " of",
+          "pre_context": " Chano Pozo on several recordings that became influential in the development of Latin jazz.\n\nOther notable practitioners",
+          "post_context": " Latin jazz include pianist and bandleader Eddie Palmieri, flutist and saxophonist",
+          "example_idx": 389,
+          "position_idx": 331
+        }
+      ]
+    },
+    {
+      "feature_id": 8427,
+      "description": "begin, text, date",
+      "keywords": [
+        "begin",
+        "text",
+        "date"
+      ],
+      "tags": [],
+      "mean_act": 2.805659055709839,
+      "max_act": 49.235225677490234,
+      "density": 0.7827154770652609,
+      "avg_fired_token_len": 17.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 49.235225677490234,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 2,
+          "position_idx": 1
+        },
+        {
+          "activation": 49.235225677490234,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 2,
+          "position_idx": 0
+        },
+        {
+          "activation": 49.235225677490234,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 1,
+          "position_idx": 0
+        },
+        {
+          "activation": 49.235225677490234,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 1,
+          "position_idx": 1
+        },
+        {
+          "activation": 49.235225677490234,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 0,
+          "position_idx": 1
+        },
+        {
+          "activation": 49.235225677490234,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 0,
+          "position_idx": 0
+        },
+        {
+          "activation": 49.235225677490234,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 3,
+          "position_idx": 0
+        },
+        {
+          "activation": 49.235225677490234,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 3,
+          "position_idx": 1
+        },
+        {
+          "activation": 49.235225677490234,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 5,
+          "position_idx": 0
+        },
+        {
+          "activation": 49.235225677490234,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 4,
+          "position_idx": 0
+        },
+        {
+          "activation": 49.235225677490234,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 5,
+          "position_idx": 1
+        },
+        {
+          "activation": 49.235225677490234,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 6,
+          "position_idx": 0
+        }
+      ]
+    },
+    {
+      "feature_id": 10833,
+      "description": "begin, text, date",
+      "keywords": [
+        "begin",
+        "text",
+        "date"
+      ],
+      "tags": [],
+      "mean_act": 2.633183479309082,
+      "max_act": 20.07790756225586,
+      "density": 0.7251382100990773,
+      "avg_fired_token_len": 17.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 20.07790756225586,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 2,
+          "position_idx": 0
+        },
+        {
+          "activation": 20.07790756225586,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 1,
+          "position_idx": 1
+        },
+        {
+          "activation": 20.07790756225586,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 1,
+          "position_idx": 0
+        },
+        {
+          "activation": 20.07790756225586,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 0,
+          "position_idx": 0
+        },
+        {
+          "activation": 20.07790756225586,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 0,
+          "position_idx": 1
+        },
+        {
+          "activation": 20.07790756225586,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 3,
+          "position_idx": 1
+        },
+        {
+          "activation": 20.07790756225586,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 2,
+          "position_idx": 1
+        },
+        {
+          "activation": 20.07790756225586,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 3,
+          "position_idx": 0
+        },
+        {
+          "activation": 20.07790756225586,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 5,
+          "position_idx": 0
+        },
+        {
+          "activation": 20.07790756225586,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 4,
+          "position_idx": 0
+        },
+        {
+          "activation": 20.07790756225586,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 5,
+          "position_idx": 1
+        },
+        {
+          "activation": 20.07790756225586,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 6,
+          "position_idx": 0
+        }
+      ]
+    },
+    {
+      "feature_id": 4304,
+      "description": "begin, text, date",
+      "keywords": [
+        "begin",
+        "text",
+        "date"
+      ],
+      "tags": [],
+      "mean_act": 2.3085825443267822,
+      "max_act": 40.929901123046875,
+      "density": 0.6639361644416608,
+      "avg_fired_token_len": 17.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 40.929901123046875,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 3,
+          "position_idx": 0
+        },
+        {
+          "activation": 40.929901123046875,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 2,
+          "position_idx": 1
+        },
+        {
+          "activation": 40.929901123046875,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 1,
+          "position_idx": 1
+        },
+        {
+          "activation": 40.929901123046875,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 2,
+          "position_idx": 0
+        },
+        {
+          "activation": 40.929901123046875,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 0,
+          "position_idx": 1
+        },
+        {
+          "activation": 40.929901123046875,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 0,
+          "position_idx": 0
+        },
+        {
+          "activation": 40.929901123046875,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 1,
+          "position_idx": 0
+        },
+        {
+          "activation": 40.929901123046875,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 3,
+          "position_idx": 1
+        },
+        {
+          "activation": 40.929901123046875,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 5,
+          "position_idx": 0
+        },
+        {
+          "activation": 40.929901123046875,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 5,
+          "position_idx": 1
+        },
+        {
+          "activation": 40.929901123046875,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 4,
+          "position_idx": 0
+        },
+        {
+          "activation": 40.929901123046875,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 6,
+          "position_idx": 0
+        }
+      ]
+    },
+    {
+      "feature_id": 3104,
+      "description": "numbers/code/refusal/safety/politeness/math | audience, relevant, project",
+      "keywords": [
+        "audience",
+        "relevant",
+        "project"
+      ],
+      "tags": [
+        "numbers",
+        "code",
+        "refusal/safety",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 1.902449131011963,
+      "max_act": 16.740142822265625,
+      "density": 0.6470846422811941,
+      "avg_fired_token_len": 1.0,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 16.740142822265625,
+          "text": " different cultural and language backgrounds. Consider using multimedia materials and offering translation services for non-English speakers.\n\n4. Encourage participation: Encourage learners to participate actively in the training program by asking questions, facilitating",
+          "fired_token": "4",
+          "pre_context": " different cultural and language backgrounds. Consider using multimedia materials and offering translation services for non-English speakers.\n\n",
+          "post_context": ". Encourage participation: Encourage learners to participate actively in the training program by asking questions, facilitating",
+          "example_idx": 256,
+          "position_idx": 490
+        },
+        {
+          "activation": 16.556671142578125,
+          "text": " examples from the workplace to illustrate the importance of workplace safety and make the training relevant to the learners.\n\n3. Address cultural and language differences: Ensure that the training materials are accessible and understandable to learners from different",
+          "fired_token": "3",
+          "pre_context": " examples from the workplace to illustrate the importance of workplace safety and make the training relevant to the learners.\n\n",
+          "post_context": ". Address cultural and language differences: Ensure that the training materials are accessible and understandable to learners from different",
+          "example_idx": 256,
+          "position_idx": 450
+        },
+        {
+          "activation": 16.467594146728516,
+          "text": " on Instagram, Facebook, and Twitter, using relevant hashtags and tagging influencers and experts in the field.\n\n4. Utilize email marketing to promote the masterclass to the target audience. Create an email list comprised",
+          "fired_token": "4",
+          "pre_context": " on Instagram, Facebook, and Twitter, using relevant hashtags and tagging influencers and experts in the field.\n\n",
+          "post_context": ". Utilize email marketing to promote the masterclass to the target audience. Create an email list comprised",
+          "example_idx": 140,
+          "position_idx": 152
+        },
+        {
+          "activation": 16.22622299194336,
+          "text": " of each project on the community or region and the feasibility of completing the project based on resources available.\n\n4. Evaluate cost-effectiveness: evaluate the costs of each project, and the benefits that it delivers to",
+          "fired_token": "4",
+          "pre_context": " of each project on the community or region and the feasibility of completing the project based on resources available.\n\n",
+          "post_context": ". Evaluate cost-effectiveness: evaluate the costs of each project, and the benefits that it delivers to",
+          "example_idx": 369,
+          "position_idx": 404
+        },
+        {
+          "activation": 16.086986541748047,
+          "text": " collected into a spreadsheet or mapping software and build visualizations to help in identifying patterns or clusters. \n\n3. Determine the impact and feasibility: determine the expected impact of each project on the community or region and",
+          "fired_token": "3",
+          "pre_context": " collected into a spreadsheet or mapping software and build visualizations to help in identifying patterns or clusters. \n\n",
+          "post_context": ". Determine the impact and feasibility: determine the expected impact of each project on the community or region and",
+          "example_idx": 369,
+          "position_idx": 372
+        },
+        {
+          "activation": 16.07857322692871,
+          "text": " reach a larger audience and promote your brand\n\nStep 5: Build a compelling brand on LinkedIn\n\n1. Use a consistent tone of voice and visual style throughout your LinkedIn business page and content\n2.",
+          "fired_token": "1",
+          "pre_context": " reach a larger audience and promote your brand\n\nStep 5: Build a compelling brand on LinkedIn\n\n",
+          "post_context": ". Use a consistent tone of voice and visual style throughout your LinkedIn business page and content\n2.",
+          "example_idx": 238,
+          "position_idx": 480
+        },
+        {
+          "activation": 16.057769775390625,
+          "text": " Expand marketing efforts to attract a younger and more diverse audience through targeted social media campaigns and community outreach.\n3. Foster a culture of innovation and collaboration by partnering with local artists and institutions to create unique and innovative",
+          "fired_token": "3",
+          "pre_context": " Expand marketing efforts to attract a younger and more diverse audience through targeted social media campaigns and community outreach.\n",
+          "post_context": ". Foster a culture of innovation and collaboration by partnering with local artists and institutions to create unique and innovative",
+          "example_idx": 229,
+          "position_idx": 288
+        },
+        {
+          "activation": 16.03881072998047,
+          "text": " the breath, which in turn helps to calm the nervous system and create a sense of inner peace.\n\n4. Serves as a physical reminder of your intention. The beads on a mala bracelet can serve",
+          "fired_token": "4",
+          "pre_context": " the breath, which in turn helps to calm the nervous system and create a sense of inner peace.\n\n",
+          "post_context": ". Serves as a physical reminder of your intention. The beads on a mala bracelet can serve",
+          "example_idx": 84,
+          "position_idx": 438
+        },
+        {
+          "activation": 15.993593215942383,
+          "text": " and regular reminders leading up to the masterclass, highlighting key speakers, topics, and takeaways.\n\n5. Partner with relevant organizations and online communities to promote the masterclass. Reach out to universities, industry",
+          "fired_token": "5",
+          "pre_context": " and regular reminders leading up to the masterclass, highlighting key speakers, topics, and takeaways.\n\n",
+          "post_context": ". Partner with relevant organizations and online communities to promote the masterclass. Reach out to universities, industry",
+          "example_idx": 140,
+          "position_idx": 209
+        },
+        {
+          "activation": 15.992059707641602,
+          "text": "'m grateful for my job,\" try to think of specific aspects of your job that you appreciate. 4. Practice mindfulness: Take a few deep breaths before you start writing in your journal. This will",
+          "fired_token": "4",
+          "pre_context": "'m grateful for my job,\" try to think of specific aspects of your job that you appreciate. ",
+          "post_context": ". Practice mindfulness: Take a few deep breaths before you start writing in your journal. This will",
+          "example_idx": 77,
+          "position_idx": 397
+        },
+        {
+          "activation": 15.974357604980469,
+          "text": " types of content and messaging that resonate with the audience. Here are some best practices for channel selection:\n\n1. Do not limit yourself to one channel: Multichannel marketing involves using multiple channels to reach a",
+          "fired_token": "1",
+          "pre_context": " types of content and messaging that resonate with the audience. Here are some best practices for channel selection:\n\n",
+          "post_context": ". Do not limit yourself to one channel: Multichannel marketing involves using multiple channels to reach a",
+          "example_idx": 337,
+          "position_idx": 489
+        },
+        {
+          "activation": 15.96902847290039,
+          "text": " of your target audience\n2. Upload high-quality images and videos that showcase your product or service\n3. Share valuable content that is relevant to your target audience and industry\n4. Use LinkedIn's showcase",
+          "fired_token": "3",
+          "pre_context": " of your target audience\n2. Upload high-quality images and videos that showcase your product or service\n",
+          "post_context": ". Share valuable content that is relevant to your target audience and industry\n4. Use LinkedIn's showcase",
+          "example_idx": 238,
+          "position_idx": 263
+        }
+      ]
+    }
+  ]
+}

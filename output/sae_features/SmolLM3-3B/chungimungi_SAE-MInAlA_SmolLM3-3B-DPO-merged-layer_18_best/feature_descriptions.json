@@ -1,0 +1,680 @@
+{
+  "sae_repo": "chungimungi/SAE-MInAlA_SmolLM3-3B-DPO-merged-layer_18_best",
+  "base_model": "MInAlA/SmolLM3-3B-DPO-merged",
+  "layer": 18,
+  "selection": "mean",
+  "min_density": 0.0001,
+  "stopwords_lang": "english",
+  "num_prompts": 400,
+  "context_size": 512,
+  "total_tokens": 204800,
+  "interpretation_methodology": {
+    "why_this_analysis": [
+      "Record which latent directions get large activations under the chosen corpus and chat template.",
+      "Separate dead or ultra-rare features from dense ones using per-feature statistics.",
+      "Provide concrete token contexts for follow-up causal work (ablation, patching, steering), not as final semantics."
+    ],
+    "known_limitations": [
+      "SAEs optimize reconstruction under sparsity, not axis-aligned semantics; strong features often track templates, delimiters, and high-frequency n-grams.",
+      "Magnitude on frequent structural tokens can overshadow rarer semantic concepts in top-k mining.",
+      "Human-readable labels are post-hoc summaries of co-activation with text; they do not prove a feature causally implements a behavior."
+    ],
+    "keyword_summaries": "Content words are ranked after NLTK stopword removal; tags are simple surface heuristics. Use likely_surface_structure to flag obvious formatting-like patterns.",
+    "stopwords_source": "nltk.corpus.stopwords",
+    "stopwords_lang": "english"
+  },
+  "features": [
+    {
+      "feature_id": 9734,
+      "description": "code/math | ugging, assistant, think",
+      "keywords": [
+        "ugging",
+        "assistant",
+        "think"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.7349672317504883,
+      "max_act": 2.995290756225586,
+      "density": 0.6047314453125,
+      "avg_fired_token_len": 6.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.995290756225586,
+          "text": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "fired_token": "ugging",
+          "pre_context": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by H",
+          "post_context": " Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "example_idx": 6,
+          "position_idx": 51
+        },
+        {
+          "activation": 2.995290756225586,
+          "text": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "fired_token": "ugging",
+          "pre_context": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by H",
+          "post_context": " Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "example_idx": 7,
+          "position_idx": 51
+        },
+        {
+          "activation": 2.995290756225586,
+          "text": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "fired_token": "ugging",
+          "pre_context": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by H",
+          "post_context": " Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "example_idx": 4,
+          "position_idx": 51
+        },
+        {
+          "activation": 2.995290756225586,
+          "text": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "fired_token": "ugging",
+          "pre_context": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by H",
+          "post_context": " Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "example_idx": 5,
+          "position_idx": 51
+        },
+        {
+          "activation": 2.995290756225586,
+          "text": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "fired_token": "ugging",
+          "pre_context": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by H",
+          "post_context": " Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "example_idx": 0,
+          "position_idx": 51
+        },
+        {
+          "activation": 2.995290756225586,
+          "text": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "fired_token": "ugging",
+          "pre_context": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by H",
+          "post_context": " Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "example_idx": 1,
+          "position_idx": 51
+        },
+        {
+          "activation": 2.995290756225586,
+          "text": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "fired_token": "ugging",
+          "pre_context": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by H",
+          "post_context": " Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "example_idx": 3,
+          "position_idx": 51
+        },
+        {
+          "activation": 2.995290756225586,
+          "text": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "fired_token": "ugging",
+          "pre_context": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by H",
+          "post_context": " Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "example_idx": 2,
+          "position_idx": 51
+        },
+        {
+          "activation": 2.995290756225586,
+          "text": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "fired_token": "ugging",
+          "pre_context": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by H",
+          "post_context": " Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "example_idx": 10,
+          "position_idx": 51
+        },
+        {
+          "activation": 2.995290756225586,
+          "text": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "fired_token": "ugging",
+          "pre_context": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by H",
+          "post_context": " Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "example_idx": 11,
+          "position_idx": 51
+        },
+        {
+          "activation": 2.995290756225586,
+          "text": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "fired_token": "ugging",
+          "pre_context": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by H",
+          "post_context": " Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "example_idx": 9,
+          "position_idx": 51
+        },
+        {
+          "activation": 2.995290756225586,
+          "text": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "fired_token": "ugging",
+          "pre_context": "think\n\n## Custom Instructions\n\nYou are a helpful AI assistant named SmolLM, trained by H",
+          "post_context": " Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final",
+          "example_idx": 8,
+          "position_idx": 51
+        }
+      ]
+    },
+    {
+      "feature_id": 12908,
+      "description": "code/math | involves, assistant, helpful",
+      "keywords": [
+        "involves",
+        "assistant",
+        "helpful"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.7074858546257019,
+      "max_act": 2.1788973808288574,
+      "density": 0.4720361328125,
+      "avg_fired_token_len": 9.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.1788973808288574,
+          "text": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "fired_token": " involves",
+          "pre_context": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant",
+          "post_context": " thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "example_idx": 6,
+          "position_idx": 59
+        },
+        {
+          "activation": 2.1788973808288574,
+          "text": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "fired_token": " involves",
+          "pre_context": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant",
+          "post_context": " thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "example_idx": 7,
+          "position_idx": 59
+        },
+        {
+          "activation": 2.1788973808288574,
+          "text": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "fired_token": " involves",
+          "pre_context": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant",
+          "post_context": " thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "example_idx": 4,
+          "position_idx": 59
+        },
+        {
+          "activation": 2.1788973808288574,
+          "text": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "fired_token": " involves",
+          "pre_context": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant",
+          "post_context": " thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "example_idx": 5,
+          "position_idx": 59
+        },
+        {
+          "activation": 2.1788973808288574,
+          "text": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "fired_token": " involves",
+          "pre_context": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant",
+          "post_context": " thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "example_idx": 0,
+          "position_idx": 59
+        },
+        {
+          "activation": 2.1788973808288574,
+          "text": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "fired_token": " involves",
+          "pre_context": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant",
+          "post_context": " thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "example_idx": 1,
+          "position_idx": 59
+        },
+        {
+          "activation": 2.1788973808288574,
+          "text": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "fired_token": " involves",
+          "pre_context": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant",
+          "post_context": " thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "example_idx": 3,
+          "position_idx": 59
+        },
+        {
+          "activation": 2.1788973808288574,
+          "text": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "fired_token": " involves",
+          "pre_context": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant",
+          "post_context": " thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "example_idx": 2,
+          "position_idx": 59
+        },
+        {
+          "activation": 2.1788973808288574,
+          "text": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "fired_token": " involves",
+          "pre_context": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant",
+          "post_context": " thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "example_idx": 10,
+          "position_idx": 59
+        },
+        {
+          "activation": 2.1788973808288574,
+          "text": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "fired_token": " involves",
+          "pre_context": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant",
+          "post_context": " thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "example_idx": 11,
+          "position_idx": 59
+        },
+        {
+          "activation": 2.1788973808288574,
+          "text": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "fired_token": " involves",
+          "pre_context": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant",
+          "post_context": " thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "example_idx": 9,
+          "position_idx": 59
+        },
+        {
+          "activation": 2.1788973808288574,
+          "text": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant involves thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "fired_token": " involves",
+          "pre_context": " a helpful AI assistant named SmolLM, trained by Hugging Face. Your role as an assistant",
+          "post_context": " thoroughly exploring questions through a systematic thinking process before providing the final precise and accurate solutions. This requires engaging",
+          "example_idx": 8,
+          "position_idx": 59
+        }
+      ]
+    },
+    {
+      "feature_id": 5866,
+      "description": "code/politeness/math | reach, conclusion, user",
+      "keywords": [
+        "reach",
+        "conclusion",
+        "user"
+      ],
+      "tags": [
+        "code",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 0.6340878009796143,
+      "max_act": 2.4965882301330566,
+      "density": 0.816171875,
+      "avg_fired_token_len": 8.666666666666666,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.4965882301330566,
+          "text": " are some of the most exciting projects currently underway in the field of space exploration, such as SpaceX's missions to Mars?\nassistant\n1. NASA's Artemis program: This program aims to",
+          "fired_token": " missions",
+          "pre_context": " are some of the most exciting projects currently underway in the field of space exploration, such as SpaceX's",
+          "post_context": " to Mars?\nassistant\n1. NASA's Artemis program: This program aims to",
+          "example_idx": 325,
+          "position_idx": 264
+        },
+        {
+          "activation": 2.4687929153442383,
+          "text": " detail necessary steps needed to reach the conclusion.\n\nuser\nCreate a playlist for a one-hour guided meditation class that includes instrumental music, nature sounds, and soothing melodies with minimal lyrics to promote relaxation and inner",
+          "fired_token": " meditation",
+          "pre_context": " detail necessary steps needed to reach the conclusion.\n\nuser\nCreate a playlist for a one-hour guided",
+          "post_context": " class that includes instrumental music, nature sounds, and soothing melodies with minimal lyrics to promote relaxation and inner",
+          "example_idx": 34,
+          "position_idx": 251
+        },
+        {
+          "activation": 2.465999126434326,
+          "text": " reach the conclusion.\n\nuser\nCan you provide examples of gratitude prompts that might be useful for daily journaling?\nassistant\nSure, here are a few gratitude prompts for daily journaling:\n\n",
+          "fired_token": " journal",
+          "pre_context": " reach the conclusion.\n\nuser\nCan you provide examples of gratitude prompts that might be useful for daily",
+          "post_context": "ing?\nassistant\nSure, here are a few gratitude prompts for daily journaling:\n\n",
+          "example_idx": 77,
+          "position_idx": 256
+        },
+        {
+          "activation": 2.4368743896484375,
+          "text": " and detail necessary steps needed to reach the conclusion.\n\nuser\nWrite an analytical essay on metaphorical language in nature-themed writing.\nassistant\nNature-themed writing often employs metaphorical language to describe",
+          "fired_token": " language",
+          "pre_context": " and detail necessary steps needed to reach the conclusion.\n\nuser\nWrite an analytical essay on metaphorical",
+          "post_context": " in nature-themed writing.\nassistant\nNature-themed writing often employs metaphorical language to describe",
+          "example_idx": 169,
+          "position_idx": 250
+        },
+        {
+          "activation": 2.429720401763916,
+          "text": "\nWrite a fictional short story with a minimum of 1000 words about a protagonist who has the ability to travel through time and is given the task of preventing a catastrophic event from occurring. The story should",
+          "fired_token": " ability",
+          "pre_context": "\nWrite a fictional short story with a minimum of 1000 words about a protagonist who has the",
+          "post_context": " to travel through time and is given the task of preventing a catastrophic event from occurring. The story should",
+          "example_idx": 382,
+          "position_idx": 262
+        },
+        {
+          "activation": 2.426511287689209,
+          "text": " to reach the conclusion.\n\nuser\nWrite a fantasy story about a young hero, who possesses magical abilities, setting out on an epic journey full of perilous challenges and unexpected encounters, to defeat a powerful",
+          "fired_token": " abilities",
+          "pre_context": " to reach the conclusion.\n\nuser\nWrite a fantasy story about a young hero, who possesses magical",
+          "post_context": ", setting out on an epic journey full of perilous challenges and unexpected encounters, to defeat a powerful",
+          "example_idx": 225,
+          "position_idx": 255
+        },
+        {
+          "activation": 2.4168872833251953,
+          "text": " when surrounded by the serene beauty of nature, void of any technological interruptions or modern disturbances. Include sensory details such as sights, smells, sounds, and textures to fully capture the experience.\nassistant",
+          "fired_token": " details",
+          "pre_context": " when surrounded by the serene beauty of nature, void of any technological interruptions or modern disturbances. Include sensory",
+          "post_context": " such as sights, smells, sounds, and textures to fully capture the experience.\nassistant",
+          "example_idx": 366,
+          "position_idx": 273
+        },
+        {
+          "activation": 2.4138243198394775,
+          "text": " needed to reach the conclusion.\n\nuser\nWrite a fantasy story about a young hero, who possesses magical abilities, setting out on an epic journey full of perilous challenges and unexpected encounters, to defeat a",
+          "fired_token": " magical",
+          "pre_context": " needed to reach the conclusion.\n\nuser\nWrite a fantasy story about a young hero, who possesses",
+          "post_context": " abilities, setting out on an epic journey full of perilous challenges and unexpected encounters, to defeat a",
+          "example_idx": 225,
+          "position_idx": 254
+        },
+        {
+          "activation": 2.4111948013305664,
+          "text": " steps needed to reach the conclusion.\n\nuser\nWrite a news article covering the latest advancements in space exploration. Your article should include recent discoveries, technological developments, and scientific breakthroughs. Use a formal and",
+          "fired_token": " exploration",
+          "pre_context": " steps needed to reach the conclusion.\n\nuser\nWrite a news article covering the latest advancements in space",
+          "post_context": ". Your article should include recent discoveries, technological developments, and scientific breakthroughs. Use a formal and",
+          "example_idx": 87,
+          "position_idx": 253
+        },
+        {
+          "activation": 2.4052953720092773,
+          "text": " to reach the conclusion.\n\nuser\nWrite a biography on a contemporary artist who uses technology in their work.\nassistant\nTrevor Paglen is a contemporary artist who has gained international recognition",
+          "fired_token": " work",
+          "pre_context": " to reach the conclusion.\n\nuser\nWrite a biography on a contemporary artist who uses technology in their",
+          "post_context": ".\nassistant\nTrevor Paglen is a contemporary artist who has gained international recognition",
+          "example_idx": 299,
+          "position_idx": 255
+        },
+        {
+          "activation": 2.4043807983398438,
+          "text": "\nThe schema should be designed to efficiently and accurately store and retrieve music data. Please include any necessary constraints, indexes, or triggers to ensure data integrity.\nassistant\nHere is a sample schema",
+          "fired_token": " constraints",
+          "pre_context": "\nThe schema should be designed to efficiently and accurately store and retrieve music data. Please include any necessary",
+          "post_context": ", indexes, or triggers to ensure data integrity.\nassistant\nHere is a sample schema",
+          "example_idx": 224,
+          "position_idx": 262
+        },
+        {
+          "activation": 2.400635004043579,
+          "text": " and differences between Eastern and Western medicine practices. Include an examination of the philosophical and cultural underpinnings, diagnostic techniques, treatments, theoretical frameworks, and scientific validity of both approaches. Additionally, discuss the",
+          "fired_token": "ings",
+          "pre_context": " and differences between Eastern and Western medicine practices. Include an examination of the philosophical and cultural underpinn",
+          "post_context": ", diagnostic techniques, treatments, theoretical frameworks, and scientific validity of both approaches. Additionally, discuss the",
+          "example_idx": 250,
+          "position_idx": 271
+        }
+      ]
+    },
+    {
+      "feature_id": 10960,
+      "description": "code/refusal/safety/math | provide, potential, assistant",
+      "keywords": [
+        "provide",
+        "potential",
+        "assistant"
+      ],
+      "tags": [
+        "code",
+        "refusal/safety",
+        "math"
+      ],
+      "mean_act": 0.37616056203842163,
+      "max_act": 2.736969470977783,
+      "density": 0.470234375,
+      "avg_fired_token_len": 2.5,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.736969470977783,
+          "text": " past trends, predicting future outcomes, optimizing operations, minimizing risks, enhancing customer experience, and improving profitability. Provide real-life examples to support your arguments and mention the challenges associated with implementing a data-driven approach in",
+          "fired_token": ".",
+          "pre_context": " past trends, predicting future outcomes, optimizing operations, minimizing risks, enhancing customer experience, and improving profitability",
+          "post_context": " Provide real-life examples to support your arguments and mention the challenges associated with implementing a data-driven approach in",
+          "example_idx": 203,
+          "position_idx": 303
+        },
+        {
+          "activation": 2.675172805786133,
+          "text": " universities, industry guilds or associations, and other relevant groups to help spread the word.\n\n6. Utilize targeted advertising tactics such as paid search, display ads, and video ads to reach potential attendees.",
+          "fired_token": " Util",
+          "pre_context": " universities, industry guilds or associations, and other relevant groups to help spread the word.\n\n6.",
+          "post_context": "ize targeted advertising tactics such as paid search, display ads, and video ads to reach potential attendees.",
+          "example_idx": 140,
+          "position_idx": 459
+        },
+        {
+          "activation": 2.554880142211914,
+          "text": " to collaborate on initiatives that address plastic pollution and work towards a common goal of reducing plastic waste in oceans.\nuser\nI heard that plastic straws and utensils are major contributors to ocean pollution",
+          "fired_token": ".",
+          "pre_context": " to collaborate on initiatives that address plastic pollution and work towards a common goal of reducing plastic waste in oceans",
+          "post_context": "\nuser\nI heard that plastic straws and utensils are major contributors to ocean pollution",
+          "example_idx": 293,
+          "position_idx": 474
+        },
+        {
+          "activation": 2.5299532413482666,
+          "text": " potential economic, social, and environmental impacts of adopting energy storage systems for meeting energy demands in developing nations.\nassistant\nEnergy storage technologies have emerged as an essential component of the transition towards a low",
+          "fired_token": ".",
+          "pre_context": " potential economic, social, and environmental impacts of adopting energy storage systems for meeting energy demands in developing nations",
+          "post_context": "\nassistant\nEnergy storage technologies have emerged as an essential component of the transition towards a low",
+          "example_idx": 162,
+          "position_idx": 310
+        },
+        {
+          "activation": 2.527574300765991,
+          "text": " selection of design elements, color schemes, and typography to optimize the overall visual appeal of the marketing material.\nassistant\n1. Define the target audience: The first step towards creating marketing graphics is",
+          "fired_token": ".",
+          "pre_context": " selection of design elements, color schemes, and typography to optimize the overall visual appeal of the marketing material",
+          "post_context": "\nassistant\n1. Define the target audience: The first step towards creating marketing graphics is",
+          "example_idx": 83,
+          "position_idx": 293
+        },
+        {
+          "activation": 2.5161867141723633,
+          "text": ". They often have strong community bonds and rely on each other for support during the harsh winter months.\nuser\nThat's really interesting! Do you know of any",
+          "fired_token": "<|im_end|>",
+          "pre_context": ". They often have strong community bonds and rely on each other for support during the harsh winter months.",
+          "post_context": "\nuser\nThat's really interesting! Do you know of any",
+          "example_idx": 48,
+          "position_idx": 497
+        },
+        {
+          "activation": 2.5039615631103516,
+          "text": " integrating a feature that provides users with recommendations based on their language proficiency and interests to enhance the learning experience.\nassistant\nI am unable to write actual coded design. However, I can provide you",
+          "fired_token": ".",
+          "pre_context": " integrating a feature that provides users with recommendations based on their language proficiency and interests to enhance the learning experience",
+          "post_context": "\nassistant\nI am unable to write actual coded design. However, I can provide you",
+          "example_idx": 168,
+          "position_idx": 355
+        },
+        {
+          "activation": 2.501894235610962,
+          "text": " of friendship, focusing on how it helps individuals cope with stress and adversity, promotes personal growth and happiness, and why it's crucial for building a strong support network. Additionally, address any counterarguments, provide",
+          "fired_token": ",",
+          "pre_context": " of friendship, focusing on how it helps individuals cope with stress and adversity, promotes personal growth and happiness",
+          "post_context": " and why it's crucial for building a strong support network. Additionally, address any counterarguments, provide",
+          "example_idx": 257,
+          "position_idx": 270
+        },
+        {
+          "activation": 2.4987893104553223,
+          "text": " and intonation. There are many resources available online or in instructional books that can help guide your practice.\n\n6. Experiment with different articulations and dynamics to add variation and expression to your playing. Try playing",
+          "fired_token": ".\n\n",
+          "pre_context": " and intonation. There are many resources available online or in instructional books that can help guide your practice",
+          "post_context": "6. Experiment with different articulations and dynamics to add variation and expression to your playing. Try playing",
+          "example_idx": 57,
+          "position_idx": 470
+        },
+        {
+          "activation": 2.470658779144287,
+          "text": " leadership in fostering a collaborative work culture and discuss how individual skills and personalities can affect team dynamics and performance. Additionally, examine the potential drawbacks of excessive reliance on teamwork and offer suggestions on how to maintain a balance",
+          "fired_token": ".",
+          "pre_context": " leadership in fostering a collaborative work culture and discuss how individual skills and personalities can affect team dynamics and performance",
+          "post_context": " Additionally, examine the potential drawbacks of excessive reliance on teamwork and offer suggestions on how to maintain a balance",
+          "example_idx": 328,
+          "position_idx": 302
+        },
+        {
+          "activation": 2.4642441272735596,
+          "text": " environments and propose strategies to overcome these challenges. Explore the role of leadership in fostering a collaborative work culture and discuss how individual skills and personalities can affect team dynamics and performance. Additionally, examine the potential drawbacks of",
+          "fired_token": " and",
+          "pre_context": " environments and propose strategies to overcome these challenges. Explore the role of leadership in fostering a collaborative work culture",
+          "post_context": " discuss how individual skills and personalities can affect team dynamics and performance. Additionally, examine the potential drawbacks of",
+          "example_idx": 328,
+          "position_idx": 289
+        },
+        {
+          "activation": 2.46285343170166,
+          "text": " chatbot should be able to answer common questions related to cooking and provide personalized recommendations based on user preferences. The app should be optimized for performance and have robust error handling capabilities.\nassistant\nI",
+          "fired_token": ".",
+          "pre_context": " chatbot should be able to answer common questions related to cooking and provide personalized recommendations based on user preferences",
+          "post_context": " The app should be optimized for performance and have robust error handling capabilities.\nassistant\nI",
+          "example_idx": 388,
+          "position_idx": 311
+        }
+      ]
+    },
+    {
+      "feature_id": 14299,
+      "description": "code/math | meditation, involves, including",
+      "keywords": [
+        "meditation",
+        "involves",
+        "including"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.25873997807502747,
+      "max_act": 2.650515079498291,
+      "density": 0.3694677734375,
+      "avg_fired_token_len": 6.75,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.650515079498291,
+          "text": " learning methods are often limited by the static, two-dimensional mediums used to convey information. Conversely, VR technology can create immersive experiences that can help students stay engaged and learn more effectively. A recent study by M",
+          "fired_token": " technology",
+          "pre_context": " learning methods are often limited by the static, two-dimensional mediums used to convey information. Conversely, VR",
+          "post_context": " can create immersive experiences that can help students stay engaged and learn more effectively. A recent study by M",
+          "example_idx": 181,
+          "position_idx": 469
+        },
+        {
+          "activation": 2.644657850265503,
+          "text": " including:\n\n1. Surrealist techniques: Surrealism introduced new techniques to the art world, such as automatic drawing, collage, and photomontage. These techniques are still used by artists today,",
+          "fired_token": " as",
+          "pre_context": " including:\n\n1. Surrealist techniques: Surrealism introduced new techniques to the art world, such",
+          "post_context": " automatic drawing, collage, and photomontage. These techniques are still used by artists today,",
+          "example_idx": 386,
+          "position_idx": 330
+        },
+        {
+          "activation": 2.5047607421875,
+          "text": " of the geological features on Mercury. It provided the first detailed maps of the planet's surface features, including its craters, cliffs, and volcanic plains, and revealed evidence of ancient tectonic activity on",
+          "fired_token": " including",
+          "pre_context": " of the geological features on Mercury. It provided the first detailed maps of the planet's surface features,",
+          "post_context": " its craters, cliffs, and volcanic plains, and revealed evidence of ancient tectonic activity on",
+          "example_idx": 375,
+          "position_idx": 305
+        },
+        {
+          "activation": 2.5012667179107666,
+          "text": "\nassistant\nOne of the best types of meditation for reducing stress is mindfulness meditation. This practice involves directing your attention to the present moment and observing your thoughts and emotions without judgment. It helps to",
+          "fired_token": " practice",
+          "pre_context": "\nassistant\nOne of the best types of meditation for reducing stress is mindfulness meditation. This",
+          "post_context": " involves directing your attention to the present moment and observing your thoughts and emotions without judgment. It helps to",
+          "example_idx": 321,
+          "position_idx": 274
+        },
+        {
+          "activation": 2.487046718597412,
+          "text": "\nassistant\nOne of the best types of meditation for reducing stress is mindfulness meditation. This practice involves directing your attention to the present moment and observing your thoughts and emotions without judgment. It helps to reduce",
+          "fired_token": " involves",
+          "pre_context": "\nassistant\nOne of the best types of meditation for reducing stress is mindfulness meditation. This practice",
+          "post_context": " directing your attention to the present moment and observing your thoughts and emotions without judgment. It helps to reduce",
+          "example_idx": 321,
+          "position_idx": 275
+        },
+        {
+          "activation": 2.4319324493408203,
+          "text": " the irrigation system used in the UAE. They use a traditional irrigation technique called \"Falaj,\" which involves water being taken from the high mountains, then",
+          "fired_token": " involves",
+          "pre_context": " the irrigation system used in the UAE. They use a traditional irrigation technique called \"Falaj,\" which",
+          "post_context": " water being taken from the high mountains, then",
+          "example_idx": 247,
+          "position_idx": 502
+        },
+        {
+          "activation": 2.4001624584198,
+          "text": " Inca Empire in Peru are an excellent example of traditional water management. The Incas created a system of canals and aqueducts to transport water from springs to fields in different terrains, including flat",
+          "fired_token": " of",
+          "pre_context": " Inca Empire in Peru are an excellent example of traditional water management. The Incas created a system",
+          "post_context": " canals and aqueducts to transport water from springs to fields in different terrains, including flat",
+          "example_idx": 247,
+          "position_idx": 424
+        },
+        {
+          "activation": 2.39566969871521,
+          "text": ", to help you make an informed decision.\n\n1. Charcoal grills\nCharcoal grills are the most traditional and popular type of camping grill. The grill uses charcoal as fuel and requires lighter fluid",
+          "fired_token": " are",
+          "pre_context": ", to help you make an informed decision.\n\n1. Charcoal grills\nCharcoal grills",
+          "post_context": " the most traditional and popular type of camping grill. The grill uses charcoal as fuel and requires lighter fluid",
+          "example_idx": 204,
+          "position_idx": 387
+        },
+        {
+          "activation": 2.3790738582611084,
+          "text": " the market. Let's explore the variations between them.\n\nStyles:\nThe most common styles of workout leggings are capri, ankle-length, and full-length. Capri leggings are shorter than ankle-length leggings,",
+          "fired_token": " are",
+          "pre_context": " the market. Let's explore the variations between them.\n\nStyles:\nThe most common styles of workout leggings",
+          "post_context": " capri, ankle-length, and full-length. Capri leggings are shorter than ankle-length leggings,",
+          "example_idx": 194,
+          "position_idx": 352
+        },
+        {
+          "activation": 2.359837770462036,
+          "text": " new technologies that enable faster, more efficient, and precise printing. One of the most promising new technologies is known as Continuous Liquid Interface Production (CLIP). Using CLIP, it is possible to create objects",
+          "fired_token": " is",
+          "pre_context": " new technologies that enable faster, more efficient, and precise printing. One of the most promising new technologies",
+          "post_context": " known as Continuous Liquid Interface Production (CLIP). Using CLIP, it is possible to create objects",
+          "example_idx": 356,
+          "position_idx": 378
+        },
+        {
+          "activation": 2.343139171600342,
+          "text": " one:\n\nBenefits of Yoga:\n\n1. Increased Flexibility: Yoga postures can help increase flexibility and promote joint mobility, which can reduce the risk of injury.\n\n2. Improved Strength: Yoga can help improve",
+          "fired_token": " promote",
+          "pre_context": " one:\n\nBenefits of Yoga:\n\n1. Increased Flexibility: Yoga postures can help increase flexibility and",
+          "post_context": " joint mobility, which can reduce the risk of injury.\n\n2. Improved Strength: Yoga can help improve",
+          "example_idx": 302,
+          "position_idx": 331
+        },
+        {
+          "activation": 2.3209240436553955,
+          "text": ", improve emotional regulation, and increase relaxation. Other types of meditation that may be effective for reducing stress include guided meditation, loving-kindness meditation, and progressive muscle relaxation. Ultimately, the best type of meditation",
+          "fired_token": " include",
+          "pre_context": ", improve emotional regulation, and increase relaxation. Other types of meditation that may be effective for reducing stress",
+          "post_context": " guided meditation, loving-kindness meditation, and progressive muscle relaxation. Ultimately, the best type of meditation",
+          "example_idx": 321,
+          "position_idx": 317
+        }
+      ]
+    }
+  ]
+}

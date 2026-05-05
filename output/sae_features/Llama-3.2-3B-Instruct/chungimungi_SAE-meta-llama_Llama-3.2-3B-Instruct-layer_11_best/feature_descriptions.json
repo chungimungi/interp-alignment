@@ -1,0 +1,682 @@
+{
+  "sae_repo": "chungimungi/SAE-meta-llama_Llama-3.2-3B-Instruct-layer_11_best",
+  "base_model": "meta-llama/Llama-3.2-3B-Instruct",
+  "layer": 11,
+  "selection": "mean",
+  "min_density": 0.0001,
+  "stopwords_lang": "english",
+  "num_prompts": 400,
+  "context_size": 512,
+  "total_tokens": 202771,
+  "interpretation_methodology": {
+    "why_this_analysis": [
+      "Record which latent directions get large activations under the chosen corpus and chat template.",
+      "Separate dead or ultra-rare features from dense ones using per-feature statistics.",
+      "Provide concrete token contexts for follow-up causal work (ablation, patching, steering), not as final semantics."
+    ],
+    "known_limitations": [
+      "SAEs optimize reconstruction under sparsity, not axis-aligned semantics; strong features often track templates, delimiters, and high-frequency n-grams.",
+      "Magnitude on frequent structural tokens can overshadow rarer semantic concepts in top-k mining.",
+      "Human-readable labels are post-hoc summaries of co-activation with text; they do not prove a feature causally implements a behavior."
+    ],
+    "keyword_summaries": "Content words are ranked after NLTK stopword removal; tags are simple surface heuristics. Use likely_surface_structure to flag obvious formatting-like patterns.",
+    "stopwords_source": "nltk.corpus.stopwords",
+    "stopwords_lang": "english"
+  },
+  "features": [
+    {
+      "feature_id": 15132,
+      "description": "code/refusal/safety/politeness/math | ingredients, user, make",
+      "keywords": [
+        "ingredients",
+        "user",
+        "make"
+      ],
+      "tags": [
+        "code",
+        "refusal/safety",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 0.9302265644073486,
+      "max_act": 3.867863655090332,
+      "density": 0.8450567388827791,
+      "avg_fired_token_len": 4.333333333333333,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 3.867863655090332,
+          "text": " narrative story of at least 500 words about a person who discovers they have the power of super strength. Make sure to include their initial reactions to the discovery, how they experiment with their abilities, any challenges",
+          "fired_token": ".",
+          "pre_context": " narrative story of at least 500 words about a person who discovers they have the power of super strength",
+          "post_context": " Make sure to include their initial reactions to the discovery, how they experiment with their abilities, any challenges",
+          "example_idx": 86,
+          "position_idx": 55
+        },
+        {
+          "activation": 3.8205888271331787,
+          "text": " story in third-person narrative about a middle-aged man named Tom who discovers he has the power to fly. Describe Tom's emotions, thoughts, and behaviors as he grapples with this newfound ability and the",
+          "fired_token": ".",
+          "pre_context": " story in third-person narrative about a middle-aged man named Tom who discovers he has the power to fly",
+          "post_context": " Describe Tom's emotions, thoughts, and behaviors as he grapples with this newfound ability and the",
+          "example_idx": 167,
+          "position_idx": 60
+        },
+        {
+          "activation": 3.7778568267822266,
+          "text": "Please provide a step-by-step guide on how to make a traditional beef stroganoff, including ingredients, cooking methods, and serving suggestions.assistant\n\nIngredients:\n- 1 lb top",
+          "fired_token": " ingredients",
+          "pre_context": "Please provide a step-by-step guide on how to make a traditional beef stroganoff, including",
+          "post_context": ", cooking methods, and serving suggestions.assistant\n\nIngredients:\n- 1 lb top",
+          "example_idx": 164,
+          "position_idx": 51
+        },
+        {
+          "activation": 3.7428159713745117,
+          "text": "\n\nProvide step-by-step instructions for making a fluffy and light angel food cake, including the necessary ingredients and equipment needed. Offer tips and tricks for creating a perfectly baked cake, such as avoiding overmix",
+          "fired_token": " ingredients",
+          "pre_context": "\n\nProvide step-by-step instructions for making a fluffy and light angel food cake, including the necessary",
+          "post_context": " and equipment needed. Offer tips and tricks for creating a perfectly baked cake, such as avoiding overmix",
+          "example_idx": 188,
+          "position_idx": 49
+        },
+        {
+          "activation": 3.7158203125,
+          "text": "\nToday Date: 05 May 2026\n\nuser\n\nHow is writing a memoir different from writing an autobiography book, and what are some of the elements commonly included in a memoir?:",
+          "fired_token": " memoir",
+          "pre_context": "\nToday Date: 05 May 2026\n\nuser\n\nHow is writing a",
+          "post_context": " different from writing an autobiography book, and what are some of the elements commonly included in a memoir?:",
+          "example_idx": 298,
+          "position_idx": 35
+        },
+        {
+          "activation": 3.714146852493286,
+          "text": "6\n\nuser\n\nCould you suggest some tips and tricks for baking a perfect chocolate cake?assistant\n\nYes, here are some tips and tricks for baking a perfect chocolate cake:\n\n",
+          "fired_token": "?",
+          "pre_context": "6\n\nuser\n\nCould you suggest some tips and tricks for baking a perfect chocolate cake",
+          "post_context": "assistant\n\nYes, here are some tips and tricks for baking a perfect chocolate cake:\n\n",
+          "example_idx": 45,
+          "position_idx": 44
+        },
+        {
+          "activation": 3.7040908336639404,
+          "text": "user\n\nWrite a step-by-step recipe on how to make a vegan black bean soup, including all necessary ingredients and cooking instructions. Please also include any variations or substitutions for dietary restrictions.",
+          "fired_token": ",",
+          "pre_context": "user\n\nWrite a step-by-step recipe on how to make a vegan black bean soup",
+          "post_context": " including all necessary ingredients and cooking instructions. Please also include any variations or substitutions for dietary restrictions.",
+          "example_idx": 149,
+          "position_idx": 46
+        },
+        {
+          "activation": 3.682950496673584,
+          "text": " your bike secure, especially with high rates of theft in the UK? Can you recommend any insurance providers?\nGenerate according to: Greener, leaner and once you make the initial investment it could save you",
+          "fired_token": "?\n",
+          "pre_context": " your bike secure, especially with high rates of theft in the UK? Can you recommend any insurance providers",
+          "post_context": "Generate according to: Greener, leaner and once you make the initial investment it could save you",
+          "example_idx": 111,
+          "position_idx": 56
+        },
+        {
+          "activation": 3.6718909740448,
+          "text": "05 May 2026\n\nuser\n\nDesign a series of posters to promote bicycle commuting.assistant\n\nI do not have the ability to create visual posters, but I can provide",
+          "fired_token": ".",
+          "pre_context": "05 May 2026\n\nuser\n\nDesign a series of posters to promote bicycle commuting",
+          "post_context": "assistant\n\nI do not have the ability to create visual posters, but I can provide",
+          "example_idx": 29,
+          "position_idx": 40
+        },
+        {
+          "activation": 3.6459693908691406,
+          "text": " 500-word opinion piece using persuasive language and evidence to argue the negative effects of consumerism on the environment. Your piece should include specific examples of environmental harm caused by consumer behavior and propose solutions to combat this",
+          "fired_token": " environment",
+          "pre_context": " 500-word opinion piece using persuasive language and evidence to argue the negative effects of consumerism on the",
+          "post_context": ". Your piece should include specific examples of environmental harm caused by consumer behavior and propose solutions to combat this",
+          "example_idx": 345,
+          "position_idx": 53
+        },
+        {
+          "activation": 3.6391847133636475,
+          "text": " Date: 05 May 2026\n\nuser\n\nWrite instructions for playing the flute.assistant\n\n1. Start by assembling your flute. Make sure all of the parts are",
+          "fired_token": ".",
+          "pre_context": " Date: 05 May 2026\n\nuser\n\nWrite instructions for playing the flute",
+          "post_context": "assistant\n\n1. Start by assembling your flute. Make sure all of the parts are",
+          "example_idx": 57,
+          "position_idx": 37
+        },
+        {
+          "activation": 3.6227827072143555,
+          "text": "2026\n\nuser\n\nCreate a YouTube tutorial on how to bake a gluten-free cake.assistant\n\nI am unable to create a youtube tutorial as it requires visual aids as well",
+          "fired_token": ".",
+          "pre_context": "2026\n\nuser\n\nCreate a YouTube tutorial on how to bake a gluten-free cake",
+          "post_context": "assistant\n\nI am unable to create a youtube tutorial as it requires visual aids as well",
+          "example_idx": 22,
+          "position_idx": 43
+        }
+      ]
+    },
+    {
+      "feature_id": 9347,
+      "description": "code/politeness/math | tips, assistant, sure",
+      "keywords": [
+        "tips",
+        "assistant",
+        "sure"
+      ],
+      "tags": [
+        "code",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 0.6946649551391602,
+      "max_act": 4.845999717712402,
+      "density": 0.6932894743331147,
+      "avg_fired_token_len": 5.5,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 4.845999717712402,
+          "text": " of emotional and mental well-being. Be sure to include real-life examples, scientific research, and practical tips for readers to implement. Use a formal tone and credible sources to support your claims.assistant",
+          "fired_token": " tips",
+          "pre_context": " of emotional and mental well-being. Be sure to include real-life examples, scientific research, and practical",
+          "post_context": " for readers to implement. Use a formal tone and credible sources to support your claims.assistant",
+          "example_idx": 263,
+          "position_idx": 76
+        },
+        {
+          "activation": 4.700407028198242,
+          "text": ", choosing toppings, and baking the pizza. Use a conversational and user-friendly tone and provide helpful tips and tricks for achieving the perfect homemade pizza. Additionally, include variations for different dietary restrictions and preferences,",
+          "fired_token": " tips",
+          "pre_context": ", choosing toppings, and baking the pizza. Use a conversational and user-friendly tone and provide helpful",
+          "post_context": " and tricks for achieving the perfect homemade pizza. Additionally, include variations for different dietary restrictions and preferences,",
+          "example_idx": 54,
+          "position_idx": 71
+        },
+        {
+          "activation": 4.680481910705566,
+          "text": ", flour, oats, sugar, and butter. Include measurements and cooking times, as well as any tips for achieving the perfect crumbly topping and juicy filling. Bonus points for including variations with different berry",
+          "fired_token": " tips",
+          "pre_context": ", flour, oats, sugar, and butter. Include measurements and cooking times, as well as any",
+          "post_context": " for achieving the perfect crumbly topping and juicy filling. Bonus points for including variations with different berry",
+          "example_idx": 31,
+          "position_idx": 70
+        },
+        {
+          "activation": 4.656497955322266,
+          "text": "\n\nIt sounds like managing a project with a limited budget can be challenging. Do you have any tips for project managers to make the most out of a tight budget?assistant\n\nYes,",
+          "fired_token": " tips",
+          "pre_context": "\n\nIt sounds like managing a project with a limited budget can be challenging. Do you have any",
+          "post_context": " for project managers to make the most out of a tight budget?assistant\n\nYes,",
+          "example_idx": 35,
+          "position_idx": 325
+        },
+        {
+          "activation": 4.640660762786865,
+          "text": " the importance of incorporating lifelong learning into your career growth strategy, highlighting the benefits of continuous learning, showcasing tips and resources for learning, and providing examples of successful professionals who have achieved career advancement through ongoing education.",
+          "fired_token": " tips",
+          "pre_context": " the importance of incorporating lifelong learning into your career growth strategy, highlighting the benefits of continuous learning, showcasing",
+          "post_context": " and resources for learning, and providing examples of successful professionals who have achieved career advancement through ongoing education.",
+          "example_idx": 327,
+          "position_idx": 57
+        },
+        {
+          "activation": 4.573890209197998,
+          "text": "-step instructions for making the dough, shaping the rolls, and baking them. Additionally, please provide any tips or variations for flavoring the rolls.assistant\n\nI am happy to provide a recipe",
+          "fired_token": " tips",
+          "pre_context": "-step instructions for making the dough, shaping the rolls, and baking them. Additionally, please provide any",
+          "post_context": " or variations for flavoring the rolls.assistant\n\nI am happy to provide a recipe",
+          "example_idx": 187,
+          "position_idx": 75
+        },
+        {
+          "activation": 4.5328145027160645,
+          "text": " good, but I want to make sure I don't mess it up. Can you give me some tips on how to cook scallops perfectly? Maybe some more specifics on the cooking time and temperature?",
+          "fired_token": " tips",
+          "pre_context": " good, but I want to make sure I don't mess it up. Can you give me some",
+          "post_context": " on how to cook scallops perfectly? Maybe some more specifics on the cooking time and temperature?",
+          "example_idx": 334,
+          "position_idx": 419
+        },
+        {
+          "activation": 4.531923294067383,
+          "text": " on how to create my own visual poem?assistant\n\nOf course! Here are some tips for creating your own visual poem:\n\n1. Choose your text: Start by choosing a piece of writing",
+          "fired_token": " tips",
+          "pre_context": " on how to create my own visual poem?assistant\n\nOf course! Here are some",
+          "post_context": " for creating your own visual poem:\n\n1. Choose your text: Start by choosing a piece of writing",
+          "example_idx": 32,
+          "position_idx": 432
+        },
+        {
+          "activation": 4.529293060302734,
+          "text": " to support your argument. Analyze the possible challenges of implementing effective teamwork in different work environments and propose strategies to overcome these challenges. Explore the role of leadership in fostering a collaborative work culture and discuss how individual",
+          "fired_token": " strategies",
+          "pre_context": " to support your argument. Analyze the possible challenges of implementing effective teamwork in different work environments and propose",
+          "post_context": " to overcome these challenges. Explore the role of leadership in fostering a collaborative work culture and discuss how individual",
+          "example_idx": 328,
+          "position_idx": 60
+        },
+        {
+          "activation": 4.492759704589844,
+          "text": " know how to get it out there? Well, in this article I am going to give you some tips and advice on how to get noticed on Social Media! First let’s talk about social media platforms that",
+          "fired_token": " tips",
+          "pre_context": " know how to get it out there? Well, in this article I am going to give you some",
+          "post_context": " and advice on how to get noticed on Social Media! First let’s talk about social media platforms that",
+          "example_idx": 296,
+          "position_idx": 80
+        },
+        {
+          "activation": 4.475422382354736,
+          "text": " it with your favorite frosting or fresh berries.user\n\nCan you provide me with some tips to make sure my gluten-free cake turns out perfect?assistant\n\nSure, here are",
+          "fired_token": " tips",
+          "pre_context": " it with your favorite frosting or fresh berries.user\n\nCan you provide me with some",
+          "post_context": " to make sure my gluten-free cake turns out perfect?assistant\n\nSure, here are",
+          "example_idx": 22,
+          "position_idx": 372
+        },
+        {
+          "activation": 4.471395015716553,
+          "text": " instructions for making a fluffy and light angel food cake, including the necessary ingredients and equipment needed. Offer tips and tricks for creating a perfectly baked cake, such as avoiding overmixing the batter and ensuring that",
+          "fired_token": " tips",
+          "pre_context": " instructions for making a fluffy and light angel food cake, including the necessary ingredients and equipment needed. Offer",
+          "post_context": " and tricks for creating a perfectly baked cake, such as avoiding overmixing the batter and ensuring that",
+          "example_idx": 188,
+          "position_idx": 55
+        }
+      ]
+    },
+    {
+      "feature_id": 6696,
+      "description": "code/math | message, place, urban",
+      "keywords": [
+        "message",
+        "place",
+        "urban"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.6094383001327515,
+      "max_act": 2.4671990871429443,
+      "density": 0.7933925462714096,
+      "avg_fired_token_len": 4.916666666666667,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.4671990871429443,
+          "text": " common due to climate change.\n\n3) Heatwaves are becoming more intense and frequent, particularly in urban areas where the urban heat island effect can worsen their impact. In Europe, a 2019 heat",
+          "fired_token": " areas",
+          "pre_context": " common due to climate change.\n\n3) Heatwaves are becoming more intense and frequent, particularly in urban",
+          "post_context": " where the urban heat island effect can worsen their impact. In Europe, a 2019 heat",
+          "example_idx": 75,
+          "position_idx": 281
+        },
+        {
+          "activation": 2.3618838787078857,
+          "text": " identify and it hid in the river bank.\nInevitably on a seven mile walk a comfort break was required but squatting amongst brambles is not the way. No names but the shrieks could",
+          "fired_token": " was",
+          "pre_context": " identify and it hid in the river bank.\nInevitably on a seven mile walk a comfort break",
+          "post_context": " required but squatting amongst brambles is not the way. No names but the shrieks could",
+          "example_idx": 284,
+          "position_idx": 226
+        },
+        {
+          "activation": 2.296923875808716,
+          "text": " on the central message. Allow sufficient white space to avoid clutter.\n\n7. Place design elements strategically: Place design elements strategically to draw attention to the central message. Use visual hierarchy to prioritize the most critical message",
+          "fired_token": " Place",
+          "pre_context": " on the central message. Allow sufficient white space to avoid clutter.\n\n7. Place design elements strategically:",
+          "post_context": " design elements strategically to draw attention to the central message. Use visual hierarchy to prioritize the most critical message",
+          "example_idx": 83,
+          "position_idx": 375
+        },
+        {
+          "activation": 2.295520782470703,
+          "text": "6. Create a layout: A clear layout can help draw attention to the message you want to convey. Consider using a grid system to help you organize design elements and keep the focus on the central message.",
+          "fired_token": ".",
+          "pre_context": "6. Create a layout: A clear layout can help draw attention to the message you want to convey",
+          "post_context": " Consider using a grid system to help you organize design elements and keep the focus on the central message.",
+          "example_idx": 83,
+          "position_idx": 339
+        },
+        {
+          "activation": 2.26688814163208,
+          "text": ". Allow sufficient white space to avoid clutter.\n\n7. Place design elements strategically: Place design elements strategically to draw attention to the central message. Use visual hierarchy to prioritize the most critical message or image on your",
+          "fired_token": " to",
+          "pre_context": ". Allow sufficient white space to avoid clutter.\n\n7. Place design elements strategically: Place design elements strategically",
+          "post_context": " draw attention to the central message. Use visual hierarchy to prioritize the most critical message or image on your",
+          "example_idx": 83,
+          "position_idx": 379
+        },
+        {
+          "activation": 2.2645022869110107,
+          "text": " to find your customer through various channels online. Because of this, companies can interact with their target audience much more frequently and efficiently. Instead of the days of old when you might buy ad space in the newspaper",
+          "fired_token": " much",
+          "pre_context": " to find your customer through various channels online. Because of this, companies can interact with their target audience",
+          "post_context": " more frequently and efficiently. Instead of the days of old when you might buy ad space in the newspaper",
+          "example_idx": 222,
+          "position_idx": 122
+        },
+        {
+          "activation": 2.264451026916504,
+          "text": " of content they are producing and how their followers engage with their content.\nListen to Your Customers: The point of social media is to be social. Praises of quality customer service are always great to have,",
+          "fired_token": " point",
+          "pre_context": " of content they are producing and how their followers engage with their content.\nListen to Your Customers: The",
+          "post_context": " of social media is to be social. Praises of quality customer service are always great to have,",
+          "example_idx": 254,
+          "position_idx": 292
+        },
+        {
+          "activation": 2.262726306915283,
+          "text": " Levi could teach at Meridian High School. Teodora uses her music skills as an organist at First Christian Church in Meridian.\nLiving thousands of miles apart as children Levi and Teodora Mit",
+          "fired_token": " at",
+          "pre_context": " Levi could teach at Meridian High School. Teodora uses her music skills as an organist",
+          "post_context": " First Christian Church in Meridian.\nLiving thousands of miles apart as children Levi and Teodora Mit",
+          "example_idx": 387,
+          "position_idx": 90
+        },
+        {
+          "activation": 2.2613582611083984,
+          "text": " known to play an aggressive brand of cricket. The India skipper also ensures he motivates the team whenever they are caught during crunch situations.\nAs the visitors were batting their way through in the first innings of",
+          "fired_token": " whenever",
+          "pre_context": " known to play an aggressive brand of cricket. The India skipper also ensures he motivates the team",
+          "post_context": " they are caught during crunch situations.\nAs the visitors were batting their way through in the first innings of",
+          "example_idx": 354,
+          "position_idx": 158
+        },
+        {
+          "activation": 2.2576394081115723,
+          "text": " color scheme that complements your message and attracts your target audience.\n\n5. Choose appropriate typography: Typography plays a vital role in the effectiveness of your marketing graphics. Use fonts that are easy to read and align",
+          "fired_token": " plays",
+          "pre_context": " color scheme that complements your message and attracts your target audience.\n\n5. Choose appropriate typography: Typography",
+          "post_context": " a vital role in the effectiveness of your marketing graphics. Use fonts that are easy to read and align",
+          "example_idx": 83,
+          "position_idx": 280
+        },
+        {
+          "activation": 2.2406165599823,
+          "text": "/Tumblr: Above, I talked about Soundcloud and Spotify. Now, in your social media profile you can put a web link to your Spotify or Soundcloud music profile. You can post videos or audio",
+          "fired_token": " you",
+          "pre_context": "/Tumblr: Above, I talked about Soundcloud and Spotify. Now, in your social media profile",
+          "post_context": " can put a web link to your Spotify or Soundcloud music profile. You can post videos or audio",
+          "example_idx": 296,
+          "position_idx": 213
+        },
+        {
+          "activation": 2.239690065383911,
+          "text": " more common due to climate change.\n\n3) Heatwaves are becoming more intense and frequent, particularly in urban areas where the urban heat island effect can worsen their impact. In Europe, a 2019",
+          "fired_token": " urban",
+          "pre_context": " more common due to climate change.\n\n3) Heatwaves are becoming more intense and frequent, particularly in",
+          "post_context": " areas where the urban heat island effect can worsen their impact. In Europe, a 2019",
+          "example_idx": 75,
+          "position_idx": 280
+        }
+      ]
+    },
+    {
+      "feature_id": 15430,
+      "description": "code/politeness/math | media, platforms, social",
+      "keywords": [
+        "media",
+        "platforms",
+        "social"
+      ],
+      "tags": [
+        "code",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 0.3941456973552704,
+      "max_act": 3.543813943862915,
+      "density": 0.5393424108970218,
+      "avg_fired_token_len": 7.166666666666667,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 3.543813943862915,
+          "text": ". Share your gratitude: Consider sharing what you are grateful for with others. This could be through social media, a gratitude jar, or simply telling a loved one what you appreciate about them. Remember, gratitude",
+          "fired_token": " media",
+          "pre_context": ". Share your gratitude: Consider sharing what you are grateful for with others. This could be through social",
+          "post_context": ", a gratitude jar, or simply telling a loved one what you appreciate about them. Remember, gratitude",
+          "example_idx": 77,
+          "position_idx": 455
+        },
+        {
+          "activation": 3.2884445190429688,
+          "text": " chefs, whether through personality clashes or intense competitive rivalries. Finally, consider how you can leverage social media and other digital platforms to engage with viewers in real-time and build a loyal audience for the show.",
+          "fired_token": " media",
+          "pre_context": " chefs, whether through personality clashes or intense competitive rivalries. Finally, consider how you can leverage social",
+          "post_context": " and other digital platforms to engage with viewers in real-time and build a loyal audience for the show.",
+          "example_idx": 287,
+          "position_idx": 127
+        },
+        {
+          "activation": 3.2454707622528076,
+          "text": " choosing a topic, designing visually appealing content, incorporating persuasive language, selecting an appropriate format, and effective distribution tactics.assistant\n\nStep 1: Identify Your Target Audience \n\nThe first step in",
+          "fired_token": " distribution",
+          "pre_context": " choosing a topic, designing visually appealing content, incorporating persuasive language, selecting an appropriate format, and effective",
+          "post_context": " tactics.assistant\n\nStep 1: Identify Your Target Audience \n\nThe first step in",
+          "example_idx": 192,
+          "position_idx": 67
+        },
+        {
+          "activation": 3.14925479888916,
+          "text": " building brand awareness and driving sales. Additionally, the campaign should incorporate influencer partnerships and collaborations to create buzz and increase reach.assistant\n\nIntroducing the “Uniquely You” campaign for",
+          "fired_token": " buzz",
+          "pre_context": " building brand awareness and driving sales. Additionally, the campaign should incorporate influencer partnerships and collaborations to create",
+          "post_context": " and increase reach.assistant\n\nIntroducing the “Uniquely You” campaign for",
+          "example_idx": 49,
+          "position_idx": 122
+        },
+        {
+          "activation": 3.115675210952759,
+          "text": " clashes or intense competitive rivalries. Finally, consider how you can leverage social media and other digital platforms to engage with viewers in real-time and build a loyal audience for the show.assistant\n\n",
+          "fired_token": " to",
+          "pre_context": " clashes or intense competitive rivalries. Finally, consider how you can leverage social media and other digital platforms",
+          "post_context": " engage with viewers in real-time and build a loyal audience for the show.assistant\n\n",
+          "example_idx": 287,
+          "position_idx": 132
+        },
+        {
+          "activation": 3.0956599712371826,
+          "text": "attend event.\n\n3. Leverage social media platforms to reach the target audience. Create attractive and engaging posts on Instagram, Facebook, and Twitter, using relevant hashtags and tagging influencers and experts in the field.\n\n",
+          "fired_token": " posts",
+          "pre_context": "attend event.\n\n3. Leverage social media platforms to reach the target audience. Create attractive and engaging",
+          "post_context": " on Instagram, Facebook, and Twitter, using relevant hashtags and tagging influencers and experts in the field.\n\n",
+          "example_idx": 140,
+          "position_idx": 131
+        },
+        {
+          "activation": 3.09405779838562,
+          "text": " the environmental, economic, and social benefits of geothermal energy. Make sure to target different demographics and platforms, such as Instagram, Twitter, and LinkedIn, to maximize outreach and engagement. Additionally, consider incorporating",
+          "fired_token": " platforms",
+          "pre_context": " the environmental, economic, and social benefits of geothermal energy. Make sure to target different demographics and",
+          "post_context": ", such as Instagram, Twitter, and LinkedIn, to maximize outreach and engagement. Additionally, consider incorporating",
+          "example_idx": 365,
+          "position_idx": 95
+        },
+        {
+          "activation": 3.0900208950042725,
+          "text": " and an elegant style that represents the sophistication and exclusivity of the brand. The campaign should leverage multiple platforms such as social media, print, and events, with a focus on building brand awareness and driving sales",
+          "fired_token": " platforms",
+          "pre_context": " and an elegant style that represents the sophistication and exclusivity of the brand. The campaign should leverage multiple",
+          "post_context": " such as social media, print, and events, with a focus on building brand awareness and driving sales",
+          "example_idx": 49,
+          "position_idx": 87
+        },
+        {
+          "activation": 3.0743398666381836,
+          "text": "ze similar podcasts and their approach to sponsorship and advertising. Look into their audience demographics, their social media reach and engagement, and their website traffic. Also, examine their sponsorships and how they're executed to",
+          "fired_token": " reach",
+          "pre_context": "ze similar podcasts and their approach to sponsorship and advertising. Look into their audience demographics, their social media",
+          "post_context": " and engagement, and their website traffic. Also, examine their sponsorships and how they're executed to",
+          "example_idx": 182,
+          "position_idx": 210
+        },
+        {
+          "activation": 3.048529624938965,
+          "text": " Seville is a great place to experience the traditional flamenco dance. The city has numerous flamenco bars where you can see live performances, and there are also several festivals throughout the year that showcase flamenco",
+          "fired_token": " bars",
+          "pre_context": " Seville is a great place to experience the traditional flamenco dance. The city has numerous flamenco",
+          "post_context": " where you can see live performances, and there are also several festivals throughout the year that showcase flamenco",
+          "example_idx": 44,
+          "position_idx": 466
+        },
+        {
+          "activation": 3.0167500972747803,
+          "text": " day of the year.\n\n3. Sardines: Grilled sardines are a classic summer street food that you can find throughout Lisbon, especially during June's Santos Populares street parties. \n\n4",
+          "fired_token": " street",
+          "pre_context": " day of the year.\n\n3. Sardines: Grilled sardines are a classic summer",
+          "post_context": " food that you can find throughout Lisbon, especially during June's Santos Populares street parties. \n\n4",
+          "example_idx": 64,
+          "position_idx": 409
+        },
+        {
+          "activation": 3.0132205486297607,
+          "text": " reach the target audience. Create attractive and engaging posts on Instagram, Facebook, and Twitter, using relevant hashtags and tagging influencers and experts in the field.\n\n4. Utilize email marketing to promote the masterclass",
+          "fired_token": " hashtags",
+          "pre_context": " reach the target audience. Create attractive and engaging posts on Instagram, Facebook, and Twitter, using relevant",
+          "post_context": " and tagging influencers and experts in the field.\n\n4. Utilize email marketing to promote the masterclass",
+          "example_idx": 140,
+          "position_idx": 142
+        }
+      ]
+    },
+    {
+      "feature_id": 8433,
+      "description": "code/math | medieval, architecture, town",
+      "keywords": [
+        "medieval",
+        "architecture",
+        "town"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.37135079503059387,
+      "max_act": 3.513821601867676,
+      "density": 0.5057034783080421,
+      "avg_fired_token_len": 7.083333333333333,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 3.513821601867676,
+          "text": " Saint Mary – it was an incredible experience,” Levi said. “This city is like a medieval town, well preserved. So much beautiful architecture with a deep history.\nAfter living in Romania for a year the",
+          "fired_token": ",",
+          "pre_context": " Saint Mary – it was an incredible experience,” Levi said. “This city is like a medieval town",
+          "post_context": " well preserved. So much beautiful architecture with a deep history.\nAfter living in Romania for a year the",
+          "example_idx": 387,
+          "position_idx": 407
+        },
+        {
+          "activation": 3.4681437015533447,
+          "text": " program: China's space agency is sending robotic missions to the Moon and is planning to build a lunar base.\n\n7. Mars One: This private company aimed to establish a permanent human settlement on Mars, but",
+          "fired_token": " base",
+          "pre_context": " program: China's space agency is sending robotic missions to the Moon and is planning to build a lunar",
+          "post_context": ".\n\n7. Mars One: This private company aimed to establish a permanent human settlement on Mars, but",
+          "example_idx": 325,
+          "position_idx": 262
+        },
+        {
+          "activation": 3.425045967102051,
+          "text": " in Sibiu, Romania, Levi said.\n“The ceremony was held at the Sibiu Lutheran Cathedral of Saint Mary – it was an incredible experience,” Levi said. “This city is like a medieval",
+          "fired_token": " Cathedral",
+          "pre_context": " in Sibiu, Romania, Levi said.\n“The ceremony was held at the Sibiu Lutheran",
+          "post_context": " of Saint Mary – it was an incredible experience,” Levi said. “This city is like a medieval",
+          "example_idx": 387,
+          "position_idx": 385
+        },
+        {
+          "activation": 3.313417911529541,
+          "text": " there’s a pool with waterfall and full summer kitchen, not to mention 300 feet of lake frontage.\nThe house, which also has four garages, is one-story — unusual for such a large",
+          "fired_token": "age",
+          "pre_context": " there’s a pool with waterfall and full summer kitchen, not to mention 300 feet of lake front",
+          "post_context": ".\nThe house, which also has four garages, is one-story — unusual for such a large",
+          "example_idx": 274,
+          "position_idx": 449
+        },
+        {
+          "activation": 3.3003103733062744,
+          "text": " it was an incredible experience,” Levi said. “This city is like a medieval town, well preserved. So much beautiful architecture with a deep history.\nAfter living in Romania for a year the Mitze-C",
+          "fired_token": ".",
+          "pre_context": " it was an incredible experience,” Levi said. “This city is like a medieval town, well preserved",
+          "post_context": " So much beautiful architecture with a deep history.\nAfter living in Romania for a year the Mitze-C",
+          "example_idx": 387,
+          "position_idx": 410
+        },
+        {
+          "activation": 3.2957897186279297,
+          "text": " who visits Patagonia looks forward to seeing the great glaciers of Chile’s Fuegian fjords or the massive southern icefields that culminate in Argentina’s Moreno Glacier (pictured below). There are",
+          "fired_token": "ords",
+          "pre_context": " who visits Patagonia looks forward to seeing the great glaciers of Chile’s Fuegian fj",
+          "post_context": " or the massive southern icefields that culminate in Argentina’s Moreno Glacier (pictured below). There are",
+          "example_idx": 70,
+          "position_idx": 75
+        },
+        {
+          "activation": 3.2952797412872314,
+          "text": " experience,” Levi said. “This city is like a medieval town, well preserved. So much beautiful architecture with a deep history.\nAfter living in Romania for a year the Mitze-Circiumarus decided",
+          "fired_token": " architecture",
+          "pre_context": " experience,” Levi said. “This city is like a medieval town, well preserved. So much beautiful",
+          "post_context": " with a deep history.\nAfter living in Romania for a year the Mitze-Circiumarus decided",
+          "example_idx": 387,
+          "position_idx": 414
+        },
+        {
+          "activation": 3.220309019088745,
+          "text": " Cathedral of Saint Mary – it was an incredible experience,” Levi said. “This city is like a medieval town, well preserved. So much beautiful architecture with a deep history.\nAfter living in Romania for a",
+          "fired_token": " medieval",
+          "pre_context": " Cathedral of Saint Mary – it was an incredible experience,” Levi said. “This city is like a",
+          "post_context": " town, well preserved. So much beautiful architecture with a deep history.\nAfter living in Romania for a",
+          "example_idx": 387,
+          "position_idx": 405
+        },
+        {
+          "activation": 3.1962990760803223,
+          "text": " industries. One such industry is construction. 3D printing technology can be used to create buildings and infrastructure quickly and efficiently. Another industry that is likely to benefit from this technology is medicine. 3D",
+          "fired_token": " infrastructure",
+          "pre_context": " industries. One such industry is construction. 3D printing technology can be used to create buildings and",
+          "post_context": " quickly and efficiently. Another industry that is likely to benefit from this technology is medicine. 3D",
+          "example_idx": 356,
+          "position_idx": 393
+        },
+        {
+          "activation": 3.1816508769989014,
+          "text": " see the adoption of this technology in many new industries. One such industry is construction. 3D printing technology can be used to create buildings and infrastructure quickly and efficiently. Another industry that is likely to benefit",
+          "fired_token": " printing",
+          "pre_context": " see the adoption of this technology in many new industries. One such industry is construction. 3D",
+          "post_context": " technology can be used to create buildings and infrastructure quickly and efficiently. Another industry that is likely to benefit",
+          "example_idx": 356,
+          "position_idx": 384
+        },
+        {
+          "activation": 3.0940358638763428,
+          "text": " of Saint Mary – it was an incredible experience,” Levi said. “This city is like a medieval town, well preserved. So much beautiful architecture with a deep history.\nAfter living in Romania for a year",
+          "fired_token": " town",
+          "pre_context": " of Saint Mary – it was an incredible experience,” Levi said. “This city is like a medieval",
+          "post_context": ", well preserved. So much beautiful architecture with a deep history.\nAfter living in Romania for a year",
+          "example_idx": 387,
+          "position_idx": 406
+        },
+        {
+          "activation": 3.08213210105896,
+          "text": " many new industries. One such industry is construction. 3D printing technology can be used to create buildings and infrastructure quickly and efficiently. Another industry that is likely to benefit from this technology is medicine. ",
+          "fired_token": " buildings",
+          "pre_context": " many new industries. One such industry is construction. 3D printing technology can be used to create",
+          "post_context": " and infrastructure quickly and efficiently. Another industry that is likely to benefit from this technology is medicine. ",
+          "example_idx": 356,
+          "position_idx": 391
+        }
+      ]
+    }
+  ]
+}

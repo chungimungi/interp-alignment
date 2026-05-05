@@ -1,0 +1,676 @@
+{
+  "sae_repo": "chungimungi/SAE-MInAlA_Llama-3.2-3B-SimPO-merged-layer_11_best",
+  "base_model": "MInAlA/Llama-3.2-3B-SimPO-merged",
+  "layer": 11,
+  "selection": "mean",
+  "min_density": 0.0001,
+  "stopwords_lang": "english",
+  "num_prompts": 400,
+  "context_size": 512,
+  "total_tokens": 202771,
+  "interpretation_methodology": {
+    "why_this_analysis": [
+      "Record which latent directions get large activations under the chosen corpus and chat template.",
+      "Separate dead or ultra-rare features from dense ones using per-feature statistics.",
+      "Provide concrete token contexts for follow-up causal work (ablation, patching, steering), not as final semantics."
+    ],
+    "known_limitations": [
+      "SAEs optimize reconstruction under sparsity, not axis-aligned semantics; strong features often track templates, delimiters, and high-frequency n-grams.",
+      "Magnitude on frequent structural tokens can overshadow rarer semantic concepts in top-k mining.",
+      "Human-readable labels are post-hoc summaries of co-activation with text; they do not prove a feature causally implements a behavior."
+    ],
+    "keyword_summaries": "Content words are ranked after NLTK stopword removal; tags are simple surface heuristics. Use likely_surface_structure to flag obvious formatting-like patterns.",
+    "stopwords_source": "nltk.corpus.stopwords",
+    "stopwords_lang": "english"
+  },
+  "features": [
+    {
+      "feature_id": 2660,
+      "description": "code/math | meditation, resources, assistant",
+      "keywords": [
+        "meditation",
+        "resources",
+        "assistant"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 1.0140446424484253,
+      "max_act": 5.818961143493652,
+      "density": 0.7910253438608086,
+      "avg_fired_token_len": 6.583333333333333,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 5.818961143493652,
+          "text": " 05 May 2026\n\nuser\n\nCreate a playlist for a one-hour guided meditation class that includes instrumental music, nature sounds, and soothing melodies with minimal lyrics to promote relaxation and inner",
+          "fired_token": " meditation",
+          "pre_context": " 05 May 2026\n\nuser\n\nCreate a playlist for a one-hour guided",
+          "post_context": " class that includes instrumental music, nature sounds, and soothing melodies with minimal lyrics to promote relaxation and inner",
+          "example_idx": 34,
+          "position_idx": 39
+        },
+        {
+          "activation": 5.640882968902588,
+          "text": " of incorporating lifelong learning into your career growth strategy, highlighting the benefits of continuous learning, showcasing tips and resources for learning, and providing examples of successful professionals who have achieved career advancement through ongoing education. The post",
+          "fired_token": " resources",
+          "pre_context": " of incorporating lifelong learning into your career growth strategy, highlighting the benefits of continuous learning, showcasing tips and",
+          "post_context": " for learning, and providing examples of successful professionals who have achieved career advancement through ongoing education. The post",
+          "example_idx": 327,
+          "position_idx": 59
+        },
+        {
+          "activation": 5.5757341384887695,
+          "text": "500-word blog post in an informative and engaging style, explaining the benefits of practicing random acts of kindness. Share real-life examples to illustrate the positive impact of small acts of kindness on individuals and communities. Include",
+          "fired_token": ".",
+          "pre_context": "500-word blog post in an informative and engaging style, explaining the benefits of practicing random acts of kindness",
+          "post_context": " Share real-life examples to illustrate the positive impact of small acts of kindness on individuals and communities. Include",
+          "example_idx": 28,
+          "position_idx": 54
+        },
+        {
+          "activation": 5.534629821777344,
+          "text": " visuals to illustrate the impact of meat consumption on greenhouse gas emissions and deforestation. Include actionable tips and resources to help people transition to a plant-based diet. Use hashtags such as #MeatlessMonday and",
+          "fired_token": " resources",
+          "pre_context": " visuals to illustrate the impact of meat consumption on greenhouse gas emissions and deforestation. Include actionable tips and",
+          "post_context": " to help people transition to a plant-based diet. Use hashtags such as #MeatlessMonday and",
+          "example_idx": 242,
+          "position_idx": 78
+        },
+        {
+          "activation": 5.437429904937744,
+          "text": " juicy filling. Bonus points for including variations with different berry combinations or adding a scoop of vanilla ice cream.assistant\n\nIngredients:\n- 4 cups mixed berries (fresh or frozen)\n- ",
+          "fired_token": ".",
+          "pre_context": " juicy filling. Bonus points for including variations with different berry combinations or adding a scoop of vanilla ice cream",
+          "post_context": "assistant\n\nIngredients:\n- 4 cups mixed berries (fresh or frozen)\n- ",
+          "example_idx": 31,
+          "position_idx": 100
+        },
+        {
+          "activation": 5.3839640617370605,
+          "text": " Date: 05 May 2026\n\nuser\n\nWhat is the best type of meditation for reducing stress?assistant\n\nOne of the best types of meditation for reducing stress is",
+          "fired_token": " meditation",
+          "pre_context": " Date: 05 May 2026\n\nuser\n\nWhat is the best type of",
+          "post_context": " for reducing stress?assistant\n\nOne of the best types of meditation for reducing stress is",
+          "example_idx": 321,
+          "position_idx": 37
+        },
+        {
+          "activation": 5.360560894012451,
+          "text": " word blog post that delves into the mental, physical, and emotional benefits of spending time in nature. Use scientific research and personal anecdotes to support your claims, and include suggestions for ways that readers can incorporate",
+          "fired_token": ".",
+          "pre_context": " word blog post that delves into the mental, physical, and emotional benefits of spending time in nature",
+          "post_context": " Use scientific research and personal anecdotes to support your claims, and include suggestions for ways that readers can incorporate",
+          "example_idx": 395,
+          "position_idx": 58
+        },
+        {
+          "activation": 5.284663200378418,
+          "text": "user\n\nCan you tell me more about the benefits of using a mala bracelet during meditation?assistant\n\nYes, absolutely! Mala bracelets can be a powerful tool for enhancing",
+          "fired_token": " meditation",
+          "pre_context": "user\n\nCan you tell me more about the benefits of using a mala bracelet during",
+          "post_context": "?assistant\n\nYes, absolutely! Mala bracelets can be a powerful tool for enhancing",
+          "example_idx": 84,
+          "position_idx": 284
+        },
+        {
+          "activation": 5.232702732086182,
+          "text": " how to choose and prepare the ingredients, the proper order of steps, cooking times, and recommended garnishes or toppings to enhance the taste and presentation.assistant\n\nIngredients:\n-2 tbsp.",
+          "fired_token": "ishes",
+          "pre_context": " how to choose and prepare the ingredients, the proper order of steps, cooking times, and recommended garn",
+          "post_context": " or toppings to enhance the taste and presentation.assistant\n\nIngredients:\n-2 tbsp.",
+          "example_idx": 15,
+          "position_idx": 71
+        },
+        {
+          "activation": 5.1266937255859375,
+          "text": " May 2026\n\nuser\n\nWhat is the best type of meditation for reducing stress?assistant\n\nOne of the best types of meditation for reducing stress is mindfulness meditation. This",
+          "fired_token": "?",
+          "pre_context": " May 2026\n\nuser\n\nWhat is the best type of meditation for reducing stress",
+          "post_context": "assistant\n\nOne of the best types of meditation for reducing stress is mindfulness meditation. This",
+          "example_idx": 321,
+          "position_idx": 41
+        },
+        {
+          "activation": 5.1139140129089355,
+          "text": "0 word blog post that delves into the mental, physical, and emotional benefits of spending time in nature. Use scientific research and personal anecdotes to support your claims, and include suggestions for ways that readers can",
+          "fired_token": " nature",
+          "pre_context": "0 word blog post that delves into the mental, physical, and emotional benefits of spending time in",
+          "post_context": ". Use scientific research and personal anecdotes to support your claims, and include suggestions for ways that readers can",
+          "example_idx": 395,
+          "position_idx": 57
+        },
+        {
+          "activation": 5.10360050201416,
+          "text": " May 2026\n\nuser\n\nDescribe how to make your own natural face tonerassistant\n\nTo make your own natural face toner, you will need a few simple ingredients",
+          "fired_token": "<|eot_id|>",
+          "pre_context": " May 2026\n\nuser\n\nDescribe how to make your own natural face toner",
+          "post_context": "assistant\n\nTo make your own natural face toner, you will need a few simple ingredients",
+          "example_idx": 265,
+          "position_idx": 41
+        }
+      ]
+    },
+    {
+      "feature_id": 15239,
+      "description": "begin, text, date",
+      "keywords": [
+        "begin",
+        "text",
+        "date"
+      ],
+      "tags": [],
+      "mean_act": 0.6663936972618103,
+      "max_act": 7.114782333374023,
+      "density": 0.6714421687519418,
+      "avg_fired_token_len": 17.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 7.114782333374023,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 2,
+          "position_idx": 1
+        },
+        {
+          "activation": 7.114782333374023,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 2,
+          "position_idx": 0
+        },
+        {
+          "activation": 7.114782333374023,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 1,
+          "position_idx": 0
+        },
+        {
+          "activation": 7.114782333374023,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 1,
+          "position_idx": 1
+        },
+        {
+          "activation": 7.114782333374023,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 0,
+          "position_idx": 1
+        },
+        {
+          "activation": 7.114782333374023,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 0,
+          "position_idx": 0
+        },
+        {
+          "activation": 7.114782333374023,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 3,
+          "position_idx": 1
+        },
+        {
+          "activation": 7.114782333374023,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 3,
+          "position_idx": 0
+        },
+        {
+          "activation": 7.114782333374023,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 6,
+          "position_idx": 0
+        },
+        {
+          "activation": 7.114782333374023,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 6,
+          "position_idx": 1
+        },
+        {
+          "activation": 7.114782333374023,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05",
+          "example_idx": 7,
+          "position_idx": 0
+        },
+        {
+          "activation": 7.114782333374023,
+          "text": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "fired_token": "<|begin_of_text|>",
+          "pre_context": "",
+          "post_context": "system\n\nCutting Knowledge Date: December 2023\nToday Date: 05 May",
+          "example_idx": 7,
+          "position_idx": 1
+        }
+      ]
+    },
+    {
+      "feature_id": 8882,
+      "description": "code/politeness/math | symbolism, poetry, lead",
+      "keywords": [
+        "symbolism",
+        "poetry",
+        "lead"
+      ],
+      "tags": [
+        "code",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 0.628016471862793,
+      "max_act": 2.340705633163452,
+      "density": 0.8086215484462769,
+      "avg_fired_token_len": 5.416666666666667,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.340705633163452,
+          "text": " share their technical knowledge to improve people's gaming experience.: If you are a techy guy who loves to play games while figure things out. You should share your knowledge while getting some nice blog traffic while making",
+          "fired_token": " to",
+          "pre_context": " share their technical knowledge to improve people's gaming experience.: If you are a techy guy who loves",
+          "post_context": " play games while figure things out. You should share your knowledge while getting some nice blog traffic while making",
+          "example_idx": 120,
+          "position_idx": 59
+        },
+        {
+          "activation": 2.2743215560913086,
+          "text": " target audience. Get feedback from people in the target audience if possible.\n\nIn summary, creating visually appealing marketing graphics involves defining the target audience, determining the message, selecting relevant images, choosing an appropriate color scheme",
+          "fired_token": " marketing",
+          "pre_context": " target audience. Get feedback from people in the target audience if possible.\n\nIn summary, creating visually appealing",
+          "post_context": " graphics involves defining the target audience, determining the message, selecting relevant images, choosing an appropriate color scheme",
+          "example_idx": 83,
+          "position_idx": 446
+        },
+        {
+          "activation": 2.1980395317077637,
+          "text": "-conscious travelers?assistant\n\n1. Budapest, Hungary\n2. Prague, Czech Republic\n3. Krakow, Poland\n4. Lisbon, Portugal\n5. Athens, Greece\n6",
+          "fired_token": "\n",
+          "pre_context": "-conscious travelers?assistant\n\n1. Budapest, Hungary\n2. Prague, Czech Republic",
+          "post_context": "3. Krakow, Poland\n4. Lisbon, Portugal\n5. Athens, Greece\n6",
+          "example_idx": 64,
+          "position_idx": 61
+        },
+        {
+          "activation": 2.172694444656372,
+          "text": "mongrass and cilantro. Overall, modern restaurant menus have embraced the diverse and flavorful cuisine of Southeast Asia and adapted it to suit the tastes and preferences of customers.user\n\nWow,",
+          "fired_token": " Southeast",
+          "pre_context": "mongrass and cilantro. Overall, modern restaurant menus have embraced the diverse and flavorful cuisine of",
+          "post_context": " Asia and adapted it to suit the tastes and preferences of customers.user\n\nWow,",
+          "example_idx": 216,
+          "position_idx": 377
+        },
+        {
+          "activation": 2.1654627323150635,
+          "text": "\n\nThe general aim of my research is to understand the neural basis of psychiatric disorders. We focus on what makes someone vulnerable to the development of psychiatric disorders, on how various treatments exert their effect, and",
+          "fired_token": " on",
+          "pre_context": "\n\nThe general aim of my research is to understand the neural basis of psychiatric disorders. We focus",
+          "post_context": " what makes someone vulnerable to the development of psychiatric disorders, on how various treatments exert their effect, and",
+          "example_idx": 33,
+          "position_idx": 49
+        },
+        {
+          "activation": 2.154155969619751,
+          "text": " Date: 05 May 2026\n\nuser\n\nWrite a character-driven short story that essentially deals with the theme of social media addiction and delve into the psychological effects that it could have on",
+          "fired_token": " that",
+          "pre_context": " Date: 05 May 2026\n\nuser\n\nWrite a character-driven short story",
+          "post_context": " essentially deals with the theme of social media addiction and delve into the psychological effects that it could have on",
+          "example_idx": 46,
+          "position_idx": 37
+        },
+        {
+          "activation": 2.1449596881866455,
+          "text": " it's easy for visitors to find and download the lead magnet. \n\nIn conclusion, creating a successful lead magnet requires a thorough understanding of your target audience, choosing a topic that provides value, visually appealing design",
+          "fired_token": " lead",
+          "pre_context": " it's easy for visitors to find and download the lead magnet. \n\nIn conclusion, creating a successful",
+          "post_context": " magnet requires a thorough understanding of your target audience, choosing a topic that provides value, visually appealing design",
+          "example_idx": 192,
+          "position_idx": 414
+        },
+        {
+          "activation": 2.1364006996154785,
+          "text": "ize anger or passion, while snow may symbolize purity and clarity.\n\nOverall, the use of imagery and symbolism in nature poetry adds depth and complexity to the poems and allows the reader to connect with and appreciate",
+          "fired_token": " and",
+          "pre_context": "ize anger or passion, while snow may symbolize purity and clarity.\n\nOverall, the use of imagery",
+          "post_context": " symbolism in nature poetry adds depth and complexity to the poems and allows the reader to connect with and appreciate",
+          "example_idx": 131,
+          "position_idx": 334
+        },
+        {
+          "activation": 2.131847620010376,
+          "text": ": 05 May 2026\n\nuser\n\nSo your students are going to write a narrative? Use these prewriting exercises to help them choose an idea and plan out their story.\nTe",
+          "fired_token": " a",
+          "pre_context": ": 05 May 2026\n\nuser\n\nSo your students are going to write",
+          "post_context": " narrative? Use these prewriting exercises to help them choose an idea and plan out their story.\nTe",
+          "example_idx": 363,
+          "position_idx": 38
+        },
+        {
+          "activation": 2.107243537902832,
+          "text": " anger or passion, while snow may symbolize purity and clarity.\n\nOverall, the use of imagery and symbolism in nature poetry adds depth and complexity to the poems and allows the reader to connect with and appreciate the",
+          "fired_token": " symbolism",
+          "pre_context": " anger or passion, while snow may symbolize purity and clarity.\n\nOverall, the use of imagery and",
+          "post_context": " in nature poetry adds depth and complexity to the poems and allows the reader to connect with and appreciate the",
+          "example_idx": 131,
+          "position_idx": 335
+        },
+        {
+          "activation": 2.1063849925994873,
+          "text": ", while snow may symbolize purity and clarity.\n\nOverall, the use of imagery and symbolism in nature poetry adds depth and complexity to the poems and allows the reader to connect with and appreciate the natural world on",
+          "fired_token": " poetry",
+          "pre_context": ", while snow may symbolize purity and clarity.\n\nOverall, the use of imagery and symbolism in nature",
+          "post_context": " adds depth and complexity to the poems and allows the reader to connect with and appreciate the natural world on",
+          "example_idx": 131,
+          "position_idx": 338
+        },
+        {
+          "activation": 2.105872631072998,
+          "text": " that plays a game of Blackjack against the computer. The app should have a simple and intuitive user interface that includes buttons for the player to hit, stand, or double down. The player's current hand and",
+          "fired_token": " that",
+          "pre_context": " that plays a game of Blackjack against the computer. The app should have a simple and intuitive user interface",
+          "post_context": " includes buttons for the player to hit, stand, or double down. The player's current hand and",
+          "example_idx": 106,
+          "position_idx": 55
+        }
+      ]
+    },
+    {
+      "feature_id": 11488,
+      "description": "code/math | add, minutes, february",
+      "keywords": [
+        "add",
+        "minutes",
+        "february"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.39557379484176636,
+      "max_act": 2.920523166656494,
+      "density": 0.5727347599015639,
+      "avg_fired_token_len": 5.25,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 2.920523166656494,
+          "text": " tiny office in Great King Street and then the first Carers Centre on Bank Street opened its doors in February 1997 with the HRH Princess Royal's official opening a year later.\nOver the first five",
+          "fired_token": " February",
+          "pre_context": " tiny office in Great King Street and then the first Carers Centre on Bank Street opened its doors in",
+          "post_context": " 1997 with the HRH Princess Royal's official opening a year later.\nOver the first five",
+          "example_idx": 105,
+          "position_idx": 192
+        },
+        {
+          "activation": 2.475996732711792,
+          "text": "3 percent.\nArabian Shield Cooperative Insurance, which had been trading near 20-month lows, surged 2.5 percent after saying state utility National Water Co had engaged it to provide health insurance services",
+          "fired_token": " surged",
+          "pre_context": "3 percent.\nArabian Shield Cooperative Insurance, which had been trading near 20-month lows,",
+          "post_context": " 2.5 percent after saying state utility National Water Co had engaged it to provide health insurance services",
+          "example_idx": 109,
+          "position_idx": 247
+        },
+        {
+          "activation": 2.4717214107513428,
+          "text": " excuse still being touted by Christie last week.\n* The state Assembly has begun its new legislative session by creating a special investigatory committee to oversee the probe into the scandal. As Rachel noted on the show last",
+          "fired_token": " creating",
+          "pre_context": " excuse still being touted by Christie last week.\n* The state Assembly has begun its new legislative session by",
+          "post_context": " a special investigatory committee to oversee the probe into the scandal. As Rachel noted on the show last",
+          "example_idx": 312,
+          "position_idx": 265
+        },
+        {
+          "activation": 2.4379892349243164,
+          "text": " Cooperative Insurance, which had been trading near 20-month lows, surged 2.5 percent after saying state utility National Water Co had engaged it to provide health insurance services to its employees for a year,",
+          "fired_token": " saying",
+          "pre_context": " Cooperative Insurance, which had been trading near 20-month lows, surged 2.5 percent after",
+          "post_context": " state utility National Water Co had engaged it to provide health insurance services to its employees for a year,",
+          "example_idx": 109,
+          "position_idx": 254
+        },
+        {
+          "activation": 2.4088878631591797,
+          "text": "°F) . Heat the oil in a large frying pan, add the leek and cook for 5 to 7 minutes. Add the butter, allowing it to melt, then stir in the flour.",
+          "fired_token": "5",
+          "pre_context": "°F) . Heat the oil in a large frying pan, add the leek and cook for ",
+          "post_context": " to 7 minutes. Add the butter, allowing it to melt, then stir in the flour.",
+          "example_idx": 394,
+          "position_idx": 143
+        },
+        {
+          "activation": 2.4058926105499268,
+          "text": ", being careful to leave the stem in, and then set aside.\nIn a medium saucepan, combine water, sugar and honey; bring to a simmer over medium-high heat. Once the sugar has dissolved",
+          "fired_token": " combine",
+          "pre_context": ", being careful to leave the stem in, and then set aside.\nIn a medium saucepan,",
+          "post_context": " water, sugar and honey; bring to a simmer over medium-high heat. Once the sugar has dissolved",
+          "example_idx": 107,
+          "position_idx": 84
+        },
+        {
+          "activation": 2.403061628341675,
+          "text": "-square-foot game room.\nThe room features a two-lane bowling alley, a Skee-Ball arcade game, a Claw-Machine grabber game, air hockey, pinball machines, a racing-car",
+          "fired_token": " arcade",
+          "pre_context": "-square-foot game room.\nThe room features a two-lane bowling alley, a Skee-Ball",
+          "post_context": " game, a Claw-Machine grabber game, air hockey, pinball machines, a racing-car",
+          "example_idx": 274,
+          "position_idx": 174
+        },
+        {
+          "activation": 2.375401258468628,
+          "text": " support the “traffic study” excuse still being touted by Christie last week.\n* The state Assembly has begun its new legislative session by creating a special investigatory committee to oversee the probe into the scandal. As",
+          "fired_token": " begun",
+          "pre_context": " support the “traffic study” excuse still being touted by Christie last week.\n* The state Assembly has",
+          "post_context": " its new legislative session by creating a special investigatory committee to oversee the probe into the scandal. As",
+          "example_idx": 312,
+          "position_idx": 259
+        },
+        {
+          "activation": 2.3744630813598633,
+          "text": " in a large frying pan, add the leek and cook for 5 to 7 minutes. Add the butter, allowing it to melt, then stir in the flour. Cook for 2 minutes then",
+          "fired_token": " Add",
+          "pre_context": " in a large frying pan, add the leek and cook for 5 to 7 minutes.",
+          "post_context": " the butter, allowing it to melt, then stir in the flour. Cook for 2 minutes then",
+          "example_idx": 394,
+          "position_idx": 149
+        },
+        {
+          "activation": 2.360034465789795,
+          "text": " Great King Street and then the first Carers Centre on Bank Street opened its doors in February 1997 with the HRH Princess Royal's official opening a year later.\nOver the first five years the organisation",
+          "fired_token": "7",
+          "pre_context": " Great King Street and then the first Carers Centre on Bank Street opened its doors in February 199",
+          "post_context": " with the HRH Princess Royal's official opening a year later.\nOver the first five years the organisation",
+          "example_idx": 105,
+          "position_idx": 195
+        },
+        {
+          "activation": 2.3558926582336426,
+          "text": ". Season and stir in, parsley and fish.\nDivide the mixture between 2 individual pie dishes or like me in a big pie dish. Brush the rim of the dish with egg. Cut thin strips",
+          "fired_token": " or",
+          "pre_context": ". Season and stir in, parsley and fish.\nDivide the mixture between 2 individual pie dishes",
+          "post_context": " like me in a big pie dish. Brush the rim of the dish with egg. Cut thin strips",
+          "example_idx": 394,
+          "position_idx": 206
+        },
+        {
+          "activation": 2.3139312267303467,
+          "text": "5 to 7 minutes. Add the butter, allowing it to melt, then stir in the flour. Cook for 2 minutes then slowly pour in the milk or white wine, stirring constantly and simmer until",
+          "fired_token": ".",
+          "pre_context": "5 to 7 minutes. Add the butter, allowing it to melt, then stir in the flour",
+          "post_context": " Cook for 2 minutes then slowly pour in the milk or white wine, stirring constantly and simmer until",
+          "example_idx": 394,
+          "position_idx": 163
+        }
+      ]
+    },
+    {
+      "feature_id": 13150,
+      "description": "code/math | algorithms, learning, software",
+      "keywords": [
+        "algorithms",
+        "learning",
+        "software"
+      ],
+      "tags": [
+        "code",
+        "math"
+      ],
+      "mean_act": 0.32062602043151855,
+      "max_act": 3.6249966621398926,
+      "density": 0.4543943660582628,
+      "avg_fired_token_len": 8.25,
+      "likely_surface_structure": false,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 3.6249966621398926,
+          "text": " the fact that NVIDIA&apos;s SHIELD family is powered by its own Tegra series mobile superchips, which NVIDIA can ensure will work seamlessly with the Kepler architecture-based GPUs contained in the remote servers that",
+          "fired_token": "ips",
+          "pre_context": " the fact that NVIDIA&apos;s SHIELD family is powered by its own Tegra series mobile superch",
+          "post_context": ", which NVIDIA can ensure will work seamlessly with the Kepler architecture-based GPUs contained in the remote servers that",
+          "example_idx": 261,
+          "position_idx": 408
+        },
+        {
+          "activation": 3.4295639991760254,
+          "text": " study of how individuals or groups are linked through relationships or connections. It is an interdisciplinary field that combines mathematics, computer science, physics, and social sciences.\n\n[Visual: Image of a food web]\n\nIn",
+          "fired_token": " mathematics",
+          "pre_context": " study of how individuals or groups are linked through relationships or connections. It is an interdisciplinary field that combines",
+          "post_context": ", computer science, physics, and social sciences.\n\n[Visual: Image of a food web]\n\nIn",
+          "example_idx": 398,
+          "position_idx": 146
+        },
+        {
+          "activation": 3.4113218784332275,
+          "text": "Excellent stability up to 2,000 hours of service life.\nSmart touch control. Using intelligent touch chip, easy to operate, easy to touch any position of the metal cylinder, not only can control opening",
+          "fired_token": " chip",
+          "pre_context": "Excellent stability up to 2,000 hours of service life.\nSmart touch control. Using intelligent touch",
+          "post_context": ", easy to operate, easy to touch any position of the metal cylinder, not only can control opening",
+          "example_idx": 381,
+          "position_idx": 322
+        },
+        {
+          "activation": 3.3737452030181885,
+          "text": " to bring the animals and landscapes of the African savannah to life. The filmmakers used special cameras and software to create a virtual world that was as realistic and detailed as possible.\n\nIn summary, the employment of",
+          "fired_token": " software",
+          "pre_context": " to bring the animals and landscapes of the African savannah to life. The filmmakers used special cameras and",
+          "post_context": " to create a virtual world that was as realistic and detailed as possible.\n\nIn summary, the employment of",
+          "example_idx": 339,
+          "position_idx": 279
+        },
+        {
+          "activation": 3.336822032928467,
+          "text": " PhD in geography.\n\nPaglen's unique approach to art involves using technology such as satellite imaging, computer algorithms, and artificial intelligence to create his work. He is known for his thought-provoking pieces that",
+          "fired_token": " algorithms",
+          "pre_context": " PhD in geography.\n\nPaglen's unique approach to art involves using technology such as satellite imaging, computer",
+          "post_context": ", and artificial intelligence to create his work. He is known for his thought-provoking pieces that",
+          "example_idx": 299,
+          "position_idx": 131
+        },
+        {
+          "activation": 3.3237690925598145,
+          "text": " department in your company. Securely manage access and roles with user and team workspaces.\nWith machine learning, gauge brand sentiment and prioritise posts — then automatically route customer activity to the appropriate role in either",
+          "fired_token": " learning",
+          "pre_context": " department in your company. Securely manage access and roles with user and team workspaces.\nWith machine",
+          "post_context": ", gauge brand sentiment and prioritise posts — then automatically route customer activity to the appropriate role in either",
+          "example_idx": 368,
+          "position_idx": 295
+        },
+        {
+          "activation": 3.286151170730591,
+          "text": "heets, and other software applications. This data is then processed and analyzed using various statistical and machine learning algorithms. By leveraging these algorithms, the platform is able to identify patterns, trends, and insights in the",
+          "fired_token": " algorithms",
+          "pre_context": "heets, and other software applications. This data is then processed and analyzed using various statistical and machine learning",
+          "post_context": ". By leveraging these algorithms, the platform is able to identify patterns, trends, and insights in the",
+          "example_idx": 25,
+          "position_idx": 403
+        },
+        {
+          "activation": 3.2817888259887695,
+          "text": ". Code Optimization: Streamlining your website's codebase can significantly decrease load times. Implementing best coding practices can lead to a website that's easier to load and navigate for users.\n\nIn summary, website",
+          "fired_token": " coding",
+          "pre_context": ". Code Optimization: Streamlining your website's codebase can significantly decrease load times. Implementing best",
+          "post_context": " practices can lead to a website that's easier to load and navigate for users.\n\nIn summary, website",
+          "example_idx": 95,
+          "position_idx": 439
+        },
+        {
+          "activation": 3.2489891052246094,
+          "text": " spreadsheets, and other software applications. This data is then processed and analyzed using various statistical and machine learning algorithms. By leveraging these algorithms, the platform is able to identify patterns, trends, and insights in",
+          "fired_token": " learning",
+          "pre_context": " spreadsheets, and other software applications. This data is then processed and analyzed using various statistical and machine",
+          "post_context": " algorithms. By leveraging these algorithms, the platform is able to identify patterns, trends, and insights in",
+          "example_idx": 25,
+          "position_idx": 402
+        },
+        {
+          "activation": 3.206920862197876,
+          "text": " Service\n\nFinally, AI is also transforming customer service in the insurance industry. Chatbots, powered by AI technology, are helping insurance companies to provide round-the-clock customer service, answer customer queries, and handle",
+          "fired_token": " AI",
+          "pre_context": " Service\n\nFinally, AI is also transforming customer service in the insurance industry. Chatbots, powered by",
+          "post_context": " technology, are helping insurance companies to provide round-the-clock customer service, answer customer queries, and handle",
+          "example_idx": 230,
+          "position_idx": 435
+        },
+        {
+          "activation": 3.200850486755371,
+          "text": "4. Catalyzing Technological Advancements: The construction of the canal was a significant achievement in engineering and technology, leading to significant advancements in naval architecture, machinery, and transportation infrastructure.\n\nIn conclusion,",
+          "fired_token": " engineering",
+          "pre_context": "4. Catalyzing Technological Advancements: The construction of the canal was a significant achievement in",
+          "post_context": " and technology, leading to significant advancements in naval architecture, machinery, and transportation infrastructure.\n\nIn conclusion,",
+          "example_idx": 115,
+          "position_idx": 368
+        },
+        {
+          "activation": 3.1983869075775146,
+          "text": " individuals or groups are linked through relationships or connections. It is an interdisciplinary field that combines mathematics, computer science, physics, and social sciences.\n\n[Visual: Image of a food web]\n\nIn ecological systems,",
+          "fired_token": " science",
+          "pre_context": " individuals or groups are linked through relationships or connections. It is an interdisciplinary field that combines mathematics, computer",
+          "post_context": ", physics, and social sciences.\n\n[Visual: Image of a food web]\n\nIn ecological systems,",
+          "example_idx": 398,
+          "position_idx": 149
+        }
+      ]
+    }
+  ]
+}

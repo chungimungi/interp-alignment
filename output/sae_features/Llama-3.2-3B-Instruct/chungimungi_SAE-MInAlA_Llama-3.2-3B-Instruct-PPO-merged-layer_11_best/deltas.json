@@ -1,0 +1,12 @@
+{
+  "alive_features_aligned": 3700,
+  "alive_features_baseline": 3028,
+  "mean_density_aligned": 0.004284769046347235,
+  "mean_density_baseline": 0.004209587350487709,
+  "mean_max_act_aligned": 0.3868498206138611,
+  "mean_max_act_baseline": 0.33795785903930664,
+  "delta_alive": 672,
+  "delta_mean_density": 7.518169585952594e-05,
+  "delta_mean_max_act": 0.04889196157455444,
+  "baseline_metadata_path": "/home/vng598/C-ANNs/interp-alignment/output/sae_features/Llama-3.2-3B-Instruct/chungimungi_SAE-meta-llama_Llama-3.2-3B-Instruct-layer_11_best/replot_metadata.npz"
+}

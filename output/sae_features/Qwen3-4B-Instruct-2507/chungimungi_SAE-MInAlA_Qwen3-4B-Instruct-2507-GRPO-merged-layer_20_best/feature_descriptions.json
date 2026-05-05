@@ -1,0 +1,683 @@
+{
+  "sae_repo": "chungimungi/SAE-MInAlA_Qwen3-4B-Instruct-2507-GRPO-merged-layer_20_best",
+  "base_model": "MInAlA/Qwen3-4B-Instruct-2507-GRPO-merged",
+  "layer": 20,
+  "selection": "mean",
+  "min_density": 0.0001,
+  "stopwords_lang": "english",
+  "num_prompts": 400,
+  "context_size": 512,
+  "total_tokens": 202098,
+  "interpretation_methodology": {
+    "why_this_analysis": [
+      "Record which latent directions get large activations under the chosen corpus and chat template.",
+      "Separate dead or ultra-rare features from dense ones using per-feature statistics.",
+      "Provide concrete token contexts for follow-up causal work (ablation, patching, steering), not as final semantics."
+    ],
+    "known_limitations": [
+      "SAEs optimize reconstruction under sparsity, not axis-aligned semantics; strong features often track templates, delimiters, and high-frequency n-grams.",
+      "Magnitude on frequent structural tokens can overshadow rarer semantic concepts in top-k mining.",
+      "Human-readable labels are post-hoc summaries of co-activation with text; they do not prove a feature causally implements a behavior."
+    ],
+    "keyword_summaries": "Content words are ranked after NLTK stopword removal; tags are simple surface heuristics. Use likely_surface_structure to flag obvious formatting-like patterns.",
+    "stopwords_source": "nltk.corpus.stopwords",
+    "stopwords_lang": "english"
+  },
+  "features": [
+    {
+      "feature_id": 12381,
+      "description": "code/politeness/math | start, user, write",
+      "keywords": [
+        "start",
+        "user",
+        "write"
+      ],
+      "tags": [
+        "code",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 4.831446170806885,
+      "max_act": 199.81134033203125,
+      "density": 0.7742530851369138,
+      "avg_fired_token_len": 12.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 199.81134033203125,
+          "text": "user\nWrite a comprehensive blog post of at least 1000 words about the top ",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite a comprehensive blog post of at least 1000 words about the top ",
+          "example_idx": 2,
+          "position_idx": 0
+        },
+        {
+          "activation": 199.81134033203125,
+          "text": "user\nWrite a Python program that can identify and remove duplicate images from a given folder or directory.",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite a Python program that can identify and remove duplicate images from a given folder or directory.",
+          "example_idx": 6,
+          "position_idx": 0
+        },
+        {
+          "activation": 199.81134033203125,
+          "text": "user\nWhat many companies do when planning their global marketing strategies is to organize the world’s countries into",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhat many companies do when planning their global marketing strategies is to organize the world’s countries into",
+          "example_idx": 5,
+          "position_idx": 0
+        },
+        {
+          "activation": 199.81134033203125,
+          "text": "user\nWrite an essay that evaluates the positive and negative influence of social media on personal relationships, citing",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite an essay that evaluates the positive and negative influence of social media on personal relationships, citing",
+          "example_idx": 4,
+          "position_idx": 0
+        },
+        {
+          "activation": 199.81134033203125,
+          "text": "user\nDe León, previewing the speech he will give today, said he will highlight his",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nDe León, previewing the speech he will give today, said he will highlight his",
+          "example_idx": 3,
+          "position_idx": 0
+        },
+        {
+          "activation": 199.81134033203125,
+          "text": "user\nPlease provide a specific cooking method for the salmon, as well as any seasonings or ingredients",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nPlease provide a specific cooking method for the salmon, as well as any seasonings or ingredients",
+          "example_idx": 7,
+          "position_idx": 0
+        },
+        {
+          "activation": 199.81134033203125,
+          "text": "user\nWhich famous landmarks should I visit in London, beyond the usual ones?\nassistant",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhich famous landmarks should I visit in London, beyond the usual ones?\nassistant",
+          "example_idx": 1,
+          "position_idx": 0
+        },
+        {
+          "activation": 199.81134033203125,
+          "text": "user\nThese instructions apply to section-based themes (Responsive 6.0+, Retina 4",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nThese instructions apply to section-based themes (Responsive 6.0+, Retina 4",
+          "example_idx": 0,
+          "position_idx": 0
+        },
+        {
+          "activation": 199.81134033203125,
+          "text": "user\nExpressing your emotions is what keeps a relationship going. Whether it's a mother-daughter",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nExpressing your emotions is what keeps a relationship going. Whether it's a mother-daughter",
+          "example_idx": 10,
+          "position_idx": 0
+        },
+        {
+          "activation": 199.81134033203125,
+          "text": "user\nHow did the Spanish conquest of the Low Countries in the 16th century impact European",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nHow did the Spanish conquest of the Low Countries in the 16th century impact European",
+          "example_idx": 11,
+          "position_idx": 0
+        },
+        {
+          "activation": 199.81134033203125,
+          "text": "user\nWhat are the classic cocktails that every bartender should know how to make and what are their ingredients",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhat are the classic cocktails that every bartender should know how to make and what are their ingredients",
+          "example_idx": 8,
+          "position_idx": 0
+        },
+        {
+          "activation": 199.81134033203125,
+          "text": "user\nWrite step-by-step instructions detailing how to make a creamy and tangy vegan cashew cheese",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite step-by-step instructions detailing how to make a creamy and tangy vegan cashew cheese",
+          "example_idx": 9,
+          "position_idx": 0
+        }
+      ]
+    },
+    {
+      "feature_id": 8863,
+      "description": "code/politeness/math | start, user, write",
+      "keywords": [
+        "start",
+        "user",
+        "write"
+      ],
+      "tags": [
+        "code",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 4.647389888763428,
+      "max_act": 340.75592041015625,
+      "density": 0.7462023374798366,
+      "avg_fired_token_len": 12.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 340.75592041015625,
+          "text": "user\nDe León, previewing the speech he will give today, said he will highlight his",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nDe León, previewing the speech he will give today, said he will highlight his",
+          "example_idx": 3,
+          "position_idx": 0
+        },
+        {
+          "activation": 340.75592041015625,
+          "text": "user\nWrite a Python program that can identify and remove duplicate images from a given folder or directory.",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite a Python program that can identify and remove duplicate images from a given folder or directory.",
+          "example_idx": 6,
+          "position_idx": 0
+        },
+        {
+          "activation": 340.75592041015625,
+          "text": "user\nWhat many companies do when planning their global marketing strategies is to organize the world’s countries into",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhat many companies do when planning their global marketing strategies is to organize the world’s countries into",
+          "example_idx": 5,
+          "position_idx": 0
+        },
+        {
+          "activation": 340.75592041015625,
+          "text": "user\nWrite an essay that evaluates the positive and negative influence of social media on personal relationships, citing",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite an essay that evaluates the positive and negative influence of social media on personal relationships, citing",
+          "example_idx": 4,
+          "position_idx": 0
+        },
+        {
+          "activation": 340.75592041015625,
+          "text": "user\nWhich famous landmarks should I visit in London, beyond the usual ones?\nassistant",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhich famous landmarks should I visit in London, beyond the usual ones?\nassistant",
+          "example_idx": 1,
+          "position_idx": 0
+        },
+        {
+          "activation": 340.75592041015625,
+          "text": "user\nPlease provide a specific cooking method for the salmon, as well as any seasonings or ingredients",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nPlease provide a specific cooking method for the salmon, as well as any seasonings or ingredients",
+          "example_idx": 7,
+          "position_idx": 0
+        },
+        {
+          "activation": 340.75592041015625,
+          "text": "user\nWrite a comprehensive blog post of at least 1000 words about the top ",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite a comprehensive blog post of at least 1000 words about the top ",
+          "example_idx": 2,
+          "position_idx": 0
+        },
+        {
+          "activation": 340.75592041015625,
+          "text": "user\nThese instructions apply to section-based themes (Responsive 6.0+, Retina 4",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nThese instructions apply to section-based themes (Responsive 6.0+, Retina 4",
+          "example_idx": 0,
+          "position_idx": 0
+        },
+        {
+          "activation": 340.75592041015625,
+          "text": "user\nWhat are the classic cocktails that every bartender should know how to make and what are their ingredients",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhat are the classic cocktails that every bartender should know how to make and what are their ingredients",
+          "example_idx": 8,
+          "position_idx": 0
+        },
+        {
+          "activation": 340.75592041015625,
+          "text": "user\nWrite step-by-step instructions detailing how to make a creamy and tangy vegan cashew cheese",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite step-by-step instructions detailing how to make a creamy and tangy vegan cashew cheese",
+          "example_idx": 9,
+          "position_idx": 0
+        },
+        {
+          "activation": 340.75592041015625,
+          "text": "user\nHow did the Spanish conquest of the Low Countries in the 16th century impact European",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nHow did the Spanish conquest of the Low Countries in the 16th century impact European",
+          "example_idx": 11,
+          "position_idx": 0
+        },
+        {
+          "activation": 340.75592041015625,
+          "text": "user\nExpressing your emotions is what keeps a relationship going. Whether it's a mother-daughter",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nExpressing your emotions is what keeps a relationship going. Whether it's a mother-daughter",
+          "example_idx": 10,
+          "position_idx": 0
+        }
+      ]
+    },
+    {
+      "feature_id": 3097,
+      "description": "code/politeness/math | start, user, write",
+      "keywords": [
+        "start",
+        "user",
+        "write"
+      ],
+      "tags": [
+        "code",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 4.396099090576172,
+      "max_act": 34.728111267089844,
+      "density": 0.7659105978287761,
+      "avg_fired_token_len": 12.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 34.728111267089844,
+          "text": "user\nWrite an essay that evaluates the positive and negative influence of social media on personal relationships, citing",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite an essay that evaluates the positive and negative influence of social media on personal relationships, citing",
+          "example_idx": 4,
+          "position_idx": 0
+        },
+        {
+          "activation": 34.728111267089844,
+          "text": "user\nWhat many companies do when planning their global marketing strategies is to organize the world’s countries into",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhat many companies do when planning their global marketing strategies is to organize the world’s countries into",
+          "example_idx": 5,
+          "position_idx": 0
+        },
+        {
+          "activation": 34.728111267089844,
+          "text": "user\nWrite a Python program that can identify and remove duplicate images from a given folder or directory.",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite a Python program that can identify and remove duplicate images from a given folder or directory.",
+          "example_idx": 6,
+          "position_idx": 0
+        },
+        {
+          "activation": 34.728111267089844,
+          "text": "user\nPlease provide a specific cooking method for the salmon, as well as any seasonings or ingredients",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nPlease provide a specific cooking method for the salmon, as well as any seasonings or ingredients",
+          "example_idx": 7,
+          "position_idx": 0
+        },
+        {
+          "activation": 34.728111267089844,
+          "text": "user\nDe León, previewing the speech he will give today, said he will highlight his",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nDe León, previewing the speech he will give today, said he will highlight his",
+          "example_idx": 3,
+          "position_idx": 0
+        },
+        {
+          "activation": 34.728111267089844,
+          "text": "user\nWrite a comprehensive blog post of at least 1000 words about the top ",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite a comprehensive blog post of at least 1000 words about the top ",
+          "example_idx": 2,
+          "position_idx": 0
+        },
+        {
+          "activation": 34.728111267089844,
+          "text": "user\nThese instructions apply to section-based themes (Responsive 6.0+, Retina 4",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nThese instructions apply to section-based themes (Responsive 6.0+, Retina 4",
+          "example_idx": 0,
+          "position_idx": 0
+        },
+        {
+          "activation": 34.728111267089844,
+          "text": "user\nWhich famous landmarks should I visit in London, beyond the usual ones?\nassistant",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhich famous landmarks should I visit in London, beyond the usual ones?\nassistant",
+          "example_idx": 1,
+          "position_idx": 0
+        },
+        {
+          "activation": 34.728111267089844,
+          "text": "user\nWhat are the classic cocktails that every bartender should know how to make and what are their ingredients",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhat are the classic cocktails that every bartender should know how to make and what are their ingredients",
+          "example_idx": 8,
+          "position_idx": 0
+        },
+        {
+          "activation": 34.728111267089844,
+          "text": "user\nWrite step-by-step instructions detailing how to make a creamy and tangy vegan cashew cheese",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite step-by-step instructions detailing how to make a creamy and tangy vegan cashew cheese",
+          "example_idx": 9,
+          "position_idx": 0
+        },
+        {
+          "activation": 34.728111267089844,
+          "text": "user\nExpressing your emotions is what keeps a relationship going. Whether it's a mother-daughter",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nExpressing your emotions is what keeps a relationship going. Whether it's a mother-daughter",
+          "example_idx": 10,
+          "position_idx": 0
+        },
+        {
+          "activation": 34.728111267089844,
+          "text": "user\nHow did the Spanish conquest of the Low Countries in the 16th century impact European",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nHow did the Spanish conquest of the Low Countries in the 16th century impact European",
+          "example_idx": 11,
+          "position_idx": 0
+        }
+      ]
+    },
+    {
+      "feature_id": 7002,
+      "description": "code/politeness/math | start, user, write",
+      "keywords": [
+        "start",
+        "user",
+        "write"
+      ],
+      "tags": [
+        "code",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 3.931942939758301,
+      "max_act": 250.5943145751953,
+      "density": 0.6685222020999713,
+      "avg_fired_token_len": 12.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 250.5943145751953,
+          "text": "user\nWrite a comprehensive blog post of at least 1000 words about the top ",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite a comprehensive blog post of at least 1000 words about the top ",
+          "example_idx": 2,
+          "position_idx": 0
+        },
+        {
+          "activation": 250.5943145751953,
+          "text": "user\nWrite a Python program that can identify and remove duplicate images from a given folder or directory.",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite a Python program that can identify and remove duplicate images from a given folder or directory.",
+          "example_idx": 6,
+          "position_idx": 0
+        },
+        {
+          "activation": 250.5943145751953,
+          "text": "user\nWhat many companies do when planning their global marketing strategies is to organize the world’s countries into",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhat many companies do when planning their global marketing strategies is to organize the world’s countries into",
+          "example_idx": 5,
+          "position_idx": 0
+        },
+        {
+          "activation": 250.5943145751953,
+          "text": "user\nWrite an essay that evaluates the positive and negative influence of social media on personal relationships, citing",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite an essay that evaluates the positive and negative influence of social media on personal relationships, citing",
+          "example_idx": 4,
+          "position_idx": 0
+        },
+        {
+          "activation": 250.5943145751953,
+          "text": "user\nDe León, previewing the speech he will give today, said he will highlight his",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nDe León, previewing the speech he will give today, said he will highlight his",
+          "example_idx": 3,
+          "position_idx": 0
+        },
+        {
+          "activation": 250.5943145751953,
+          "text": "user\nPlease provide a specific cooking method for the salmon, as well as any seasonings or ingredients",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nPlease provide a specific cooking method for the salmon, as well as any seasonings or ingredients",
+          "example_idx": 7,
+          "position_idx": 0
+        },
+        {
+          "activation": 250.5943145751953,
+          "text": "user\nWhich famous landmarks should I visit in London, beyond the usual ones?\nassistant",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhich famous landmarks should I visit in London, beyond the usual ones?\nassistant",
+          "example_idx": 1,
+          "position_idx": 0
+        },
+        {
+          "activation": 250.5943145751953,
+          "text": "user\nThese instructions apply to section-based themes (Responsive 6.0+, Retina 4",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nThese instructions apply to section-based themes (Responsive 6.0+, Retina 4",
+          "example_idx": 0,
+          "position_idx": 0
+        },
+        {
+          "activation": 250.5943145751953,
+          "text": "user\nWhat are the classic cocktails that every bartender should know how to make and what are their ingredients",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhat are the classic cocktails that every bartender should know how to make and what are their ingredients",
+          "example_idx": 8,
+          "position_idx": 0
+        },
+        {
+          "activation": 250.5943145751953,
+          "text": "user\nWrite step-by-step instructions detailing how to make a creamy and tangy vegan cashew cheese",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite step-by-step instructions detailing how to make a creamy and tangy vegan cashew cheese",
+          "example_idx": 9,
+          "position_idx": 0
+        },
+        {
+          "activation": 250.5943145751953,
+          "text": "user\nHow did the Spanish conquest of the Low Countries in the 16th century impact European",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nHow did the Spanish conquest of the Low Countries in the 16th century impact European",
+          "example_idx": 11,
+          "position_idx": 0
+        },
+        {
+          "activation": 250.5943145751953,
+          "text": "user\nExpressing your emotions is what keeps a relationship going. Whether it's a mother-daughter",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nExpressing your emotions is what keeps a relationship going. Whether it's a mother-daughter",
+          "example_idx": 10,
+          "position_idx": 0
+        }
+      ]
+    },
+    {
+      "feature_id": 10918,
+      "description": "code/politeness/math | start, user, write",
+      "keywords": [
+        "start",
+        "user",
+        "write"
+      ],
+      "tags": [
+        "code",
+        "politeness",
+        "math"
+      ],
+      "mean_act": 3.8110744953155518,
+      "max_act": 270.4180908203125,
+      "density": 0.6510702728379301,
+      "avg_fired_token_len": 12.0,
+      "likely_surface_structure": true,
+      "evidence_basis": "co_activation_top_tokens",
+      "interpretation_caveat": "Summary from co-activating tokens only; does not imply this direction causally implements the paraphrased theme. High-magnitude features often track formatting or frequent n-grams under reconstruction training.",
+      "top_examples": [
+        {
+          "activation": 270.4180908203125,
+          "text": "user\nDe León, previewing the speech he will give today, said he will highlight his",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nDe León, previewing the speech he will give today, said he will highlight his",
+          "example_idx": 3,
+          "position_idx": 0
+        },
+        {
+          "activation": 270.4180908203125,
+          "text": "user\nPlease provide a specific cooking method for the salmon, as well as any seasonings or ingredients",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nPlease provide a specific cooking method for the salmon, as well as any seasonings or ingredients",
+          "example_idx": 7,
+          "position_idx": 0
+        },
+        {
+          "activation": 270.4180908203125,
+          "text": "user\nWrite a Python program that can identify and remove duplicate images from a given folder or directory.",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite a Python program that can identify and remove duplicate images from a given folder or directory.",
+          "example_idx": 6,
+          "position_idx": 0
+        },
+        {
+          "activation": 270.4180908203125,
+          "text": "user\nWrite an essay that evaluates the positive and negative influence of social media on personal relationships, citing",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite an essay that evaluates the positive and negative influence of social media on personal relationships, citing",
+          "example_idx": 4,
+          "position_idx": 0
+        },
+        {
+          "activation": 270.4180908203125,
+          "text": "user\nThese instructions apply to section-based themes (Responsive 6.0+, Retina 4",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nThese instructions apply to section-based themes (Responsive 6.0+, Retina 4",
+          "example_idx": 0,
+          "position_idx": 0
+        },
+        {
+          "activation": 270.4180908203125,
+          "text": "user\nWhat many companies do when planning their global marketing strategies is to organize the world’s countries into",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhat many companies do when planning their global marketing strategies is to organize the world’s countries into",
+          "example_idx": 5,
+          "position_idx": 0
+        },
+        {
+          "activation": 270.4180908203125,
+          "text": "user\nWrite a comprehensive blog post of at least 1000 words about the top ",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite a comprehensive blog post of at least 1000 words about the top ",
+          "example_idx": 2,
+          "position_idx": 0
+        },
+        {
+          "activation": 270.4180908203125,
+          "text": "user\nWhich famous landmarks should I visit in London, beyond the usual ones?\nassistant",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhich famous landmarks should I visit in London, beyond the usual ones?\nassistant",
+          "example_idx": 1,
+          "position_idx": 0
+        },
+        {
+          "activation": 270.4180908203125,
+          "text": "user\nWrite step-by-step instructions detailing how to make a creamy and tangy vegan cashew cheese",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWrite step-by-step instructions detailing how to make a creamy and tangy vegan cashew cheese",
+          "example_idx": 9,
+          "position_idx": 0
+        },
+        {
+          "activation": 270.4180908203125,
+          "text": "user\nExpressing your emotions is what keeps a relationship going. Whether it's a mother-daughter",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nExpressing your emotions is what keeps a relationship going. Whether it's a mother-daughter",
+          "example_idx": 10,
+          "position_idx": 0
+        },
+        {
+          "activation": 270.4180908203125,
+          "text": "user\nHow did the Spanish conquest of the Low Countries in the 16th century impact European",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nHow did the Spanish conquest of the Low Countries in the 16th century impact European",
+          "example_idx": 11,
+          "position_idx": 0
+        },
+        {
+          "activation": 270.4180908203125,
+          "text": "user\nWhat are the classic cocktails that every bartender should know how to make and what are their ingredients",
+          "fired_token": "<|im_start|>",
+          "pre_context": "",
+          "post_context": "user\nWhat are the classic cocktails that every bartender should know how to make and what are their ingredients",
+          "example_idx": 8,
+          "position_idx": 0
+        }
+      ]
+    }
+  ]
+}
