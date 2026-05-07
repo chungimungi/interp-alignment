@@ -20,7 +20,7 @@ from queue import Queue
 from tqdm import tqdm
 
 # (base_model_id, base_layer, aligned_model_id, aligned_run_id, trust_remote_code)
-# base_layer is the base model's probe-best layer from chungimungi's SAE CSV.
+# base_layer is the base model's probe-best layer from the SAE CSV.
 DEFAULT_PAIRS: list[tuple[str, int, str, str, bool]] = [
     # SmolLM3-3B @ L19
     ("HuggingFaceTB/SmolLM3-3B", 19, "MInAlA/SmolLM3-3B-DPO-merged",   "smollm-dpo",   True),

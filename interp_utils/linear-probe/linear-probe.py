@@ -8,14 +8,9 @@ matches the reference results regardless of GPU.
 """
 import argparse
 import json
-import os
 import random
 import sys
 from pathlib import Path
-
-_LP_DIR = Path(__file__).resolve().parent
-if str(_LP_DIR) not in sys.path:
-    sys.path.insert(0, str(_LP_DIR))
 
 import numpy as np
 import torch
@@ -35,6 +30,10 @@ from sklearn.metrics import (
 )
 from sklearn.model_selection import StratifiedKFold
 from sklearn.decomposition import PCA
+
+_LP_DIR = Path(__file__).resolve().parent
+if str(_LP_DIR) not in sys.path:
+    sys.path.insert(0, str(_LP_DIR))
 
 from pca_plot import plot_best_layer_pca_figure
 
@@ -310,7 +309,7 @@ def main() -> None:
 
     hooks = [layers[i].register_forward_hook(make_hook(i)) for i in range(num_layers)]
 
-    def extract(texts: list[str], desc: str) -> dict[int, np.ndarray]:
+    def extract(texts: list[str], desc: str, the_model) -> dict[int, np.ndarray]:
         feats: dict[int, list[np.ndarray]] = {i: [] for i in range(num_layers)}
         for i in tqdm(range(0, len(texts), args.batch_size), desc=desc):
             batch = texts[i : i + args.batch_size]
@@ -322,13 +321,13 @@ def main() -> None:
                 padding=True,
             ).to(device)
             with torch.no_grad():
-                _ = model(**inputs)
+                _ = the_model(**inputs)
             for j in range(num_layers):
                 feats[j].append(activations[j])
         return {j: np.concatenate(feats[j], axis=0) for j in range(num_layers)}
 
-    chosen_features = extract(chosen_texts, "Chosen")
-    rejected_features = extract(rejected_texts, "Rejected")
+    chosen_features = extract(chosen_texts, "Chosen", model)
+    rejected_features = extract(rejected_texts, "Rejected", model)
     for h in hooks:
         h.remove()
 

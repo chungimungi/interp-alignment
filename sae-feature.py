@@ -1,37 +1,3 @@
-"""Extract interpretable feature descriptions from a trained Batch-TopK SAE.
-
-Pipeline (per ``--sae`` HF repo id):
-
-If the output directory already contains a full artefact set from a previous
-run, the script exits early without reloading models (delete those files to
-force a recomputation).
-
-1. Load the matching base model + tokenizer (from a small built-in catalog or
-   ``--base-model`` / ``--layer`` overrides). HF auth uses ``HF_TOKEN`` from the
-   nearest ``.env`` file, since both the base models (MInAlA private repos) and
-   the SAEs (chungimungi private repos) require a token.
-2. Stream a chat-formatted slice of UltraChat (default) or any HF dataset, build
-   batches with the model's chat template, and capture the residual-stream
-   activations at ``model.layers[<layer>]`` via a forward hook.
-3. Encode the activations through the SAE -> ``feature_acts`` of shape
-   ``[num_tokens, d_sae]``. Maintain the top-N highest activating tokens per
-   feature with a streaming top-k merge so we never sort the full
-   ``[num_tokens, d_sae]`` matrix.
-4. For each selected feature, decode a context window around the firing token
-   and emit a *strictly evidence-based* short description (top content words
-   from the firing tokens, plus tag heuristics: code / numbers / punctuation /
-   whitespace / title-case). No LLM hallucinations.
-5. Save:
-    * ``feature_descriptions.json`` (list of ``{feature_id, description, top_examples}``)
-    * ``feature_stats.parquet`` (per-feature mean act, max act, density, l0 share)
-    * ``replot_metadata.npz`` (everything needed to remake the plots without rerun)
-    * NeurIPS-style PDF figures (top-feature bar, density vs. mean scatter,
-      activation heatmap for top-N features).
-
-The script also computes a base-vs-aligned delta when ``--base-sae`` is provided
-(aggregate sparsity / activation distribution shifts; per-feature alignment is
-not meaningful between independently-trained SAEs).
-"""
 from __future__ import annotations
 
 import argparse
@@ -59,51 +25,110 @@ import matplotlib.ticker as mticker
 import seaborn as sns
 
 DEFAULT_SAE_CATALOG: dict[str, str] = {
-    # Llama-3.2-3B family.
-    "chungimungi/SAE-MInAlA_Llama-3.2-3B-DPO-merged-layer_13_best": "MInAlA/Llama-3.2-3B-DPO-merged",
-    "chungimungi/SAE-MInAlA_Llama-3.2-3B-Instruct-PPO-merged-layer_11_best": "MInAlA/Llama-3.2-3B-Instruct-PPO-merged",
-    "chungimungi/SAE-MInAlA_Llama-3.2-3B-Instruct-KTO-merged-layer_24_best": "MInAlA/Llama-3.2-3B-Instruct-KTO-merged",
-    "chungimungi/SAE-MInAlA_Llama-3.2-3B-Instruct-GRPO-merged-layer_13_best": "MInAlA/Llama-3.2-3B-Instruct-GRPO-merged",
-    "chungimungi/SAE-MInAlA_Llama-3.2-3B-ORPO-merged-layer_25_best": "MInAlA/Llama-3.2-3B-ORPO-merged",
-    "chungimungi/SAE-MInAlA_Llama-3.2-3B-SimPO-merged-layer_11_best": "MInAlA/Llama-3.2-3B-SimPO-merged",
-    "chungimungi/SAE-meta-llama_Llama-3.2-3B-Instruct-layer_11_best": "meta-llama/Llama-3.2-3B-Instruct",
-    # Qwen3-4B family.
-    "chungimungi/SAE-MInAlA_Qwen3-4B-Instruct-2507-GRPO-merged-layer_20_best": "MInAlA/Qwen3-4B-Instruct-2507-GRPO-merged",
-    "chungimungi/SAE-MInAlA_Qwen3-4B-Instruct-2507-DPO-merged-layer_22_best": "MInAlA/Qwen3-4B-Instruct-2507-DPO-merged",
-    "chungimungi/SAE-MInAlA_Qwen3-4B-Instruct-2507-SimPO-merged-layer_21_best": "MInAlA/Qwen3-4B-Instruct-2507-SimPO-merged",
-    "chungimungi/SAE-MInAlA_Qwen3-4B-Instruct-2507-KTO-merged-layer_24_best": "MInAlA/Qwen3-4B-Instruct-2507-KTO-merged",
-    "chungimungi/SAE-MInAlA_Qwen3-4B-Instruct-2507-PPO-merged-layer_21_best": "MInAlA/Qwen3-4B-Instruct-2507-PPO-merged",
-    "chungimungi/SAE-MInAlA_Qwen3-4B-ORPO-merged-layer_22_best": "MInAlA/Qwen3-4B-ORPO-merged",
-    "chungimungi/SAE-Qwen_Qwen3-4B-Instruct-2507-layer_24_best": "Qwen/Qwen3-4B-Instruct-2507",
-    # SmolLM3-3B family.
-    "chungimungi/SAE-HuggingFaceTB_SmolLM3-3B-layer_19_best": "HuggingFaceTB/SmolLM3-3B",
-    "chungimungi/SAE-MInAlA_SmolLM3-3B-GRPO-merged-layer_17_best": "MInAlA/SmolLM3-3B-GRPO-merged",
-    "chungimungi/SAE-MInAlA_SmolLM3-3B-DPO-merged-layer_18_best": "MInAlA/SmolLM3-3B-DPO-merged",
-    "chungimungi/SAE-MInAlA_SmolLM3-3B-SimPO-merged-layer_18_best": "MInAlA/SmolLM3-3B-SimPO-merged",
-    "chungimungi/SAE-MInAlA_SmolLM3-3B-PPO-merged-layer_18_best": "MInAlA/SmolLM3-3B-PPO-merged",
-    "chungimungi/SAE-MInAlA_SmolLM3-3B-ORPO-merged-layer_18_best": "MInAlA/SmolLM3-3B-ORPO-merged",
-    "chungimungi/SAE-MInAlA_SmolLM3-3B-KTO-merged-layer_19_best": "MInAlA/SmolLM3-3B-KTO-merged",
+    "qwen3-4b-layer_11_best": "HuggingFaceTB/SAE-Qwen3-4B-layer_11_best",
+    "qwen3-4b-layer_11_mid": "HuggingFaceTB/SAE-Qwen3-4B-layer_11_mid",
+    "llama-3.2-3b-layer_11_best": "HuggingFaceTB/SAE-Llama-3.2-3B-layer_11_best",
+    "llama-3.2-3b-layer_11_mid": "HuggingFaceTB/SAE-Llama-3.2-3B-layer_11_mid",
+    "smollm3-layer_10_best": "HuggingFaceTB/SAE-SmolLM3-layer_10_best",
+    "smollm3-layer_10_mid": "HuggingFaceTB/SAE-SmolLM3-layer_10_mid",
 }
 
 LAYER_RE = re.compile(r"[-_]layer_(\d+)_(best|mid)$", re.IGNORECASE)
 
-# Stop-words / function tokens we filter out when summarising top contexts.
-_STOPWORDS = {
-    "the", "a", "an", "and", "or", "but", "if", "then", "of", "to", "in", "on",
-    "for", "with", "at", "by", "from", "is", "are", "was", "were", "be", "been",
-    "being", "as", "it", "its", "this", "that", "these", "those", "i", "you",
-    "he", "she", "we", "they", "them", "his", "her", "our", "your", "their",
-    "do", "does", "did", "doing", "done", "have", "has", "had", "having", "not",
-    "no", "yes", "so", "such", "than", "what", "which", "who", "whom", "whose",
-    "when", "where", "why", "how", "can", "could", "should", "would", "will",
-    "may", "might", "must", "shall", "into", "out", "up", "down", "over",
-    "under", "about", "after", "before", "more", "most", "less", "least", "some",
-    "any", "all", "each", "every", "few", "many", "much", "one", "two", "first",
-    "second", "also", "just", "only", "other", "another", "same", "different",
-    "very", "really", "quite", "now", "here", "there", "well", "even", "still",
-    "yet", "than", "while", "because", "since", "though", "although", "however",
-    "therefore", "thus", "however", "moreover",
-}
+PAPER_MAIN_TOP_FEATURES_DEFAULT = 5
+PAPER_APPENDIX_TOP_FEATURES = 40
+APPENDIX_PLOTS_SUBDIR = "appendix"
+
+_STOPWORDS_CACHE: dict[str, frozenset[str]] = {}
+
+
+def get_nltk_stopwords(lang: str = "english") -> frozenset[str]:
+    """Return NLTK stopwords for ``lang`` (downloads ``stopwords`` corpus on first use)."""
+    key = (lang or "english").lower()
+    if key in _STOPWORDS_CACHE:
+        return _STOPWORDS_CACHE[key]
+    try:
+        from nltk.corpus import stopwords  # type: ignore[import-untyped]
+    except ImportError as e:
+        raise SystemExit(
+            "nltk is required for stopwords. Install with: pip install nltk"
+        ) from e
+    try:
+        words = stopwords.words(key)
+    except LookupError:
+        # Offline fallback: many cluster environments block outbound HTTPS and NLTK's
+        # downloader is noisy (SSL/cert failures). If the corpus isn't present, we
+        # skip network access and fall back deterministically.
+        if key not in {"english", "en"}:
+            words = []
+        else:
+            try:
+                from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS  # noqa: PLC0415
+
+                words = list(ENGLISH_STOP_WORDS)
+            except Exception:  # noqa: BLE001
+                words = [
+                    "the",
+                    "a",
+                    "an",
+                    "and",
+                    "or",
+                    "but",
+                    "if",
+                    "then",
+                    "of",
+                    "to",
+                    "in",
+                    "on",
+                    "for",
+                    "with",
+                    "at",
+                    "by",
+                    "from",
+                    "is",
+                    "are",
+                    "was",
+                    "were",
+                    "be",
+                    "been",
+                    "being",
+                    "as",
+                    "it",
+                    "this",
+                    "that",
+                    "these",
+                    "those",
+                    "i",
+                    "you",
+                    "we",
+                    "they",
+                    "not",
+                ]
+    sw = frozenset(w.lower() for w in words)
+    _STOPWORDS_CACHE[key] = sw
+    return sw
+
+
+def interpretation_methodology_block(*, stopwords_lang: str) -> dict[str, Any]:
+    """Static text persisted in JSON so downstream readers see scope and limits."""
+    return {
+        "why_this_analysis": [
+            "Record which latent directions get large activations under the chosen corpus and chat template.",
+            "Separate dead or ultra-rare features from dense ones using per-feature statistics.",
+            "Provide concrete token contexts for follow-up causal work (ablation, patching, steering), not as final semantics.",
+        ],
+        "known_limitations": [
+            "SAEs optimize reconstruction under sparsity, not axis-aligned semantics; strong features often track templates, delimiters, and high-frequency n-grams.",
+            "Magnitude on frequent structural tokens can overshadow rarer semantic concepts in top-k mining.",
+            "Human-readable labels are post-hoc summaries of co-activation with text; they do not prove a feature causally implements a behavior.",
+        ],
+        "keyword_summaries": (
+            "Content words are ranked after NLTK stopword removal; tags are simple surface heuristics. "
+            "Use likely_surface_structure to flag obvious formatting-like patterns."
+        ),
+        "stopwords_source": "nltk.corpus.stopwords",
+        "stopwords_lang": stopwords_lang,
+    }
 
 _CODE_HINTS = {
     "def", "class", "import", "from", "return", "if", "else", "elif", "while",
@@ -168,6 +193,14 @@ def _sanitize(name: str) -> str:
     return re.sub(r"[^A-Za-z0-9_.-]", "_", name)
 
 
+def output_run_dir(output_root: str, sae_repo: str, family_subdir: str | None) -> Path:
+    """``<output_root>[/family]/<sae_sanitized>`` for organised multi-family runs."""
+    p = Path(output_root).expanduser()
+    if family_subdir:
+        p = p / family_subdir.strip().strip("/")
+    return p / _sanitize(sae_repo)
+
+
 def _plot_short_model_name(base_model_id: str) -> str:
     """Short label for figure subtitles: drop HF org, strip trailing ``-merged``."""
     tail = base_model_id.rsplit("/", 1)[-1]
@@ -227,13 +260,49 @@ def replot_sae_feature_plots_from_artifacts(out_root: Path) -> None:
     plot_top_feature_activation_heatmap(
         top_feature_ids=np.array([int(r["feature_id"]) for r in rows], dtype=np.int64),
         top_acts_matrix=top_acts_matrix,
-        title=(
-            "Top examples × top features (activation magnitude)\n"
-            f"{plot_label} (layer {layer_idx})"
-        ),
         out_path=plots_dir / "top_examples_heatmap",
     )
     print(f"  replotted PDFs under {plots_dir}", flush=True)
+
+    # Optional appendix plots (if present).
+    appendix_json = out_root / "feature_descriptions_appendix.json"
+    appendix_npz = out_root / "replot_metadata_appendix.npz"
+    if appendix_json.is_file() and appendix_npz.is_file():
+        meta2 = json.loads(appendix_json.read_text(encoding="utf-8"))
+        rows2: list[dict[str, Any]] = meta2["features"]
+        z2 = np.load(appendix_npz, allow_pickle=True)
+        selected2 = z2["selected_feature_ids"]
+        top_acts_matrix2 = z2["top_acts_matrix"]
+        sub = str(meta2.get("appendix_subdir", "appendix")).strip() or "appendix"
+        plots2_dir = plots_dir / sub
+        plots2_dir.mkdir(parents=True, exist_ok=True)
+
+        plot_top_features_bar(
+            feature_ids=np.array([int(r["feature_id"]) for r in rows2], dtype=np.int64),
+            mean_acts=np.array([float(r["mean_act"]) for r in rows2], dtype=np.float32),
+            descriptions=[str(r["description"]) for r in rows2],
+            title=(
+                f"Top {len(rows2)} features by mean activation (appendix)\n"
+                f"{plot_label} (layer {layer_idx})"
+            ),
+            out_path=plots2_dir / "top_features_mean_activation",
+        )
+        plot_density_vs_mean(
+            mean_acts=mean_act,
+            density=density,
+            selected=selected2,
+            title=(
+                f"Feature density vs. mean activation (appendix)\n"
+                f"{plot_label} (layer {layer_idx})"
+            ),
+            out_path=plots2_dir / "density_vs_mean",
+        )
+        plot_top_feature_activation_heatmap(
+            top_feature_ids=np.array([int(r["feature_id"]) for r in rows2], dtype=np.int64),
+            top_acts_matrix=top_acts_matrix2,
+            out_path=plots2_dir / "top_examples_heatmap",
+        )
+        print(f"  replotted appendix PDFs under {plots2_dir}", flush=True)
 
 
 def _outputs_complete(out_root: Path, *, baseline_npz: str | None) -> bool:
@@ -533,6 +602,18 @@ class _ResidualCapture:
         self.residual = residual
 
 
+def _forward_backbone_only(model, *, input_ids: torch.Tensor, attention_mask: torch.Tensor):
+    """
+    Forward the *backbone* (no lm_head/logits) to reduce VRAM.
+    Works for standard HF CausalLM wrappers that expose ``model.model``.
+    """
+    inner = getattr(model, "model", None)
+    if inner is None:
+        # Fall back to full forward; still works, just uses more memory.
+        return model(input_ids=input_ids, attention_mask=attention_mask)
+    return inner(input_ids=input_ids, attention_mask=attention_mask, use_cache=False)
+
+
 @dataclass
 class FeatureStats:
     """Streaming summaries per SAE feature."""
@@ -700,11 +781,16 @@ def get_feature_activations(
         for i, batch in enumerate(batches):
             ids = batch["input_ids"].to(device, non_blocking=True)
             mask = batch["attention_mask"].to(device, non_blocking=True)
+            # Use backbone-only forward when possible (avoid lm_head logits).
             try:
-                model(input_ids=ids, attention_mask=mask, use_cache=False)
+                _forward_backbone_only(model, input_ids=ids, attention_mask=mask)
             except TypeError:
-                # Some HF wrappers reject ``use_cache``; retry without it.
-                model(input_ids=ids, attention_mask=mask)
+                # Some models reject use_cache; retry without it.
+                inner = getattr(model, "model", None)
+                if inner is not None:
+                    inner(input_ids=ids, attention_mask=mask)
+                else:
+                    model(input_ids=ids, attention_mask=mask)
             assert capture.residual is not None, "Residual hook did not fire"
             resid = capture.residual.to(sae_dtype)
             feats = sae.encode(resid)  # [B, T, d_sae]
@@ -776,14 +862,15 @@ def get_top_examples(
     return out
 
 
-def _content_words(text: str) -> list[str]:
+def _content_words(text: str, stopwords: frozenset[str]) -> list[str]:
     words = re.findall(r"[A-Za-z][A-Za-z\-']{1,}", text.lower())
-    return [w for w in words if w not in _STOPWORDS and len(w) > 2]
+    return [w for w in words if w not in stopwords and len(w) > 2]
 
 
 def interpret_feature(
     examples: list[TopExample],
     *,
+    stopwords: frozenset[str],
     max_words: int = 3,
 ) -> dict[str, Any]:
     """Produce a strictly-evidence-based one-phrase description of a feature.
@@ -793,6 +880,8 @@ def interpret_feature(
         ``keywords``: top content words across firing tokens / context.
         ``tags``: structural tags inferred from token shape.
         ``avg_fired_token_len``: convenience signal for "subword fragment" features.
+        ``likely_surface_structure``: heuristic flag for template/format-like fires.
+        ``evidence_basis``: fixed string describing what the label is grounded in.
     """
     if not examples:
         return {
@@ -800,6 +889,11 @@ def interpret_feature(
             "keywords": [],
             "tags": ["dead"],
             "avg_fired_token_len": 0.0,
+            "likely_surface_structure": False,
+            "evidence_basis": "co_activation_top_tokens",
+            "interpretation_caveat": (
+                "No firing examples; cannot summarize. Not evidence the feature is dead globally."
+            ),
         }
 
     fired = [e.fired_token for e in examples]
@@ -807,10 +901,10 @@ def interpret_feature(
 
     fired_words = []
     for tok in fired:
-        fired_words.extend(_content_words(tok))
+        fired_words.extend(_content_words(tok, stopwords))
     context_words = []
     for ctx in contexts:
-        context_words.extend(_content_words(ctx))
+        context_words.extend(_content_words(ctx, stopwords))
 
     counts: dict[str, int] = {}
     for w in fired_words:
@@ -849,11 +943,25 @@ def interpret_feature(
         body = ", ".join(keywords) if keywords else ""
         description = " | ".join([s for s in (head, body) if s])
 
+    structural_tags = {"whitespace", "punctuation"}
+    unique_fired = {t.strip() for t in fired if t.strip()}
+    likely_surface = bool(structural_tags.intersection(tags)) or (
+        len(examples) >= 4 and len(unique_fired) <= 2
+    )
+    caveat = (
+        "Summary from co-activating tokens only; does not imply this direction "
+        "causally implements the paraphrased theme. High-magnitude features often "
+        "track formatting or frequent n-grams under reconstruction training."
+    )
+
     return {
         "description": description,
         "keywords": keywords,
         "tags": tags,
         "avg_fired_token_len": float(np.mean([len(t) for t in fired])) if fired else 0.0,
+        "likely_surface_structure": likely_surface,
+        "evidence_basis": "co_activation_top_tokens",
+        "interpretation_caveat": caveat,
     }
 
 
@@ -879,6 +987,7 @@ def configure_plot_style() -> None:
             "lines.markersize": 10.0,
             "figure.dpi": 600,
             "savefig.dpi": 600,
+            "savefig.bbox": "tight",
         }
     )
     sns.set_style("whitegrid", {"grid.alpha": 0.3, "axes.edgecolor": "0.15"})
@@ -892,10 +1001,7 @@ def plot_top_features_bar(
     out_path: Path,
 ) -> None:
     n = len(feature_ids)
-    fig, ax = plt.subplots(
-        figsize=(max(10.0, 0.45 * n + 4.0), 6.5),
-        layout="constrained",
-    )
+    fig, ax = plt.subplots(figsize=(max(10.0, 0.45 * n + 4.0), 6.5))
     palette = sns.color_palette("viridis", n)
     bars = ax.bar(np.arange(n), mean_acts, color=palette, edgecolor="black", linewidth=0.8)
     ax.set_xticks(np.arange(n))
@@ -907,7 +1013,8 @@ def plot_top_features_bar(
     ax.yaxis.set_major_locator(mticker.MaxNLocator(nbins=6))
     ax.grid(axis="y", alpha=0.3)
     ax.set_axisbelow(True)
-    fig.savefig(out_path.with_suffix(".pdf"), bbox_inches="tight", pad_inches=0.12)
+    fig.tight_layout()
+    fig.savefig(out_path.with_suffix(".pdf"))
     plt.close(fig)
     # mark vars to satisfy linters
     del bars, palette
@@ -920,7 +1027,7 @@ def plot_density_vs_mean(
     title: str,
     out_path: Path,
 ) -> None:
-    fig, ax = plt.subplots(figsize=(8.5, 6.5), layout="constrained")
+    fig, ax = plt.subplots(figsize=(8.5, 6.5))
     alive = mean_acts > 0
     ax.scatter(
         density[alive],
@@ -943,28 +1050,22 @@ def plot_density_vs_mean(
         )
     ax.set_xscale("symlog", linthresh=1e-4)
     ax.set_yscale("symlog", linthresh=1e-4)
+    # Per-feature: fraction of non-padding tokens with positive activation.
     ax.set_xlabel(
-        r"Activation density $\left(\mathbb{E}_t[\mathbf{1}\{a_t>0\}]\right)$"
+        r"Activation density: $\frac{1}{N}\sum_{t=1}^{N}\mathbf{1}[a_t>0]$"
     )
     ax.set_ylabel("Mean activation")
     ax.set_title(title)
-    ax.legend(
-        frameon=True,
-        fancybox=True,
-        framealpha=0.95,
-        loc="upper left",
-        bbox_to_anchor=(0.02, 0.98),
-        borderaxespad=0.0,
-    )
+    ax.legend(frameon=True, fancybox=True, framealpha=0.95, loc="best")
     ax.grid(alpha=0.3)
-    fig.savefig(out_path.with_suffix(".pdf"), bbox_inches="tight", pad_inches=0.12)
+    fig.tight_layout()
+    fig.savefig(out_path.with_suffix(".pdf"))
     plt.close(fig)
 
 
 def plot_top_feature_activation_heatmap(
     top_feature_ids: np.ndarray,
     top_acts_matrix: np.ndarray,
-    title: str,
     out_path: Path,
 ) -> None:
     """Heatmap of top examples (rows) x top features (cols)."""
@@ -972,22 +1073,21 @@ def plot_top_feature_activation_heatmap(
         return
     n_examples, n_features = top_acts_matrix.shape
     fig, ax = plt.subplots(
-        figsize=(max(8.0, 0.45 * n_features + 4.0), max(6.0, 0.32 * n_examples + 2.0)),
-        layout="constrained",
+        figsize=(max(8.0, 0.45 * n_features + 4.0), max(6.0, 0.32 * n_examples + 2.0))
     )
     sns.heatmap(
         top_acts_matrix,
         ax=ax,
         cmap="magma",
-        cbar_kws={"label": "Activation", "shrink": 0.82, "pad": 0.02},
+        cbar_kws={"label": "Activation"},
         linewidths=0.0,
         xticklabels=[str(f) for f in top_feature_ids],
         yticklabels=[f"ex {i + 1}" for i in range(n_examples)],
     )
     ax.set_xlabel("SAE feature ID")
     ax.set_ylabel("Top-N firing examples")
-    ax.set_title(title)
-    fig.savefig(out_path.with_suffix(".pdf"), bbox_inches="tight", pad_inches=0.12)
+    fig.tight_layout()
+    fig.savefig(out_path.with_suffix(".pdf"))
     plt.close(fig)
 
 
@@ -1003,7 +1103,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument(
         "--sae",
         default=None,
-        help="HF repo id of the trained SAE (e.g. chungimungi/SAE-...-layer_19_best). "
+        help="HF repo id of the trained SAE (e.g. your_username/SAE-...-layer_19_best). "
         "Not required with --replot-plots-under.",
     )
     p.add_argument(
@@ -1025,8 +1125,12 @@ def parse_args() -> argparse.Namespace:
     p.add_argument(
         "--top-features",
         type=int,
-        default=40,
-        help="How many features to keep for interpretation / plotting (3.5: 20-50).",
+        default=PAPER_MAIN_TOP_FEATURES_DEFAULT,
+        help=(
+            "How many features for the primary JSON / main plots. "
+            f"Appendix always adds top-{PAPER_APPENDIX_TOP_FEATURES} plots under "
+            f"plots/{APPENDIX_PLOTS_SUBDIR}/ when that set differs from the main set."
+        ),
     )
     p.add_argument(
         "--top-examples",
@@ -1068,12 +1172,22 @@ def parse_args() -> argparse.Namespace:
     p.add_argument(
         "--output-root",
         default="output/sae_features",
-        help="All artefacts are written under <output-root>/<sae_repo_sanitized>/.",
+        help="Artefacts under <output-root>[/<output-family-subdir>]/<sae_repo_sanitized>/.",
+    )
+    p.add_argument(
+        "--output-family-subdir",
+        default=None,
+        help="Optional folder under output-root (e.g. Llama-3.2-3B-Instruct) to group runs by model family.",
     )
     p.add_argument(
         "--sae-cache-dir",
         default="cache/sae_snapshots",
         help="Local cache directory for SAE snapshots.",
+    )
+    p.add_argument(
+        "--stopwords-lang",
+        default="english",
+        help="NLTK stopwords language (passed to nltk.corpus.stopwords.words).",
     )
     p.add_argument(
         "--baseline-feature-stats",
@@ -1106,7 +1220,8 @@ def write_readable_table(
     """Plain-text table with feature id, description, top examples."""
     lines: list[str] = []
     head = (
-        f"{'feature':>8s}  {'mean':>9s}  {'density':>9s}  {'description':<36s}  examples"
+        f"{'feature':>8s}  {'surf':>4s}  {'mean':>9s}  {'density':>9s}  "
+        f"{'description':<32s}  examples"
     )
     lines.append(head)
     lines.append("-" * len(head))
@@ -1117,10 +1232,11 @@ def write_readable_table(
             if len(snippet) > 80:
                 snippet = snippet[:77] + "..."
             ex_lines.append(f"      [{ex['activation']:.3f}] ...{snippet}...")
-        desc = row["description"][:34]
+        surf = "y" if row.get("likely_surface_structure") else "."
+        desc = row["description"][:30]
         lines.append(
-            f"{row['feature_id']:>8d}  {row['mean_act']:>9.4f}  "
-            f"{row['density']:>9.4f}  {desc:<36s}"
+            f"{row['feature_id']:>8d}  {surf:>4s}  {row['mean_act']:>9.4f}  "
+            f"{row['density']:>9.4f}  {desc:<32s}"
         )
         lines.extend(ex_lines)
     out_path.write_text("\n".join(lines) + "\n")
@@ -1174,7 +1290,7 @@ def main() -> None:
     if args.replot_plots_only:
         if not args.sae:
             raise SystemExit("--sae is required with --replot-plots-only")
-        out_root = Path(args.output_root) / _sanitize(args.sae)
+        out_root = output_run_dir(args.output_root, args.sae, args.output_family_subdir)
         configure_plot_style()
         print(f"[replot-plots-only] {out_root}", flush=True)
         replot_sae_feature_plots_from_artifacts(out_root)
@@ -1196,12 +1312,12 @@ def main() -> None:
     model_dtype = _resolve_dtype(args.model_dtype)
     sae_dtype = _resolve_dtype(args.sae_dtype)
 
-    out_root = Path(args.output_root) / _sanitize(sae_repo)
+    out_root = output_run_dir(args.output_root, sae_repo, args.output_family_subdir)
     out_root.mkdir(parents=True, exist_ok=True)
     sae_cache = Path(args.sae_cache_dir)
     sae_cache.mkdir(parents=True, exist_ok=True)
 
-    print(f"=== sae-feature.py ===", flush=True)
+    print("=== sae-feature.py ===", flush=True)
     print(f"  SAE repo:    {sae_repo}", flush=True)
     print(f"  Base model:  {base_model_id}", flush=True)
     print(f"  Layer:       {layer_idx}", flush=True)
@@ -1271,71 +1387,113 @@ def main() -> None:
         flush=True,
     )
 
-    selected = select_feature_ids(
+    selected_main = select_feature_ids(
         stats,
         selection=args.selection,
         top_features=args.top_features,
         min_density=args.min_density,
     )
-    print(f"[select] {len(selected)} features retained for interpretation.", flush=True)
-
-    interpreted_rows: list[dict[str, Any]] = []
-    top_acts_matrix = np.zeros((args.top_examples, len(selected)), dtype=np.float32)
-    for col, fid in enumerate(selected):
-        examples = get_top_examples(
-            feature_idx=int(fid),
-            tracker=tracker,
-            tokenizer=tokenizer,
-            top_n=args.top_examples,
-            window=args.context_window,
+    print(
+        f"[select] {len(selected_main)} features retained for interpretation (main).",
+        flush=True,
+    )
+    selected_appendix = select_feature_ids(
+        stats,
+        selection=args.selection,
+        top_features=PAPER_APPENDIX_TOP_FEATURES,
+        min_density=args.min_density,
+    )
+    appendix_differs = len(selected_appendix) > 0 and (
+        len(selected_appendix) != len(selected_main)
+        or not np.array_equal(selected_appendix, selected_main)
+    )
+    if appendix_differs:
+        print(
+            f"[select] {len(selected_appendix)} features for appendix plots "
+            f"(under plots/{APPENDIX_PLOTS_SUBDIR}/; fixed top-{PAPER_APPENDIX_TOP_FEATURES}).",
+            flush=True,
         )
-        info = interpret_feature(examples)
-        for row, ex in enumerate(examples):
-            top_acts_matrix[row, col] = ex.activation
-        interpreted_rows.append(
-            {
-                "feature_id": int(fid),
-                "description": info["description"],
-                "keywords": info["keywords"],
-                "tags": info["tags"],
-                "mean_act": float(stats["mean_act"][fid]),
-                "max_act": float(stats["max_act"][fid]),
-                "density": float(stats["density"][fid]),
-                "avg_fired_token_len": info["avg_fired_token_len"],
-                "top_examples": [
-                    {
-                        "activation": ex.activation,
-                        "text": ex.text,
-                        "fired_token": ex.fired_token,
-                        "pre_context": ex.pre_context,
-                        "post_context": ex.post_context,
-                        "example_idx": ex.example_idx,
-                        "position_idx": ex.position_idx,
-                    }
-                    for ex in examples
-                ],
-            }
+    elif len(selected_appendix) > 0:
+        print(
+            "[select] appendix plots skipped (same feature set as main; "
+            "e.g. --top-features matches appendix budget).",
+            flush=True,
         )
 
-    # ------------------- persist results -------------------
+    print(
+        "[interpret] NLTK stopwords + co-activation summaries (see "
+        "interpretation_methodology in JSON; labels are not causal claims).",
+        flush=True,
+    )
+    stopwords = get_nltk_stopwords(args.stopwords_lang)
+    methodology = interpretation_methodology_block(stopwords_lang=args.stopwords_lang)
+
+    def _interpret(selected_ids: np.ndarray) -> tuple[list[dict[str, Any]], np.ndarray]:
+        rows: list[dict[str, Any]] = []
+        acts = np.zeros((args.top_examples, len(selected_ids)), dtype=np.float32)
+        for col, fid in enumerate(selected_ids):
+            examples = get_top_examples(
+                feature_idx=int(fid),
+                tracker=tracker,
+                tokenizer=tokenizer,
+                top_n=args.top_examples,
+                window=args.context_window,
+            )
+            info = interpret_feature(examples, stopwords=stopwords)
+            for row, ex in enumerate(examples):
+                acts[row, col] = ex.activation
+            rows.append(
+                {
+                    "feature_id": int(fid),
+                    "description": info["description"],
+                    "keywords": info["keywords"],
+                    "tags": info["tags"],
+                    "mean_act": float(stats["mean_act"][fid]),
+                    "max_act": float(stats["max_act"][fid]),
+                    "density": float(stats["density"][fid]),
+                    "avg_fired_token_len": info["avg_fired_token_len"],
+                    "likely_surface_structure": info["likely_surface_structure"],
+                    "evidence_basis": info["evidence_basis"],
+                    "interpretation_caveat": info["interpretation_caveat"],
+                    "top_examples": [
+                        {
+                            "activation": ex.activation,
+                            "text": ex.text,
+                            "fired_token": ex.fired_token,
+                            "pre_context": ex.pre_context,
+                            "post_context": ex.post_context,
+                            "example_idx": ex.example_idx,
+                            "position_idx": ex.position_idx,
+                        }
+                        for ex in examples
+                    ],
+                }
+            )
+        return rows, acts
+
+    interpreted_rows, top_acts_matrix = _interpret(selected_main)
+    appendix_rows: list[dict[str, Any]] | None = None
+    appendix_top_acts: np.ndarray | None = None
+    if appendix_differs:
+        appendix_rows, appendix_top_acts = _interpret(selected_appendix)
+
+    # ------------------- persist results (main) -------------------
     json_path = out_root / "feature_descriptions.json"
+    payload = {
+        "sae_repo": sae_repo,
+        "base_model": base_model_id,
+        "layer": layer_idx,
+        "selection": args.selection,
+        "min_density": args.min_density,
+        "stopwords_lang": args.stopwords_lang,
+        "num_prompts": len(prompts),
+        "context_size": args.context_size,
+        "total_tokens": int(stats["total_tokens"]),
+        "interpretation_methodology": methodology,
+        "features": interpreted_rows,
+    }
     with json_path.open("w") as f:
-        json.dump(
-            {
-                "sae_repo": sae_repo,
-                "base_model": base_model_id,
-                "layer": layer_idx,
-                "selection": args.selection,
-                "min_density": args.min_density,
-                "num_prompts": len(prompts),
-                "context_size": args.context_size,
-                "total_tokens": int(stats["total_tokens"]),
-                "features": interpreted_rows,
-            },
-            f,
-            indent=2,
-            ensure_ascii=False,
-        )
+        json.dump(payload, f, indent=2, ensure_ascii=False)
     print(f"  wrote {json_path}", flush=True)
 
     table_path = out_root / "feature_descriptions.txt"
@@ -1353,14 +1511,44 @@ def main() -> None:
         density=stats["density"].astype(np.float32),
         nonzero_count=stats["nonzero_count"].astype(np.int64),
         total_tokens=np.int64(stats["total_tokens"]),
-        selected_feature_ids=selected.astype(np.int64),
-        selected_descriptions=np.array(
-            [r["description"] for r in interpreted_rows], dtype=object
-        ),
+        selected_feature_ids=selected_main.astype(np.int64),
+        selected_descriptions=np.array([r["description"] for r in interpreted_rows], dtype=object),
         top_acts_matrix=top_acts_matrix.astype(np.float32),
         layer=np.int64(layer_idx),
     )
     print(f"  wrote {npz_path}", flush=True)
+
+    # Optional appendix artifacts.
+    if appendix_rows is not None and appendix_top_acts is not None:
+        appendix_json = out_root / "feature_descriptions_appendix.json"
+        appendix_payload = dict(payload)
+        appendix_payload["features"] = appendix_rows
+        appendix_payload["appendix_top_features"] = int(PAPER_APPENDIX_TOP_FEATURES)
+        appendix_payload["appendix_subdir"] = APPENDIX_PLOTS_SUBDIR
+        with appendix_json.open("w") as f:
+            json.dump(appendix_payload, f, indent=2, ensure_ascii=False)
+        print(f"  wrote {appendix_json}", flush=True)
+
+        appendix_table = out_root / "feature_descriptions_appendix.txt"
+        write_readable_table(appendix_rows, appendix_table)
+        print(f"  wrote {appendix_table}", flush=True)
+
+        appendix_npz = out_root / "replot_metadata_appendix.npz"
+        np.savez(
+            appendix_npz,
+            feature_ids_all=np.arange(d_sae, dtype=np.int64),
+            mean_act=stats["mean_act"].astype(np.float32),
+            std_act=stats["std_act"].astype(np.float32),
+            max_act=stats["max_act"].astype(np.float32),
+            density=stats["density"].astype(np.float32),
+            nonzero_count=stats["nonzero_count"].astype(np.int64),
+            total_tokens=np.int64(stats["total_tokens"]),
+            selected_feature_ids=selected_appendix.astype(np.int64),
+            selected_descriptions=np.array([r["description"] for r in appendix_rows], dtype=object),
+            top_acts_matrix=appendix_top_acts.astype(np.float32),
+            layer=np.int64(layer_idx),
+        )
+        print(f"  wrote {appendix_npz}", flush=True)
 
     # ------------------- plots -------------------
     configure_plot_style()
@@ -1383,24 +1571,49 @@ def main() -> None:
     plot_density_vs_mean(
         mean_acts=stats["mean_act"],
         density=stats["density"],
-        selected=selected,
+        selected=selected_main,
         title=f"Feature density vs. mean activation\n{plot_label} (layer {layer_idx})",
         out_path=plots_dir / "density_vs_mean",
     )
     print(f"  wrote {plots_dir / 'density_vs_mean.pdf'}", flush=True)
 
     plot_top_feature_activation_heatmap(
-        top_feature_ids=np.array(
-            [r["feature_id"] for r in interpreted_rows], dtype=np.int64
-        ),
+        top_feature_ids=np.array([r["feature_id"] for r in interpreted_rows], dtype=np.int64),
         top_acts_matrix=top_acts_matrix,
-        title=(
-            "Top examples × top features (activation magnitude)\n"
-            f"{plot_label} (layer {layer_idx})"
-        ),
         out_path=plots_dir / "top_examples_heatmap",
     )
     print(f"  wrote {plots_dir / 'top_examples_heatmap.pdf'}", flush=True)
+
+    if appendix_rows is not None and appendix_top_acts is not None:
+        plots2_dir = plots_dir / APPENDIX_PLOTS_SUBDIR
+        plots2_dir.mkdir(parents=True, exist_ok=True)
+        plot_top_features_bar(
+            feature_ids=np.array([r["feature_id"] for r in appendix_rows], dtype=np.int64),
+            mean_acts=np.array([r["mean_act"] for r in appendix_rows], dtype=np.float32),
+            descriptions=[r["description"] for r in appendix_rows],
+            title=(
+                f"Top {len(appendix_rows)} features by mean activation (appendix)\n"
+                f"{plot_label} (layer {layer_idx})"
+            ),
+            out_path=plots2_dir / "top_features_mean_activation",
+        )
+        print(f"  wrote {plots2_dir / 'top_features_mean_activation.pdf'}", flush=True)
+
+        plot_density_vs_mean(
+            mean_acts=stats["mean_act"],
+            density=stats["density"],
+            selected=selected_appendix,
+            title=f"Feature density vs. mean activation (appendix)\n{plot_label} (layer {layer_idx})",
+            out_path=plots2_dir / "density_vs_mean",
+        )
+        print(f"  wrote {plots2_dir / 'density_vs_mean.pdf'}", flush=True)
+
+        plot_top_feature_activation_heatmap(
+            top_feature_ids=np.array([r["feature_id"] for r in appendix_rows], dtype=np.int64),
+            top_acts_matrix=appendix_top_acts,
+            out_path=plots2_dir / "top_examples_heatmap",
+        )
+        print(f"  wrote {plots2_dir / 'top_examples_heatmap.pdf'}", flush=True)
 
     # ------------------- aggregate Δ vs. baseline (optional) -------------------
     if args.baseline_feature_stats:
