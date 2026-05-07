@@ -1,37 +1,3 @@
-"""Extract interpretable feature descriptions from a trained Batch-TopK SAE.
-
-Pipeline (per ``--sae`` HF repo id):
-
-If the output directory already contains a full artefact set from a previous
-run, the script exits early without reloading models (delete those files to
-force a recomputation).
-
-1. Load the matching base model + tokenizer (from a small built-in catalog or
-   ``--base-model`` / ``--layer`` overrides). HF auth uses ``HF_TOKEN`` from the
-   nearest ``.env`` file, since both the base models (MInAlA private repos) and
-   the SAEs (chungimungi private repos) require a token.
-2. Stream a chat-formatted slice of UltraChat (default) or any HF dataset, build
-   batches with the model's chat template, and capture the residual-stream
-   activations at ``model.layers[<layer>]`` via a forward hook.
-3. Encode the activations through the SAE -> ``feature_acts`` of shape
-   ``[num_tokens, d_sae]``. Maintain the top-N highest activating tokens per
-   feature with a streaming top-k merge so we never sort the full
-   ``[num_tokens, d_sae]`` matrix.
-4. For each selected feature, decode a context window around the firing token
-   and emit a *strictly evidence-based* short description (top content words
-   from the firing tokens, plus tag heuristics: code / numbers / punctuation /
-   whitespace / title-case). No LLM hallucinations.
-5. Save:
-    * ``feature_descriptions.json`` (list of ``{feature_id, description, top_examples}``)
-    * ``feature_stats.parquet`` (per-feature mean act, max act, density, l0 share)
-    * ``replot_metadata.npz`` (everything needed to remake the plots without rerun)
-    * NeurIPS-style PDF figures (top-feature bar, density vs. mean scatter,
-      activation heatmap for top-N features).
-
-The script also computes a base-vs-aligned delta when ``--base-sae`` is provided
-(aggregate sparsity / activation distribution shifts; per-feature alignment is
-not meaningful between independently-trained SAEs).
-"""
 from __future__ import annotations
 
 import argparse
