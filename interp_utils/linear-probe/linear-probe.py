@@ -415,15 +415,29 @@ def main() -> None:
     layers_l = [m["layer"] for m in layer_metrics]
 
     fig, ax = plt.subplots(figsize=(15, 10))
-    ax.plot(layers_l, [m["accuracy"] for m in layer_metrics], marker="o", label="Accuracy")
-    ax.plot(layers_l, [m["f1"] for m in layer_metrics], marker="^", label="F1")
-    ax.plot(layers_l, [m["auroc"] for m in layer_metrics], marker="P", label="AUROC")
-    ax.plot(layers_l, [m["auprc"] for m in layer_metrics], marker="s", label="AUPRC")
-    ax.set_xlabel("Layer")
-    ax.set_ylabel("Score")
-    _set_layer_ticks(ax, layers_l)
+    ax.plot(layers_l, [m["accuracy"] for m in layer_metrics], marker="o", label="Accuracy", linewidth=4, markersize=14)
+    ax.plot(layers_l, [m["f1"] for m in layer_metrics], marker="^", label="F1", linewidth=4, markersize=14)
+    ax.plot(layers_l, [m["auroc"] for m in layer_metrics], marker="P", label="AUROC", linewidth=4, markersize=14)
+    ax.plot(layers_l, [m["auprc"] for m in layer_metrics], marker="s", label="AUPRC", linewidth=4, markersize=14)
+    ax.set_xlabel("Layer", fontsize=58)
+    ax.set_ylabel("Score", fontsize=58)
+    ax.tick_params(axis="both", which="major", labelsize=46)
+    if len(layers_l) > 20:
+        step = 5
+    elif len(layers_l) > 10:
+        step = 2
+    else:
+        step = 1
+    ax.set_xticks(layers_l[::step])
+    y_min, y_max = ax.get_ylim()
+    y_range = y_max - y_min
+    y_ticks = [y_min + i * 0.03 for i in range(int(y_range / 0.03) + 1)]
+    ax.set_yticks(y_ticks)
+    ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f'{y:.2f}'))
+    for label in ax.get_xticklabels() + ax.get_yticklabels():
+        label.set_fontsize(46)
     ax.grid(alpha=0.3)
-    ax.legend(frameon=False)
+    fig.tight_layout()
     fig.savefig(out_dir / "layerwise_probe_metrics.pdf")
     plt.close(fig)
 
