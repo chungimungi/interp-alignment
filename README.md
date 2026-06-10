@@ -22,3 +22,15 @@ First, be sure to install the requirements:
 pip install -r requirements.txt
 ```
 
+Citation:
+```
+@misc{sinha2026mechanisticanalysisalignmentalgorithms,
+      title={Mechanistic Analysis of Alignment Algorithms in Language Models}, 
+      author={Aarush Sinha and Ishan Garg and Veeraraju Elluru and Arth Singh and Kushal Garg},
+      year={2026},
+      eprint={2606.09850},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2606.09850}, 
+}
+```
